@@ -1,0 +1,46 @@
+{
+    "client_name": "KA8",
+    "brand_name": "K8 Intelligent Tracking",
+    "industry": "Moritimo / Naval Intelligence",
+    "core_value_proposition": "Plataforma unificada para controle total e inteligência operacional naval, unindo rastreamento via satélite, telemetria e vídeo.",
+    "slogan": "Visão dual, controle total",
+    "key_contacts": [
+        {
+            "name": "Luiz Ricardo",
+            "role": "Lead / Dev / Decision Maker"
+        },
+        {
+            "name": "Henrique Macedo",
+            "role": "Commercial / Technical"
+        },
+        {
+            "name": "Mailson Pignata",
+            "role": "Technical / Operations"
+        }
+    ],
+    "brand_guidelines": {
+        "colors": {
+            "primary": "Azul Escuro",
+            "accent": "Verde (Palmeiras reference mentioned by Luiz, but clarified it's not the reason)"
+        },
+        "aesthetics": "Liquid/Glass (Apple/Mac style), Glassmorphism, Backdrop Blur, smooth transitions.",
+        "tone": "Direct, professional, informative, focusing on decision-makers (Gestores)."
+    },
+    "partnership_logos": [
+        "Omnicon (Fuel)",
+        "Teotônica (Telemetry)",
+        "Global Star (Satellite)"
+    ],
+    "products": {
+        "tracking": "Global Star / Teotônica",
+        "fuel_sensor": "Omnicon High-end with AI predictive analysis",
+        "video": "Real-time satellite video transmission",
+        "safety": "SOS Buttons, Semaphore status report"
+    },
+    "segments": [
+        "Empresas de Pesca (Pesqueiros)",
+        "Cabotagem",
+        "Apoio e Rebocadores",
+        "Meio Ambiente (mapping debris/shipwrecks)"
+    ]
+}

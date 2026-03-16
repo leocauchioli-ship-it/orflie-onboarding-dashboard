@@ -1,0 +1,126 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 190 24% 9%;
+    --foreground: 190 25% 94%;
+    --card: 191 27% 12%;
+    --card-foreground: 190 25% 94%;
+    --popover: 191 27% 12%;
+    --popover-foreground: 190 25% 94%;
+    --primary: 181 83% 45%;
+    --primary-foreground: 191 27% 10%;
+    --secondary: 46 97% 69%;
+    --secondary-foreground: 191 27% 10%;
+    --muted: 193 18% 20%;
+    --muted-foreground: 191 10% 75%;
+    --accent: 196 55% 30%;
+    --accent-foreground: 190 25% 94%;
+    --destructive: 4 79% 59%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 192 18% 22%;
+    --input: 192 18% 22%;
+    --ring: 181 83% 45%;
+    --radius: 1.25rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: "Roboto", sans-serif;
+    background: #0b1622;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: "Plus Jakarta Sans", sans-serif;
+  }
+}
+
+@layer components {
+  .page-shell {
+    @apply relative overflow-hidden;
+  }
+
+  .page-shell::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 72px 72px;
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.75), transparent 90%);
+    pointer-events: none;
+  }
+
+  .container-shell {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .glass-card {
+    @apply rounded-[28px] border backdrop-blur-xl;
+    border-color: rgba(24, 114, 179, 0.12);
+    background-color: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 18px 40px rgba(3, 61, 107, 0.08);
+  }
+
+  .section-pad {
+    @apply py-20 md:py-28;
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold uppercase tracking-[0.25em];
+    border: 1px solid rgba(24, 114, 179, 0.14);
+    background-color: rgba(24, 114, 179, 0.06);
+    color: #1872b3;
+  }
+
+  .headline {
+    @apply text-4xl font-extrabold leading-tight text-white md:text-6xl;
+  }
+
+  .subheadline {
+    @apply text-lg leading-8 text-slate-200/85 md:text-xl;
+  }
+
+  .primary-button {
+    @apply inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-extrabold uppercase tracking-[0.18em] text-white transition hover:-translate-y-0.5;
+    background-color: #1872b3;
+  }
+
+  .primary-button:hover {
+    background-color: #033d6b;
+  }
+
+  .secondary-button {
+    @apply inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-bold uppercase tracking-[0.18em] transition;
+    border: 1px solid rgba(24, 114, 179, 0.18);
+    background-color: rgba(24, 114, 179, 0.04);
+    color: #1872b3;
+  }
+
+  .metric-chip {
+    @apply rounded-full px-4 py-2 text-sm font-semibold;
+    border: 1px solid rgba(24, 114, 179, 0.1);
+    background-color: #ffffff;
+    color: #4a4a4a;
+  }
+
+  .field {
+    @apply w-full rounded-2xl border border-white/10 bg-slate-950/45 px-4 py-4 text-sm text-white outline-none transition placeholder:text-slate-400 focus:border-cyan-300/60 focus:ring-2 focus:ring-cyan-300/20;
+  }
+}

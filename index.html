@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orflie – Formulário de Onboarding</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #18181f;
+    --border: #2a2a38;
+    --accent: #ff7a2f;
+    --accent2: #7c6af5;
+    --text: #f0f0f5;
+    --muted: #7a7a92;
+    --radius: 12px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  .progress-bar-wrap {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--border);
+    z-index: 100;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    width: 0%;
+    transition: width 0.4s ease;
+  }
+
+  header {
+    position: fixed;
+    top: 3px; left: 0; right: 0;
+    height: 64px;
+    background: rgba(10,10,15,0.92);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    z-index: 99;
+  }
+
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.35rem;
+    letter-spacing: -0.03em;
+  }
+  .logo span { color: var(--accent); }
+
+  .step-indicator {
+    font-size: 0.78rem;
+    color: var(--muted);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+  .step-indicator strong { color: var(--accent); }
+
+  .hero {
+    padding: 120px 40px 60px;
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,122,47,0.08);
+    border: 1px solid rgba(255,122,47,0.2);
+    color: var(--accent);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 28px;
+  }
+  .hero-tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}
+  }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.04em;
+    margin-bottom: 20px;
+  }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+
+  .hero p {
+    font-size: 1.05rem;
+    color: var(--muted);
+    font-weight: 300;
+    max-width: 560px;
+    line-height: 1.7;
+  }
+
+  .form-container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 40px 80px;
+  }
+
+  .section-block {
+    margin-bottom: 28px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: border-color 0.3s;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.5s forwards;
+  }
+  @keyframes fadeUp { to { opacity:1; transform:translateY(0); } }
+  .section-block:nth-child(1){animation-delay:.05s}
+  .section-block:nth-child(2){animation-delay:.1s}
+  .section-block:nth-child(3){animation-delay:.15s}
+  .section-block:nth-child(4){animation-delay:.2s}
+  .section-block:nth-child(n+5){animation-delay:.25s}
+  .section-block:focus-within { border-color: rgba(255,122,47,0.3); }
+
+  .section-header {
+    padding: 20px 28px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--surface2);
+  }
+
+  .section-num {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    background: rgba(255,122,47,0.08);
+    border: 1px solid rgba(255,122,47,0.2);
+    padding: 4px 10px;
+    border-radius: 6px;
+    min-width: 36px;
+    text-align: center;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.98rem;
+    letter-spacing: -0.01em;
+  }
+
+  .section-body {
+    padding: 26px 28px;
+    display: grid;
+    gap: 20px;
+  }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-row.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .form-group { display: flex; flex-direction: column; gap: 7px; }
+
+  label {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+  label .req { color: var(--accent); margin-left: 2px; }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="number"],
+  select,
+  textarea {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    padding: 11px 15px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    width: 100%;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(255,122,47,0.07);
+  }
+  input::placeholder, textarea::placeholder { color: #3a3a52; }
+  textarea { resize: vertical; min-height: 88px; }
+  select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a7a92' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 38px; }
+  select option { background: #1a1a24; }
+
+  .check-group { display: flex; flex-wrap: wrap; gap: 8px; }
+  .check-item { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+  .check-item input { width: 17px; height: 17px; accent-color: var(--accent); cursor: pointer; flex-shrink: 0; }
+  .check-item span { font-size: 0.87rem; white-space: nowrap; }
+
+  .numbered-list { display: flex; flex-direction: column; gap: 9px; }
+  .numbered-item { display: flex; align-items: center; gap: 10px; }
+  .num-badge {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--accent);
+    flex-shrink: 0;
+    font-family: 'Syne', sans-serif;
+  }
+
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.87rem; }
+  th {
+    background: var(--surface2);
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 0.73rem;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+  td { padding: 5px 7px; border-bottom: 1px solid rgba(42,42,56,0.5); }
+  td:first-child { padding-left: 14px; }
+  tr:last-child td { border-bottom: none; }
+  td input { border-radius: 8px; padding: 8px 11px; }
+
+  .add-row-btn {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--accent);
+    font-size: 0.82rem;
+    font-weight: 600;
+    background: none;
+    border: 1px dashed rgba(255,122,47,0.3);
+    border-radius: 8px;
+    padding: 8px 14px;
+    cursor: pointer;
+    margin-top: 6px;
+    transition: background 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .add-row-btn:hover { background: rgba(255,122,47,0.05); }
+
+  .divider { height: 1px; background: var(--border); margin: 2px 0; }
+
+  .info-card {
+    background: rgba(124,106,245,0.06);
+    border: 1px solid rgba(124,106,245,0.2);
+    border-radius: 10px;
+    padding: 13px 16px;
+    font-size: 0.82rem;
+    color: #a89cf7;
+    line-height: 1.6;
+    display: flex;
+    gap: 10px;
+  }
+  .info-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+
+  .submit-area {
+    margin-top: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+  }
+  .submit-note { font-size: 0.8rem; color: var(--muted); text-align: center; line-height: 1.6; }
+
+  .btn-submit {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: -0.01em;
+    background: var(--accent);
+    color: #0a0a0f;
+    border: none;
+    border-radius: var(--radius);
+    padding: 17px 54px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 36px rgba(255,122,47,0.25);
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 28px; right: 28px;
+    background: var(--surface);
+    border: 1px solid var(--accent);
+    border-radius: 12px;
+    padding: 15px 22px;
+    font-size: 0.88rem;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  .form-group.is-invalid label,
+  .submit-status.is-error {
+    color: #ffb38a;
+  }
+
+  .form-group.is-invalid input,
+  .form-group.is-invalid select,
+  .form-group.is-invalid textarea,
+  .form-group.is-invalid .check-group,
+  .form-group.is-invalid .numbered-list {
+    border-color: #ff7a2f;
+    box-shadow: 0 0 0 3px rgba(255,122,47,0.12);
+  }
+
+  .submit-status {
+    margin-top: 14px;
+    min-height: 22px;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  @media (max-width: 620px) {
+    header { padding: 0 20px; }
+    .hero { padding: 96px 20px 36px; }
+    .form-container { padding: 0 20px 60px; }
+    .form-row, .form-row.cols-3 { grid-template-columns: 1fr; }
+    .section-body { padding: 18px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressBar"></div></div>
+
+<header>
+  <div class="logo">Orf<span>lie</span></div>
+  <span class="step-indicator">DNA do Cliente – <strong>Onboarding</strong></span>
+</header>
+
+<div class="hero">
+  <div class="hero-tag">Projeto Comercial · White Label</div>
+  <h1>Formulário de<br><em>Onboarding</em></h1>
+  <p>Essas informações constroem o DNA interno da sua conta – nossa base para entregar um atendimento comercial preciso, personalizado e com resultados reais.</p>
+</div>
+
+<form class="form-container" id="onboardingForm" onsubmit="handleSubmit(event)" method="POST" target="submissionFrame" novalidate>
+  <input type="hidden" name="payload" id="payloadField">
+  <input type="hidden" name="company_name" id="companyNameField">
+  <input type="hidden" name="contact_name" id="contactNameField">
+  <input type="hidden" name="contact_email" id="contactEmailField">
+  <input type="hidden" name="contact_phone" id="contactPhoneField">
+  <input type="hidden" name="company_segment" id="companySegmentField">
+
+  <!-- 01 -->
+  <div class="section-block">
+    <div class="section-header"><span class="section-num">01</span><span class="section-title">Informações Gerais da Empresa</span></div>
+    <div class="section-body">
+      <div class="form-row">
+        <div class="form-group"><label>Nome da Empresa <span class="req">*</span></label><input type="text" placeholder="Razão social ou nome fantasia"></div>
+        <div class="form-group"><label>CNPJ</label><input type="text" placeholder="00.000.000/0000-00"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Site</label><input type="url" placeholder="https://seusite.com.br"></div>
+        <div class="form-group"><label>Segmento de Atuação <span class="req">*</span></label><input type="text" placeholder="Ex: SaaS B2B, Indústria, Varejo..."></div>
+      </div>
+      <div class="form-row cols-3">
+        <div class="form-group"><label>Tempo de Mercado</label><input type="text" placeholder="Ex: 5 anos"></div>
+        <div class="form-group"><label>Nº de Colaboradores</label><input type="number" placeholder="Ex: 80"></div>
+        <div class="form-group"><label>Cidade / Estado <span class="req">*</span></label><input type="text" placeholder="São Paulo / SP"></div>
+      </div>
+      <div class="form-group">
+        <label>Faturamento Médio Anual</label>
+        <select>
+          <option value="" disabled selected>Selecione uma faixa</option>
+          <option>Até R$ 500 mil</option>
+          <option>R$ 500 mil – R$ 2 milhões</option>
+          <option>R$ 2 milhões – R$ 10 milhões</option>
+          <option>R$ 10 milhões – R$ 50 milhões</option>
+          <option>Acima de R$ 50 milhões</option>
+          <option>Prefiro não informar</option>
+        </select>
+      </div>
+      <div class="divider"></div>
+      <div class="form-row">
+        <div class="form-group"><label>Nome do Responsável <span class="req">*</span></label><input type="text" placeholder="Nome completo"></div>
+        <div class="form-group"><label>Cargo</label><input type="text" placeholder="Ex: Diretor Comercial"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Telefone / WhatsApp <span class="req">*</span></label><input type="tel" placeholder="(11) 99999-0000"></div>
+        <div class="form-group"><label>E-mail <span class="req">*</span></label><input type="email" placeholder="nome@empresa.com.br"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 -->
+  <div class="section-block">
+    <div class="section-header"><span class="section-num">02</span><span class="section-title">Posicionamento &amp; Identidade de Marca</span></div>
+    <div class="section-body">
+      <div class="form-group">
+        <label>Como a empresa se posiciona no mercado? <span class="req">*</span></label>
+        <div class="check-group">
+          <label class="check-item"><input type="radio" name="pos"><span>Produto Premium</span></label>
+          <label class="check-item"><input type="radio" name="pos"><span>Produto Acessível</span></label>
+          <label class="check-item"><input type="radio" name="pos"><span>Especializado / Nicho</span></label>
+          <label class="check-item"><input type="radio" name="pos"><span>Serviço Consultivo</span></label>
+          <label class="check-item"><input type="radio" name="pos"><span>Outro</span></label>
+        </div>
+      </div>
+      <div class="form-group"><label>Principal diferencial competitivo <span class="req">*</span></label><textarea placeholder="O que faz a empresa única: tecnologia, atendimento, preço, expertise, velocidade..."></textarea></div>
+      <div class="form-group"><label>Como a empresa quer ser percebida pelos clientes?</label><textarea placeholder="Ex: 'Queremos ser vistos como o parceiro mais confiável do setor, não apenas um fornecedor...'"></textarea></div>
+      <div class="form-group"><label>Missão ou propósito declarado</label><input type="text" placeholder="Ex: Simplificar a gestão de RH para PMEs brasileiras"></div>
+      <div class="form-group"><label>Quais palavras NÃO representam a empresa?</label><input type="text" placeholder="Ex: Barato, improvisado, genérico... (ajuda o time a evitar erros de abordagem)"></div>
+    </div>
+  </div>
+
+  <!-- 03 -->
+  <div class="section-block">
+    <div class="section-header"><span class="section-num">03</span><span class="section-title">Produtos ou Serviços Principais</span></div>
+    <div class="section-body">
+      <div class="info-card"><span class="info-icon">💡</span><span>Foque nos produtos/serviços que o time comercial vai ativamente vender. Itens secundários podem ser mencionados nas observações finais.</span></div>
+      <div class="table-wrap">
+        <table id="productsTable">
+          <thead><tr><th>Produto / Serviço</th><th>Ticket Médio</th><th>Margem</th><th>Público Principal</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><input type="text" placeholder="Nome do produto"></td>
+              <td><input type="text" placeholder="R$ 0.000"></td>
+              <td><input type="text" placeholder="Ex: 40%"></td>
+              <td><input type="text" placeholder="Segmento ou perfil"></td>
+            </tr>
+            <tr>
+              <td><input type="text" placeholder="Nome do produto"></td>
+              <td><input type="text" placeholder="R$ 0.000"></td>
+              <td><input type="text" placeholder="Ex: 40%"></td>
+              <td><input type="text" placeholder="Segmento ou perfil"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <button type="button" class="add-row-btn" onclick="addProductRow()">+ Adicionar linha</button>
+      <div class="form-group"><label>Produto/serviço prioritário neste projeto</label><input type="text" placeholder="Qual deve ter foco principal de vendas?"></div>
+    </div>
+  </div>
+
+  <!-- 04 -->
+  <div class="section-block">
+    <div class="section-header"><span class="section-num">04</span><span class="section-title">Perfil de Cliente Ideal (ICP)</span></div>
+    <div class="section-body">
+      <div class="form-row">
+        <div class="form-group"><label>Segmento-alvo <span class="req">*</span></label><input type="text" placeholder="Ex: SaaS B2B, indústrias alimentícias..."></div>
+        <div class="form-group">
+          <label>Porte da empresa cliente</label>
+          <select>
+            <option value="" disabled selected>Selecione</option>
+            <option>MEI / Autônomos</option>
+            <option>Microempresa (até 9 func.)</option>
+            <option>Pequena empresa (10–49 func.)</option>
+            <option>Média empresa (50–249 func.)</option>
+            <option>Grande empresa (250+ func.)</option>
+            <option>Todos os portes</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Faixa de faturamento do cliente ideal</label><input type="text" placeholder="Ex: R$2M – R$20M por ano"></div>
+        <div class="form-group"><label>Região de atuação</label><input type="text" placeholder="Ex: Brasil inteiro, Sudeste, SP Capital..."></div>
+      </div>
+      <div class="form-group">
+        <label>Quem toma a decisão de compra?</label>
+        <div class="check-group">
+          <label class="check-item"><input type="checkbox"><span>Dono / Sócio</span></label>
+          <label class="check-item"><input type="checkbox"><span>CEO / Diretor</span></label>
+          <label class="check-item"><input type="checkbox"><span>Gerente Comercial</span></label>
+          <label class="check-item"><input type="checkbox"><span>RH</span></label>
+          <label class="check-item"><input type="checkbox"><span>Compras</span></label>
+          <label class="check-item"><input type="checkbox"><span>TI / CTO</span></label>
+          <label class="check-item"><input type="checkbox"><span>Financeiro / CFO</span></label>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Cargo exato do decisor mais comum</label><input type="text" placeholder="Ex: Gerente de Suprimentos, CFO..."></div>
+        <div class="form-group"><label>Existe um influenciador na jornada?</label><input type="text" placeholder="Ex: Coordenador de TI que apresenta ao Diretor"></div>
+      </div>
+      <div class="form-group"><label>Principal gatilho que leva o cliente a buscar a solução</label><textarea placeholder="Ex: Crescimento acelerado que sobrecarrega a equipe, novo concorrente no mercado..."></textarea></div>
+    </div>
+  </div>
+
+  <!-- 05 -->
+  <div class="section-block">
+    <div class="section-header"><span class="section-num">05</span><span class="section-title">Dores que o Produto/Serviço Resolve</span></div>
+    <div class="section-body">
+      <div class="form-group">
+        <label>Principais dores do cliente que a empresa resolve <span class="req">*</span></label>
+        <div class="numbered-list">
+          <div class="numbered-item"><span class="num-badge">1</span><input type="text" placeholder="Dor principal"></div>
+          <div class="numbered-item"><span class="num-badge">2</span><input type="text" placeholder="Segunda dor"></div>
+          <div class="numbered-item"><span class="num-badge">3</span><input type="text" placeholder="Terceira dor"></div>
+        </div>
+      </div>
+      <div class="form-group"><label>Impacto financeiro/operacional dessas dores</label><textarea placeholder="Ex: Custo de aquisição elevado, perda de receita por ineficiência, alto turnover..."></textarea></div>
+      <div class="form-group"><label>Como o cliente resolve esse problema hoje (antes de conhecer a empresa)?</label><textarea placeholder="Ex: Planilhas manuais, fornecedor caro, processo interno ineficiente..."></textarea></div>
+    </div>
+  </div>
+
+  <!-- 06 -->
+  <div class="section-block">
+    <div class="section-header"><span class="section-num">06</span><span class="section-title">Processo de Vendas Atual</span></div>
+    <div class="section-body">
+      <div class="form-row">
+        <div class="form-group">
+          <label>A empresa utiliza CRM?</label>
+          <div class="check-group">
+            <label class="check-item"><input type="radio" name="crm"><span>Sim</span></label>
+            <label class="check-item"><input type="radio" name="crm"><span>Não</span></label>
+            <label class="check-item"><input type="radio" name="crm"><span>Parcialmente</span></label>
+          </div>
+        </div>
+        <div class="form-group"><label>Qual CRM utiliza?</label><input type="text" placeholder="HubSpot, Pipedrive, RD Station, planilha..."></div>
+      </div>
+      <div class="form-group">
+        <label>Canais de comunicação com leads</label>
+        <div class="check-group">
+          <label class="check-item"><input type="checkbox"><span>WhatsApp</span></label>
+          <label class="check-item"><input type="checkbox"><span>E-mail</span></label>
+          <label class="check-item"><input type="checkbox"><span>LinkedIn</span></label>
+          <label class="check-item"><input type="checkbox"><span>Instagram</span></label>
+          <label class="check-item"><input type="checkbox"><span>Telefone</span></label>
+          <label class="check-item"><input type="checkbox"><span>Videoconferência</span></label>
+          <label class="check-item"><input type="checkbox"><span>Visita presencial</span></label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Como os leads chegam hoje? <span class="req">*</span></label>
+        <div class="check-group">
+          <label class="check-item"><input type="checkbox"><span>Indicação</span></label>
+          <label class="check-item"><input type="checkbox"><span>Marketing digital</span></label>
+          <label class="check-item"><input type="checkbox"><span>Prospecção ativa</span></label>
+          <label class="check-item"><input type="checkbox"><span>Eventos</span></label>
+          <label class="check-item"><input type="checkbox"><span>Inbound / SEO</span></label>
+          <label class="check-item"><input type="checkbox"><span>Parceiros</span></label>
+        </div>
+      </div>
+      <div class="form-group"><label>Descreva as etapas do funil de vendas atual</label><textarea placeholder="Ex: Lead → Qualificação → Reunião → Proposta → Negociação → Fechamento. Como funciona na prática?"></textarea></div>
+    </div>
+  </div>
+
+  <!-- 07 -->
+  <div class="section-block">
+    <div class="section-header"><span class="section-num">07</span><span class="section-title">Equipe Comercial</span></div>
+    <div class="section-body">
+      <div class="form-row">
+        <div class="form-group"><label>Total de vendedores ativos</label><input type="number" placeholder="Ex: 4"></div>
+        <div class="form-group">
+          <label>Estrutura da equipe</label>
+          <div class="check-group">
+            <label class="check-item"><input type="checkbox"><span>SDR</span></label>
+            <label class="check-item"><input type="checkbox"><span>Closer</span></label>
+            <label class="check-item"><input type="checkbox"><span>Executivo de Contas</span></label>
+            <label class="check-item"><input type="checkbox"><span>Inside Sales</span></label>
+            <label class="check-item"><input type="checkbox"><span>Field Sales</span></label>
+            <label class="check-item"><input type="checkbox"><span>CS / Pós-venda</span></label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group"><label>Metas comerciais atuais (mensal / anual)</label><textarea placeholder="Ex: Meta mensal de R$150k em novos contratos, 10 novos clientes por mês..."></textarea></div>
+      <div class="form-group">
+        <label>O time tem treinamento de vendas regular?</label>
+        <div class="check-group">
+          <label class="check-item"><input type="radio" name="trein"><span>Sim, frequentemente</span></label>
+          <label class="check-item"><input type="radio" name="trein"><span>Às vezes</span></label>
+          <label class="check-item"><input type="radio" name="trein"><span>Não</span></label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 08 -->
+  <div class="section-block">
+    <div class="section-header"><span class="section-num">08</span><span class="section-title">Métricas Comerciais</span></div>
+    <div class="section-body">
+      <div class="info-card"><span class="info-icon">📊</span><span>Preencha com aproximações. Esses dados são a linha de base para medir o impacto real do projeto.</span></div>
+      <div class="form-row cols-3">
+        <div class="form-group"><label>Ticket Médio</label><input type="text" placeholder="R$ 0.000"></div>
+        <div class="form-group"><label>Ciclo Médio de Vendas</label><input type="text" placeholder="Ex: 15 dias"></div>
+        <div class="form-group"><label>Taxa de Conversão Média</label><input type="text" placeholder="Ex: 18%"></div>
+      </div>
+      <div class="form-row cols-3">
+        <div class="form-group"><label>Reuniões / mês</label><input type="number" placeholder="Ex: 40"></div>
+        <div class="form-group"><label>Novos clientes / mês</label><input type="number" placeholder="Ex: 8"></div>
+        <div class="form-group"><label>Churn mensal</label><input type="text" placeholder="Ex: 3%"></div>
+      </div>
+      <div class="form-group">
+        <label>Métrica mais crítica para melhorar</label>
+        <select>
+          <option value="" disabled selected>Selecione</option>
+          <option>Volume de leads</option>
+          <option>Qualificação de leads</option>
+          <option>Taxa de conversão</option>
+          <option>Redução do ciclo de vendas</option>
+          <option>Aumento do ticket médio</option>
+          <option>Redução do churn</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- 09 -->
+  <div class="section-block">
+    <div class="section-header"><span class="section-num">09</span><span class="section-title">Principais Objeções dos Clientes</span></div>
+    <div class="section-body">
+      <div class="form-group">
+        <label>As 5 objeções mais comuns na hora da venda <span class="req">*</span></label>
+        <div class="numbered-list">
+          <div class="numbered-item"><span class="num-badge">1</span><input type="text" placeholder="Ex: 'Está muito caro'"></div>
+          <div class="numbered-item"><span class="num-badge">2</span><input type="text" placeholder="Ex: 'Preciso consultar meu sócio'"></div>
+          <div class="numbered-item"><span class="num-badge">3</span><input type="text" placeholder="Ex: 'Já tentei uma solução assim e não funcionou'"></div>
+          <div class="numbered-item"><span class="num-badge">4</span><input type="text" placeholder="Ex: 'Não tenho tempo agora'"></div>
+          <div class="numbered-item"><span class="num-badge">5</span><input type="text" placeholder="Ex: 'Não conheço bem a empresa de vocês'"></div>
+        </div>
+      </div>
+      <div class="form-group"><label>Qual objeção é mais difícil de superar e por quê?</label><textarea placeholder="Descreva a objeção e o motivo de ser desafiadora para o time..."></textarea></div>
+      <div class="form-group"><label>Algum argumento que já funcionou bem para contornar objeções?</label><textarea placeholder="Ex: Mostrar ROI com dados, compartilhar case de cliente similar..."></textarea></div>
+    </div>
+  </div>
+
+  <!-- 10 -->
+  <div class="section-block">
+    <div class="section-header"><span class="section-num">10</span><span class="section-title">Concorrentes &amp; Mercado</span></div>
+    <div class="section-body">
+      <div class="form-group">
+        <label>Principais concorrentes diretos <span class="req">*</span></label>
+        <div class="numbered-list">
+          <div class="numbered-item"><span class="num-badge">1</span><input type="text" placeholder="Nome do concorrente"></div>
+          <div class="numbered-item"><span class="num-badge">2</span><input type="text" placeholder="Nome do concorrente"></div>
+          <div class="numbered-item"><span class="num-badge">3</span><input type="text" placeholder="Nome do concorrente"></div>
+        </div>
+      </div>
+      <div class="form-group"><label>O que os concorrentes fazem melhor?</label><textarea placeholder="Ex: Preço mais baixo, marca mais conhecida, interface mais simples..."></textarea></div>
+      <div class="form-group"><label>O que a empresa faz melhor que os concorrentes?</label><textarea placeholder="Ex: Suporte técnico, entrega mais rápida, customização, expertise setorial..."></textarea></div>
+      <div class="form-group"><label>Quando o cliente vai para o concorrente, qual o principal motivo?</label><textarea placeholder="Ex: Preço foi decisivo, falta de urgência no follow-up, proposta menos clara..."></textarea></div>
+    </div>
+  </div>
+
+  <!-- 11 -->
+  <div class="section-block">
+    <div class="section-header"><span class="section-num">11</span><span class="section-title">Objetivos do Projeto com a Orflie</span></div>
+    <div class="section-body">
+      <div class="form-group">
+        <label>O que a empresa espera alcançar? <span class="req">*</span></label>
+        <div class="check-group">
+          <label class="check-item"><input type="checkbox"><span>Aumentar geração de leads</span></label>
+          <label class="check-item"><input type="checkbox"><span>Melhorar conversão</span></label>
+          <label class="check-item"><input type="checkbox"><span>Estruturar processo comercial</span></label>
+          <label class="check-item"><input type="checkbox"><span>Treinar equipe de vendas</span></label>
+          <label class="check-item"><input type="checkbox"><span>Escalar receita</span></label>
+          <label class="check-item"><input type="checkbox"><span>Entrar em novos mercados</span></label>
+          <label class="check-item"><input type="checkbox"><span>Reduzir ciclo de vendas</span></label>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Meta de faturamento desejada</label><input type="text" placeholder="Ex: R$500k/mês em 6 meses"></div>
+        <div class="form-group">
+          <label>Prazo esperado para ver resultados</label>
+          <select>
+            <option value="" disabled selected>Selecione</option>
+            <option>30 dias</option><option>60 dias</option><option>90 dias</option>
+            <option>6 meses</option><option>1 ano</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group"><label>Como o sucesso deste projeto será medido internamente?</label><textarea placeholder="Ex: Número de reuniões agendadas, aumento no faturamento, redução do CAC, pipeline gerado..."></textarea></div>
+    </div>
+  </div>
+
+  <!-- 12 -->
+  <div class="section-block">
+    <div class="section-header"><span class="section-num">12</span><span class="section-title">Histórico de Marketing</span></div>
+    <div class="section-body">
+      <div class="form-group">
+        <label>A empresa já investe em marketing?</label>
+        <div class="check-group">
+          <label class="check-item"><input type="radio" name="mkt"><span>Sim</span></label>
+          <label class="check-item"><input type="radio" name="mkt"><span>Não</span></label>
+          <label class="check-item"><input type="radio" name="mkt"><span>Pouco / pontual</span></label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Canais ativos</label>
+        <div class="check-group">
+          <label class="check-item"><input type="checkbox"><span>Google Ads</span></label>
+          <label class="check-item"><input type="checkbox"><span>Meta Ads</span></label>
+          <label class="check-item"><input type="checkbox"><span>LinkedIn Ads</span></label>
+          <label class="check-item"><input type="checkbox"><span>Conteúdo / Blog</span></label>
+          <label class="check-item"><input type="checkbox"><span>E-mail marketing</span></label>
+          <label class="check-item"><input type="checkbox"><span>Eventos / Feiras</span></label>
+          <label class="check-item"><input type="checkbox"><span>SEO</span></label>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Investimento mensal em mídia paga</label>
+          <select>
+            <option value="" disabled selected>Selecione uma faixa</option>
+            <option>Não investe</option>
+            <option>Até R$ 2.000</option>
+            <option>R$ 2.000 – R$ 10.000</option>
+            <option>R$ 10.000 – R$ 50.000</option>
+            <option>Acima de R$ 50.000</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Agência de marketing ativa?</label><input type="text" placeholder="Nome ou 'gerenciamento interno'"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 13 -->
+  <div class="section-block">
+    <div class="section-header"><span class="section-num">13</span><span class="section-title">Materiais Comerciais Existentes</span></div>
+    <div class="section-body">
+      <div class="form-group">
+        <label>A empresa já possui:</label>
+        <div class="check-group">
+          <label class="check-item"><input type="checkbox"><span>Apresentação institucional</span></label>
+          <label class="check-item"><input type="checkbox"><span>Proposta comercial padrão</span></label>
+          <label class="check-item"><input type="checkbox"><span>Cases de sucesso documentados</span></label>
+          <label class="check-item"><input type="checkbox"><span>Depoimentos / Vídeos de clientes</span></label>
+          <label class="check-item"><input type="checkbox"><span>Portfólio</span></label>
+          <label class="check-item"><input type="checkbox"><span>Playbook de vendas</span></label>
+          <label class="check-item"><input type="checkbox"><span>Scripts de prospecção</span></label>
+          <label class="check-item"><input type="checkbox"><span>Calculadora de ROI</span></label>
+        </div>
+      </div>
+      <div class="form-group"><label>Qual material precisa ser criado ou melhorado com urgência?</label><textarea placeholder="Ex: A proposta comercial está desatualizada..."></textarea></div>
+    </div>
+  </div>
+
+  <!-- 14 -->
+  <div class="section-block">
+    <div class="section-header"><span class="section-num">14</span><span class="section-title">Aprovações e Responsáveis</span></div>
+    <div class="section-body">
+      <div class="form-row">
+        <div class="form-group"><label>Responsável interno pelo projeto <span class="req">*</span></label><input type="text" placeholder="Nome completo"></div>
+        <div class="form-group"><label>Cargo</label><input type="text" placeholder="Ex: Gerente Comercial"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Responsável por aprovar decisões estratégicas</label><input type="text" placeholder="Nome completo"></div>
+        <div class="form-group"><label>Cargo</label><input type="text" placeholder="Ex: CEO, Diretor de Operações"></div>
+      </div>
+      <div class="form-group"><label>Outras partes que precisam ser consultadas?</label><input type="text" placeholder="Ex: Sócio, Conselho, Jurídico..."></div>
+    </div>
+  </div>
+
+  <!-- 15 -->
+  <div class="section-block">
+    <div class="section-header"><span class="section-num">15</span><span class="section-title">Acessos Necessários</span></div>
+    <div class="section-body">
+      <div class="form-group">
+        <label>Quais acessos a Orflie precisará?</label>
+        <div class="check-group">
+          <label class="check-item"><input type="checkbox"><span>CRM</span></label>
+          <label class="check-item"><input type="checkbox"><span>E-mail corporativo</span></label>
+          <label class="check-item"><input type="checkbox"><span>Redes sociais</span></label>
+          <label class="check-item"><input type="checkbox"><span>Ferramentas de automação</span></label>
+          <label class="check-item"><input type="checkbox"><span>Base de leads / planilha</span></label>
+          <label class="check-item"><input type="checkbox"><span>Google Analytics / Ads</span></label>
+          <label class="check-item"><input type="checkbox"><span>Meta Business Manager</span></label>
+          <label class="check-item"><input type="checkbox"><span>Gravações de calls</span></label>
+        </div>
+      </div>
+      <div class="form-group"><label>Restrições de acesso ou política de segurança?</label><textarea placeholder="Ex: Dados sensíveis precisam de NDA, acesso limitado por VPN..."></textarea></div>
+    </div>
+  </div>
+
+  <!-- 16 -->
+  <div class="section-block">
+    <div class="section-header"><span class="section-num">16</span><span class="section-title">Observações Gerais</span></div>
+    <div class="section-body">
+      <div class="form-group"><label>O que o time da Orflie precisa saber antes de começar?</label><textarea style="min-height:110px" placeholder="Contexto histórico, situações delicadas, parcerias estratégicas, sazonalidade, qualquer informação relevante..."></textarea></div>
+      <div class="form-group"><label>Qual foi a maior frustração com projetos comerciais anteriores?</label><textarea placeholder="Isso nos ajuda a não repetir erros e entregar uma experiência diferente..."></textarea></div>
+      <div class="form-group"><label>O que tornaria este projeto um sucesso absoluto para você?</label><textarea placeholder="Fale com liberdade – isso é o que guia tudo que vamos construir juntos."></textarea></div>
+    </div>
+  </div>
+
+  <div class="submit-area">
+    <p class="submit-note">Ao enviar, você confirma que as informações são verídicas e autoriza<br>a Orflie a utilizá-las para estruturar o projeto comercial da sua empresa.</p>
+    <button type="submit" class="btn-submit">Enviar Formulário →</button>
+    <p class="submit-status" id="submitStatus"></p>
+  </div>
+
+</form>
+
+<iframe name="submissionFrame" id="submissionFrame" title="Envio do formulario" hidden></iframe>
+
+<div class="toast" id="toast">
+  <span>✅</span>
+  <span>Formulário enviado com sucesso! Em breve entraremos em contato.</span>
+</div>
+
+<script src="./config.js"></script>
+<script>
+  const form = document.getElementById('onboardingForm');
+  const submissionFrame = document.getElementById('submissionFrame');
+  const submitButton = form.querySelector('.btn-submit');
+  const submitStatus = document.getElementById('submitStatus');
+  const toast = document.getElementById('toast');
+  const payloadField = document.getElementById('payloadField');
+  const companyNameField = document.getElementById('companyNameField');
+  const contactNameField = document.getElementById('contactNameField');
+  const contactEmailField = document.getElementById('contactEmailField');
+  const contactPhoneField = document.getElementById('contactPhoneField');
+  const companySegmentField = document.getElementById('companySegmentField');
+
+  let awaitingSubmission = false;
+
+  window.addEventListener('scroll', () => {
+    const pct = Math.min(100, (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+    document.getElementById('progressBar').style.width = pct + '%';
+  }, { passive: true });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    configureForm();
+    submissionFrame.addEventListener('load', handleFrameLoad);
+  });
+
+  function addProductRow() {
+    const tbody = document.querySelector('#productsTable tbody');
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td><input type="text" placeholder="Nome do produto"></td>
+      <td><input type="text" placeholder="R$ 0.000"></td>
+      <td><input type="text" placeholder="Ex: 40%"></td>
+      <td><input type="text" placeholder="Segmento ou perfil"></td>
+    `;
+    tbody.appendChild(row);
+  }
+
+  function configureForm() {
+    const endpoint = normalizeAppsScriptUrl(window.ORFLIE_CONFIG && window.ORFLIE_CONFIG.appsScriptUrl);
+
+    if (!endpoint || endpoint.includes('COLE_AQUI')) {
+      submitButton.disabled = true;
+      submitStatus.textContent = 'Configure a URL pública do Google Apps Script no arquivo config.js para habilitar o envio.';
+      return;
+    }
+
+    form.action = endpoint;
+    submitButton.disabled = false;
+    submitStatus.textContent = 'Formulário pronto para envio.';
+  }
+
+  function normalizeAppsScriptUrl(endpoint) {
+    if (!endpoint) {
+      return '';
+    }
+    return endpoint.replace('https://script.google.com/a/macros/orflie.com/s/', 'https://script.google.com/macros/s/');
+  }
+
+  function handleFrameLoad() {
+    if (!awaitingSubmission) {
+      return;
+    }
+
+    awaitingSubmission = false;
+    submitButton.disabled = false;
+
+    let responseText = '';
+    try {
+      responseText = submissionFrame.contentDocument && submissionFrame.contentDocument.body
+        ? submissionFrame.contentDocument.body.innerText
+        : '';
+    } catch (error) {
+      submitStatus.classList.add('is-error');
+      submitStatus.textContent = 'Não foi possível confirmar o envio. Verifique se o Google Apps Script está público para qualquer pessoa.';
+      return;
+    }
+
+    if (!responseText.includes('"ok":true')) {
+      submitStatus.classList.add('is-error');
+      submitStatus.textContent = 'O Google recusou o envio. Revise a implantação do Apps Script e deixe o acesso como Qualquer pessoa.';
+      return;
+    }
+
+    submitStatus.classList.remove('is-error');
+    submitStatus.textContent = 'Recebemos as informações com sucesso.';
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 5000);
+    form.reset();
+    clearValidation();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    if (!form.action) {
+      submitStatus.classList.add('is-error');
+      submitStatus.textContent = 'Falta conectar este formulário ao Google Sheets no arquivo config.js.';
+      return;
+    }
+
+    clearValidation();
+
+    const invalidGroups = [];
+    const payload = buildPayload(invalidGroups);
+
+    if (invalidGroups.length > 0) {
+      invalidGroups.forEach(group => group.classList.add('is-invalid'));
+      submitStatus.classList.add('is-error');
+      submitStatus.textContent = 'Preencha os campos obrigatórios destacados antes de enviar.';
+      invalidGroups[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    payloadField.value = JSON.stringify(payload);
+    companyNameField.value = payload.summary.companyName;
+    contactNameField.value = payload.summary.contactName;
+    contactEmailField.value = payload.summary.contactEmail;
+    contactPhoneField.value = payload.summary.contactPhone;
+    companySegmentField.value = payload.summary.companySegment;
+
+    awaitingSubmission = true;
+    submitButton.disabled = true;
+    submitStatus.classList.remove('is-error');
+    submitStatus.textContent = 'Enviando respostas...';
+    form.submit();
+  }
+
+  function buildPayload(invalidGroups) {
+    const summaryFields = Array.from(document.querySelectorAll('.section-block:first-of-type input, .section-block:first-of-type select'));
+    const payload = {
+      submittedAt: new Date().toISOString(),
+      summary: {
+        companyName: summaryFields[0] ? summaryFields[0].value.trim() : '',
+        companySegment: summaryFields[3] ? summaryFields[3].value.trim() : '',
+        contactName: summaryFields[7] ? summaryFields[7].value.trim() : '',
+        contactPhone: summaryFields[9] ? summaryFields[9].value.trim() : '',
+        contactEmail: summaryFields[10] ? summaryFields[10].value.trim() : ''
+      },
+      sections: {}
+    };
+
+    document.querySelectorAll('.section-block').forEach((section, index) => {
+      const title = cleanLabel(section.querySelector('.section-title') ? section.querySelector('.section-title').textContent : 'Seção ' + (index + 1));
+      const sectionData = {};
+
+      section.querySelectorAll('.form-group').forEach(group => {
+        const labelElement = Array.from(group.children).find(child => child.tagName === 'LABEL');
+        if (!labelElement) {
+          return;
+        }
+
+        const key = cleanLabel(labelElement.textContent);
+        const value = extractGroupValue(group);
+        const isRequired = Boolean(labelElement.querySelector('.req'));
+        const isEmpty = isValueEmpty(value);
+
+        if (isRequired && isEmpty) {
+          invalidGroups.push(group);
+        }
+
+        if (!isEmpty) {
+          appendUniqueValue(sectionData, key, value);
+        }
+      });
+
+      const products = extractProducts(section);
+      if (products.length > 0) {
+        sectionData['Produtos cadastrados'] = products;
+      }
+
+      payload.sections[title] = sectionData;
+    });
+
+    return payload;
+  }
+
+  function extractGroupValue(group) {
+    if (group.querySelector('.numbered-list')) {
+      return Array.from(group.querySelectorAll('.numbered-list input')).map(input => input.value.trim()).filter(Boolean);
+    }
+
+    const checkedCheckboxes = group.querySelectorAll('.check-group input[type="checkbox"]');
+    if (checkedCheckboxes.length > 0) {
+      return Array.from(checkedCheckboxes)
+        .filter(input => input.checked)
+        .map(input => input.parentElement.querySelector('span') ? input.parentElement.querySelector('span').textContent.trim() : '')
+        .filter(Boolean);
+    }
+
+    const radioOptions = group.querySelectorAll('.check-group input[type="radio"]');
+    if (radioOptions.length > 0) {
+      const selected = Array.from(radioOptions).find(input => input.checked);
+      return selected && selected.parentElement.querySelector('span') ? selected.parentElement.querySelector('span').textContent.trim() : '';
+    }
+
+    const field = group.querySelector('input, select, textarea');
+    return field ? field.value.trim() : '';
+  }
+
+  function extractProducts(section) {
+    const table = section.querySelector('#productsTable');
+    if (!table) {
+      return [];
+    }
+
+    return Array.from(table.querySelectorAll('tbody tr'))
+      .map(row => {
+        const inputs = row.querySelectorAll('input');
+        return {
+          produto: inputs[0] ? inputs[0].value.trim() : '',
+          ticketMedio: inputs[1] ? inputs[1].value.trim() : '',
+          margem: inputs[2] ? inputs[2].value.trim() : '',
+          publicoPrincipal: inputs[3] ? inputs[3].value.trim() : ''
+        };
+      })
+      .filter(item => Object.values(item).some(Boolean));
+  }
+
+  function appendUniqueValue(target, key, value) {
+    if (!(key in target)) {
+      target[key] = value;
+      return;
+    }
+
+    let suffix = 2;
+    while ((key + ' (' + suffix + ')') in target) {
+      suffix += 1;
+    }
+
+    target[key + ' (' + suffix + ')'] = value;
+  }
+
+  function clearValidation() {
+    document.querySelectorAll('.form-group.is-invalid').forEach(group => group.classList.remove('is-invalid'));
+    submitStatus.classList.remove('is-error');
+  }
+
+  function isValueEmpty(value) {
+    return Array.isArray(value) ? value.length === 0 : !value;
+  }
+
+  function cleanLabel(text) {
+    return text.replace(/\s+/g, ' ').replace(/\*/g, '').trim();
+  }
+</script>
+</body>
+</html>

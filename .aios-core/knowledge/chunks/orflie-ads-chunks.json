@@ -1,0 +1,35 @@
+[
+    {
+        "id": "chunk_orflie_ads_001",
+        "topic": "Facebook API Specs",
+        "content": "Account ORFLIE GERAL (4102226916661284) uses FB_MARKETING_API_TOKEN in .env. Amount_spent must be divided by 100 to get BRL value.",
+        "tags": [
+            "orflie",
+            "ads",
+            "api",
+            "technical"
+        ]
+    },
+    {
+        "id": "chunk_orflie_ads_002",
+        "topic": "Creative Performance",
+        "content": "Core baseline CTR is 2.31%. Videos focus on CLT vs Outsource costs and Management risk of 'Star Sellers'. Target CPL is below R$ 50-70 for lead forms.",
+        "tags": [
+            "orflie",
+            "performance",
+            "ctr",
+            "creative"
+        ]
+    },
+    {
+        "id": "chunk_orflie_ads_003",
+        "topic": "Lead Qualification",
+        "content": "To avoid 'pirate' leads (low quality/unqualified), use Higher Intent Lead Forms with mandatory questions about Job Role and Company Size.",
+        "tags": [
+            "orflie",
+            "leads",
+            "quality",
+            "strategy"
+        ]
+    }
+]

@@ -1,0 +1,14 @@
+{
+    "timestamp": "2026-03-05T10:05:00-03:00",
+    "baseline": {
+        "spend_30d": "1050.61",
+        "impressions_30d": "24488",
+        "clicks_30d": "564",
+        "reach_30d": "19189",
+        "active_campaigns": [
+            "Aberto- Leads-OUT",
+            "[Camp-Orflie-Form-C01]"
+        ],
+        "notes": "Orçamento visualizado hoje de manhã estava zerado nas campanhas ativas. Assim que o novo token for inserido ao fim do dia, este baseline será usado para calcular o que rodou nas horas seguintes."
+    }
+}

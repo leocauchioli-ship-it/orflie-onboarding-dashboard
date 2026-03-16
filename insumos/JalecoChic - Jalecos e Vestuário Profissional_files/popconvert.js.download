@@ -1,0 +1,28 @@
+if (!window.pcwApp) {
+  window.pcwApp = (async () => {
+    const pcwScript = document.createElement('div')
+    pcwScript.setAttribute('id', 'pcwApp')
+    document.body.appendChild(pcwScript)
+    const scriptTag = document.createElement('script')
+    // scriptTag.src = 'window.eData = window.eData || [];' TODO e-commerce
+    scriptTag.src = 'https://cdn.popconvert.com.br/widget/dist/js/app.js'
+    scriptTag.setAttribute('type', 'text/javascript')
+    document.body.appendChild(scriptTag)
+  })
+
+  if (document.body) {
+    window.pcwApp()
+  } else {
+    console.log('🟣PCW: DOM not ready yet.')
+    const observer = new MutationObserver(mutations => {
+      if (document.body) {
+        window.pcwApp()
+        observer.disconnect()
+      }
+    })
+    observer.observe(document, {
+      childList: true,
+      subtree: true
+    })
+  }
+}

@@ -1,0 +1,727 @@
+"use strict";
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+var rdt_version = '1.0.17';
+var checkEmail = /^(?:[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/;
+if (!store) var store = {
+  "id": document.getElementsByTagName('html')[0].getAttribute('data-checkout-store_id')
+};
+
+var product_submit = 0;
+
+
+  try {
+    /**
+     * Descobre parâmetros na URL do pixel
+     * @param {String} field
+     */
+    var getCode = function getCode(field) {
+      var scripts = document.getElementsByTagName("script"),
+          pattern = "(" + field + "=)([a-zA-Z0-9-, ]{0,})";
+
+      for (var i in scripts) {
+        if (/rdstation/.test(scripts[i].src)) {
+          var s = scripts[i].src;
+          var values = s.match(new RegExp(pattern));
+          return values[2];
+        }
+      }
+    };
+    /**
+     * Função para realizar o Split
+     * das tags vindas das configurações
+     * RD Station
+     *
+     * @param {String} valores
+     * @returns Array com valores para configuração do link
+     */
+
+
+    var joinTags = function joinTags(valores) {
+      return valores.split(",");
+    };
+    /**
+     * Seleciona o valor do array passado e
+     * transforma em valor inteiro
+     *
+     * @param {Array} data
+     * @returns soma inteiro do Array somado + 1
+     */
+
+
+    var arrToInt = function arrToInt(data) {
+      var somar = data;
+      var soma = parseInt(somar) + 1;
+      return soma;
+    };
+    /**
+     * Recuperação de dados
+     * do dataLayer
+     * @param {String} response
+     */
+
+
+    var GTM_get = function GTM_get() {
+      var key = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+      return dataLayer.map(function (elem) {
+        return elem[key];
+      }).filter(function (valor) {
+        valor != 'undefined';
+        return valor;
+      }).pop();
+    };
+    /**
+     * Empty do PHP (Ironic Mode)
+     * @param {*} mixedVar
+     */
+
+
+    var empty = function empty(mixedVar) {
+      var undef,
+          key,
+          i,
+          len,
+          emptyValues = [undef, null, false, 0, '', '0'];
+
+      for (i = 0, len = emptyValues.length; i < len; i++) {
+        if (mixedVar === emptyValues[i]) {
+          return true;
+        }
+      }
+
+      if (_typeof(mixedVar) === 'object') {
+        for (key in mixedVar) {
+          if (mixedVar.hasOwnProperty(key)) {
+            return false;
+          }
+        }
+
+        return true;
+      }
+
+      return false;
+    };
+    /**
+     * Leitor de Cookie
+     * @param {string} name
+     */
+
+
+    var getCookie = function getCookie(name) {
+      var escape = function escape(s) {
+        return s.replace(/([.*+?\^${}()|\[\]\/\\])/g, '\\$1');
+      };
+
+      var match = document.cookie.match(RegExp('(?:^|;\\s*)' + escape(name) + '=([^;]*)'));
+      return match ? match[1] : null;
+    };
+
+    var setCookie = function setCookie(name, value) {
+      document.cookie = "".concat(name, "=").concat(value);
+    };
+    /**
+     * Prepara dados da origem
+     * do usuário para a API da RD Station
+     * @param {*} data
+     */
+
+
+    var setOriginRD = function setOriginRD(data) {
+      data = data || {};
+      var utmz = getCookie('__utmz');
+      if (!empty(utmz)) data['traffic_source_cookie'] = utmz;
+
+      if (empty(utmz)) {
+        data['traffic_source'] = getCookie('traffic_source');
+        data['traffic_campaign'] = getCookie('traffic_campaign');
+        data['traffic_medium'] = getCookie('traffic_medium');
+        data['traffic_value'] = getCookie('traffic_value');
+      }
+
+      return data;
+    };
+    /**
+     * Submit da página
+     * @param {*} query_form
+     * @param {*} callback
+     * @param {*} prevdefault
+     */
+
+
+    var _onform = function _onform(query_form, callback, prevdefault) {
+      var forms = document.querySelectorAll(query_form);
+
+      callback = callback || function () {
+      };
+
+      prevdefault = prevdefault || false;
+      forms = [].slice.call(forms )
+      forms.forEach(function (form, i) {
+        form.addEventListener('submit', function (e) {
+          if (prevdefault) {
+            e.preventDefault();
+          }
+
+          callback(form);
+        });
+      });
+    };
+    /**
+     * recupera valor
+     * @param {*} query
+     * @param {*} padrao
+     */
+
+
+    var _value = function _value(query, padrao) {
+      var e = document.querySelector(query),
+          padrao = padrao || '';
+      return e != null ? e.value : padrao;
+    };
+    /**
+     * Captura os dados cadastrados
+     * na tela de cadastro para
+     * montagem do lead
+     *
+     * @param {string} email
+     * @param {string} nome
+     * @param {string} telefone
+     */
+
+
+    var setContact = function setContact(email, nome, telefone) {
+      console.log('[RDstation] set contact.');
+
+      if (empty(email)) {
+        console.log('[RDstation] empty email to set contact.');
+        return false;
+      }
+
+      if (!checkEmail.test(email)) {
+        console.log('[RDstation] invalid email to set contact. ' + email + ' - secure format');
+        return false;
+      }
+
+      var data = {
+        'event_type': 'CONVERSION',
+        'store': store.id,
+        'identificador': "Formulario de Contato",
+        'email': email
+      };
+
+      if (!empty(nome) && !nome.match(/\*/)) {
+        data['nome'] = nome;
+      }
+
+      if (!empty(telefone) && !telefone.match(/\*/)) {
+        data['telefone'] = telefone;
+      }
+
+      data = setOriginRD(data);
+      return geraLeadRd(data, "POST", data['identificador']);
+    };
+    /**
+     * Ajax
+     * @param {*} data
+     * @param {*} async
+     * @param {*} endpoint
+     * @param {*} method
+     * @param {*} subject
+     */
+
+
+     var geraLeadRd = function geraLeadRd(data, x, method, subject, callback) {
+      method = method || 'POST';
+      subject = subject || '';
+      var xhr = new XMLHttpRequest();
+
+      xhr.open('POST', "https://developers.tray.com.br/apps/rdstation/events/", true);
+      xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+      xhr.onreadystatechange = function() {
+        if(xhr.readyState == 4 && xhr.status == 200) {
+          xhr.status === 200 ? console.log("Request Success!! " + xhr) : console.log("RD Fail!! " + subject), console.log(xhr);
+          if(callback){
+              callback();
+          }
+        }
+      }
+      xhr.send(JSON.stringify(data));
+      return false;
+    };
+
+    var addToCart = function addToCart(session, id, name, price, category, email, callback){
+      console.log('[RDstation] addtoCart');
+      if (empty(email)) {
+        console.log('[RDstation] empty email to set register.');
+        callback();
+        return false;
+      }
+
+      var data = {
+        'event_type': 'CONVERSION',
+        'store': store.id,
+        'identificador': "Produto adicionado ao carrinho",
+        'email': email,
+        'productId': id,
+        'session': session,
+        'product': name,
+        'price': price,
+        'category' : category
+      };
+
+      data = setOriginRD(data);
+      return geraLeadRd(data, "", "POST", data['identificador'], callback);
+
+    }
+    /**
+     * Envia dados do registro
+     * no e-commerce
+     * @param {*} email
+     * @param {*} nome
+     * @param {*} telefone
+     */
+
+
+    var setRegister = function setRegister(email, nome, telefone, celular, niver, cidade, email_promocional, callback) {
+      console.log('[RDstation] set register.');
+
+      if (empty(email)) {
+        console.log('[RDstation] empty email to set register.');
+        return false;
+      }
+
+      if (!checkEmail.test(email)) {
+        console.log('[RDstation] invalid email to set register. ' + email + ' - secure format');
+        return false;
+      }
+
+      var data = {
+        'event_type': 'CONVERSION',
+        'store': store.id,
+        'identificador': "Formulario de Cadastro",
+        'email': email,
+        'niver': niver,
+        'cidade': cidade,
+        'email_promocional': email_promocional
+      };
+
+      if (!empty(nome) && !nome.match(/\*/)) {
+        data['nome'] = nome;
+      }
+
+      if (!empty(telefone) && !telefone.match(/\*/)) {
+        data['telefone'] = telefone;
+      }
+
+      if (!empty(celular) && !celular.match(/\*/)) {
+        data['celular'] = celular;
+      }
+
+      if (!empty(niver) && !niver.match(/\*/)) {
+        data['niver'] = niver;
+      }
+
+      if (!empty(cidade) && !cidade.match(/\*/)) {
+        data['cidade'] = cidade;
+      }
+
+      data = setOriginRD(data);
+      
+      return geraLeadRd(data, "", "POST", data['identificador'], callback);
+
+    };
+    /**
+     * Marca o lead como Oportunidade
+     * @param {*} email
+     */
+
+
+    var setOpportunity = function setOpportunity(email) {
+      console.log('[RDstation] set opportunity.');
+
+      if (empty(email)) {
+        console.log('[RDstation] empty email to set opportunity.');
+        return false;
+      }
+
+      if (!checkEmail.test(email)) {
+        console.log('[RDstation] invalid email to set oportunity. ' + email + ' - secure format');
+        return false;
+      }
+
+      var data = {
+        'event_type': 'OPPORTUNITY',
+        'store': store.id,
+        'email': email
+      };
+      geraLeadRd(data, "", "POST", 'Marcado como oportunidade');
+    };
+    /**
+     * Envia dados do pré-registro
+     * no e-commerce
+     * @param {*} email
+     */
+
+
+    var setPreRegister = function setPreRegister(email) {
+      console.log('[RDstation] set pre-register.');
+
+      if (empty(email)) {
+        console.log('[RDstation] empty email to pre-register.');
+        return false;
+      }
+
+      if (!checkEmail.test(email)) {
+        console.log('[RDstation] invalid email to pre-register. ' + email + ' - secure format');
+        return false;
+      }
+
+      var data = {
+        'event_type': 'CONVERSION',
+        'store': store.id,
+        'identificador': "Formulario de Pre Cadastro",
+        'email': email
+      };
+      data = setOriginRD(data);
+      return geraLeadRd(data, "", "POST", data['identificador']);
+    };
+    /**
+     * Envia dados da Newsletter
+     * no e-commerce
+     * @param {*} email
+     * @param {*} nome
+     */
+
+
+    var setNewsletter = function setNewsletter(email, nome, callback) {
+      console.log('[RDstation] set newsletter.');
+
+      if (empty(email)) {
+        console.log('[RDstation] empty email to set Newsletter.');
+        return false;
+      }
+
+      if (!checkEmail.test(email)) {
+        console.log('[RDstation] invalid email to set Newsletter. ' + email + ' - secure format');
+        return false;
+      }
+
+
+      var data = {
+        'event_type': 'CONVERSION',
+        'store': store.id,
+        'identificador': "Formulario de Newsletter",
+        'email': email
+      };      
+
+      if (!empty(nome)) {
+        data['nome'] = nome;
+      }
+
+      data = setOriginRD(data);
+
+      return geraLeadRd(data, "", "POST", data['identificador'], callback);
+    };
+
+    var setSale = function setSale(){
+      var data = {
+        'event_type': 'SALE',
+        'store': store.id,
+        'order_id': GTM_get('ecommerce').purchase.actionField.id
+      };
+
+      if (!empty(GTM_get('email')) && !GTM_get('email').match(/\*/)) {
+        data['email'] = GTM_get('email');
+      }
+
+      data = setOriginRD(data);
+
+      if (!empty(data['email'])) {
+        geraLeadRd(data, "", "POST", data['identificador']);
+      };
+
+
+    }
+    var setIdentification = function setIdentification() {
+      console.log('[RDstation] set Identification.');
+      var data = {
+        'event_type': 'CONVERSION',
+        'store': store.id,
+        'identificador': "Formulário de Identificação"
+      };
+
+      if (!empty(GTM_get('email')) && !GTM_get('email').match(/\*/)) {
+        data['email'] = GTM_get('email');
+      }
+
+      if (GTM_get('customername') != undefined) {
+        data['nome'] = GTM_get('customerName');
+      }
+
+      if (!empty(data['email'])) {
+          data = setOriginRD(data);
+          geraLeadRd(data, "", "POST", data['identificador']);
+        };
+      }
+
+    var setConfirmation = function setConfirmation() {
+      console.log('[RDstation] set confirmation.');
+      var data = {
+        'event_type': 'CONVERSION',
+        'store': store.id,
+        'identificador': "Finalização de Compra",
+        'email': GTM_get('email')
+      };
+
+      if (GTM_get('customername') != undefined) {
+        data['nome'] = GTM_get('customerName');
+      }
+
+      data = setOriginRD(data);
+      geraLeadRd(data, "", "POST", data['identificador']);
+    };
+
+    window.addEventListener("load", function () {
+      var _this = this;
+
+      console.log('[RDstation] Initialized: ' + rdt_version);
+      var pageCategorySub = GTM_get('pageCategory').substr(0, 12);
+      var url_string = window.location.href,
+          url = new URL(url_string),
+          traffic_source = "utm_source",
+          traffic_medium = "utm_medium",
+          traffic_campaign = "utm_campaign",
+          traffic_value = "utm_term";
+
+      if(url.searchParams){
+        if (url.searchParams.get(traffic_source) != 'undefined') {
+          setCookie("traffic_source", url.searchParams.get(traffic_source));
+        }
+
+        if (url.searchParams.get(traffic_medium)!= 'undefined') {
+          setCookie("traffic_medium", url.searchParams.get(traffic_medium));
+        }
+
+        if (url.searchParams.get(traffic_campaign)!= 'undefined') {
+          setCookie("traffic_campaign", url.searchParams.get(traffic_campaign));
+        }
+
+        if (url.searchParams.get(traffic_value)!= 'undefined') {
+          setCookie("traffic_value", url.searchParams.get(traffic_value));
+        }
+      }
+
+      switch (GTM_get('pageCategory').toLowerCase()) {
+        case "contato":
+          console.log('pagina de contato');
+
+          _onform("form[name=form1]", function () {
+            var email = _value("#email_contato"),
+                nome = _value("#nome_contato"),
+                telefone = _value("#telefone_contato");
+
+            _this.console.log(email);
+
+            if (email.length > 0) {
+              setContact(email, nome, telefone);
+            }
+          });
+
+          break;
+
+        case "cadastro":
+          console.log('pagina de cadastro');
+
+          _onform("#frm2", function (form) {
+            var email = _value("#email_cliente"),
+                nome = _value("#pf_nome_cliente"),
+                telefone = _value("#telefone_cliente"),
+                celular = _value("#telefone_cliente_2"),
+                niver = _value("#pf_data_nascimento"),
+                cidade = _value("#cidade_cliente"),
+                email_promocional = document.getElementById("email").checked;
+
+            setRegister(email, nome, telefone, celular, niver, cidade, email_promocional, function(){
+                form.submit();
+            })
+
+            if (getCode('opportunity') == 1) {
+              setOpportunity(email);
+            }
+
+          
+          }, true);
+
+          break;
+
+        case "produto":
+          console.log('pagina de produto');
+          var buyButton = document.getElementById('button-buy'),
+              buyForm = document.getElementById('form_comprar');
+          if(buyButton){
+            if(!document.getElementById('button-buy').getAttribute('data-target')){
+              buyButton.addEventListener('click', function(event){    
+                if(product_submit == 0){
+                  product_submit += 1;
+                  event.preventDefault();
+                  var session = GTM_get('visitorSessionID'),
+                      id = GTM_get('idProduct'),
+                      name = GTM_get('nameProduct'),
+                      price = GTM_get('priceSell'),
+                      category = GTM_get('category'),
+                      email = GTM_get('customerEmail');
+    
+                  addToCart(session, id, name, price, category, email, function(){
+                    buyButton.click();
+                    product_submit = 0
+    
+                  });
+                }
+    
+              })
+            }
+            if(document.getElementById('button-buy').getAttribute('data-target')){
+              jQuery('#modal-form').on('shown.bs.modal', function (){
+                    var session = GTM_get('visitorSessionID'),
+                    id = GTM_get('idProduct'),
+                    name = GTM_get('nameProduct'),
+                    price = GTM_get('priceSell'),
+                    category = GTM_get('category'),
+                    email = GTM_get('customerEmail');
+
+                addToCart(session, id, name, price, category, email, function(){ });
+              })
+            }
+          }
+
+          break;
+       
+        case "login_layout":
+          console.log('pagina de pré cadastro');
+
+          _onform("form[name=cadastro_pre_insercao]", function () {
+            var email = _value("input#email_cadastro");
+
+            setPreRegister(email);
+          });
+
+          break;
+
+        case "carrinho":
+          console.log('Pagina de carrinho', GTM_get('customerEmail'));
+          var setOpp = setInterval(function () {
+            if (GTM_get('customerEmail')) {
+              var data = {
+                'event_type': 'CONVERSION',
+                'store': store.id,
+                'identificador': "Pagina de Carrinho",
+                'email': GTM_get('customerEmail')
+              };
+              data = setOriginRD(data);
+              geraLeadRd(data, "", "POST", data['identificador']);
+
+              if (!empty(GTM_get('customerEmail')) && !GTM_get('customerEmail').match(/\*/)) {
+                data['email'] = GTM_get('customerEmail');
+              }
+
+              if (!empty(data['email'])) {
+                data = setOriginRD(data);
+                geraLeadRd(data, "", "POST", data['identificador']);
+              }
+
+              if (getCode('opportunity') == 2) {
+                setOpportunity(GTM_get('customerEmail'));
+              }
+
+              clearInterval(setOpp);
+            }
+          }, 1000);
+          break;
+
+        case "easycheckout_identification":
+          console.log('Formulario de Confirmação');
+          break;
+      }
+
+      if ("object" == _typeof(document.forms.newsletter) || document.querySelector("form[name=newsletter], form[action*='newsletter']")) {
+        _onform("form[name=newsletter], form[action*='newsletter']", function (form) {
+
+          var email, nome;
+          if (form.querySelector("input[name=email]")) email = form.querySelector("input[name=email]").value;
+          if (form.querySelector("input[name=name],input[name=nome]")) 
+            nome = form.querySelector("input[name=name],input[name=nome]").value;
+          setNewsletter(email, nome, function(){
+            form.submit();
+          });
+        }, true);
+      }
+
+      if ("EasyCheckout" === pageCategorySub) {
+        setTimeout(function () {
+          var oldPush = dataLayer.push;
+          var lastPageCategory = "";
+
+          dataLayer.push = function () {
+            try {
+              var states = [].slice.call(arguments, 0);
+              var result = oldPush.apply(dataLayer, states);
+
+              switch (GTM_get('pageCategory').toLowerCase()) {
+                case "easycheckout_orderplaced":
+                  if (lastPageCategory != GTM_get('pageCategory').toLowerCase()) {
+                    lastPageCategory = GTM_get('pageCategory').toLowerCase();
+                    if((document.referrer.indexOf('/my-account/orders/') !== -1) ? false : true ){
+
+                      var orderNumber = document.querySelector('.order-id').innerHTML;
+                      var getItemLocalStorage = localStorage.getItem('rd_station_order') || null      
+
+
+                      if(getItemLocalStorage != orderNumber){
+
+                        console.log('Foi gerado uma nova notificação na RD');                  
+                        setConfirmation();
+                        setSale();
+                        localStorage.setItem('rd_station_order', orderNumber)
+
+                      } else {
+                        console.log('compra já foi notificada na RD');                       
+                      }           
+
+                      if (getCode('opportunity') == 3) {
+                        setOpportunity(GTM_get('email'));
+                      }
+                    } else {
+                      console.log('editando o pedido, esse evento não gera notificação na RD');
+                    }
+                  }
+
+                  break;
+
+                case "easycheckout_orderconfirmation":
+                    var checkoutStep = GTM_get('ecommerce').checkout.actionField.step;
+                    if (lastPageCategory != 'easycheckout_orderconfirmation'){
+                      if(checkoutStep >= 2){
+                        if((document.referrer.indexOf('/my-account/orders/') !== -1) ? false : true ){
+                          setIdentification();
+                        }
+                        lastPageCategory = 'easycheckout_orderconfirmation';
+                      }
+                    }
+
+
+                  break;
+              }
+
+              return result;
+            } catch (err) {
+              console.log(err);
+            }
+          };
+        }, 1000);
+      }
+    });
+  } catch (err) {
+    console.log(err);
+  }
+

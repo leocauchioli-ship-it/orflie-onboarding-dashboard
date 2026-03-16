@@ -1,0 +1,8 @@
+{
+  "error": {
+    "message": "(#3) Application does not have the capability to make this API call.",
+    "type": "OAuthException",
+    "code": 3,
+    "fbtrace_id": "A07vCI36c1lGXMrmm6OpYky"
+  }
+}

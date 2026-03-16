@@ -1,0 +1,150 @@
+;(function () {
+  // Inject critical CSS immediately (antes de qualquer outra lógica)
+  if (!document.getElementById('widde-critical-css')) {
+    const style = document.createElement('style')
+    style.id = 'widde-critical-css'
+    style.textContent = `.mm-wrapper--opened,.mm-wrapper_opened,.mm-opened,html.js-drawer-open,body.snapjs-left{widde-story-floating,widde-story-inline,widde-configuration-previewe{display:none!important}}widde-configuration-preview,widde-story-inline,widde-story-floating,widde-fullscreen{box-sizing:content-box!important;display:inline!important}widde-feed{width:100%!important}`
+    document.head.appendChild(style)
+  }
+
+  let CDN_URL = 'https://cdn.widde.io'
+  if (window.location.href.includes('disable-widde')) return
+  if (window.______widdeLoadded) return
+  window.______widdeLoadded = true
+
+  let runned = false
+  const hasLVItem = !!window.LS && window.LS.ready && window.LS.ready.then
+
+  // Detecção do domínio cdn.widde.io para fluxo otimizado
+  const isCDNWiddeIoApp = window.location.hostname === 'cdn.widde.io/app'
+
+  // Fluxo otimizado para cdn.widde.io
+  if (isCDNWiddeIoApp) {
+    // Carregamento imediato sem timeouts ou validações extras
+    run()
+    return
+  }
+
+  // Fluxo normal para outros domínios
+  // TimeoutFeedVideos(0)
+
+  if (hasLVItem)
+    window.LS.ready.then(function () {
+      run()
+    })
+  else {
+    Timeout(1500)
+    DocumentLoad()
+  }
+
+  function Timeout(time) {
+    setTimeout(() => {
+      run()
+    }, time)
+  }
+
+  function TimeoutFeedVideos(time) {
+    try {
+      if (window.location.href.includes('video-commerce'))
+        setTimeout(() => {
+          run()
+        }, time)
+      if (window.location.href.includes('carousel'))
+        setTimeout(() => {
+          run()
+        }, time)
+    } catch (error) {}
+  }
+
+  async function run() {
+    if (runned) return
+
+    // Para cdn.widde.io, não aguardamos o body se ele não existir ainda
+    if (isCDNWiddeIoApp) {
+      runned = true
+      // Tenta carregar imediatamente, se não conseguir, aguarda o body
+      if (document.body) {
+        init()
+      } else {
+        // Aguarda o body de forma mais eficiente para CDN
+        const checkBody = () => {
+          if (document.body) {
+            init()
+          } else {
+            requestAnimationFrame(checkBody)
+          }
+        }
+        checkBody()
+      }
+      return
+    }
+
+    // Fluxo normal para outros domínios
+    await waitBody()
+    if (document.body) {
+      runned = true
+      setTimeout(init, 0)
+    }
+  }
+  function init() {
+    const script = document.createElement('script')
+    script.type = 'module'
+    script.src = `${CDN_URL}/${'assets/main.6icah6nq54v.js'}`
+
+    // Para cdn.widde.io, adiciona o script imediatamente ao head se body não estiver disponível
+    if (isCDNWiddeIoApp && !document.body) {
+      document.head.appendChild(script)
+    } else {
+      document.body.appendChild(script)
+    }
+  }
+
+  function waitBody() {
+    return new Promise(r => {
+      if (document.body) {
+        r()
+      } else {
+        setTimeout(() => {
+          waitBody().then(r)
+        }, 100)
+      }
+    })
+  }
+  function DocumentLoad() {
+    if (document.readyState === 'complete') {
+      run()
+    }
+    function bodyLoad() {
+      let attempts = 0
+      const maxAttempts = 50
+
+      function checkBody() {
+        if (document.body) {
+          run()
+          window.removeEventListener('load', bodyLoad)
+        } else if (attempts < maxAttempts) {
+          attempts++
+          setTimeout(checkBody, 100)
+        } else {
+          console.warn('widde: body not created')
+          window.removeEventListener('load', bodyLoad)
+        }
+      }
+      checkBody()
+    }
+    function listenerLoad() {
+      run()
+      document.removeEventListener('load', listenerLoad)
+    }
+
+    function listerner(event) {
+      if (event.target.readyState === 'complete') {
+        run()
+        document.removeEventListener('readystatechange', listerner)
+      }
+    }
+    document.addEventListener('readystatechange', listerner)
+    window.addEventListener('load', listenerLoad)
+    window.addEventListener('load', bodyLoad)
+  }
+})()

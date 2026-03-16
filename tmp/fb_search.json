@@ -1,0 +1,256 @@
+{
+  "Planejamento estrat\u00e9gico": [
+    {
+      "id": "6003388161512",
+      "name": "Planejamento estrat\u00e9gico",
+      "audience_size_lower_bound": 3602380,
+      "audience_size_upper_bound": 4236400,
+      "path": [
+        "Interesses",
+        "Outros interesses",
+        "Planejamento estrat\u00e9gico"
+      ],
+      "description": null,
+      "disambiguation_category": "Empresa local",
+      "topic": "Business and industry"
+    }
+  ],
+  "Totvs": [],
+  "SAP": [
+    {
+      "id": "6003464326203",
+      "name": "Sapatos de salto alto (cal\u00e7ados)",
+      "audience_size_lower_bound": 44155722,
+      "audience_size_upper_bound": 51927130,
+      "path": [
+        "Interesses",
+        "Outros interesses",
+        "Sapatos de salto alto (cal\u00e7ados)"
+      ],
+      "description": null,
+      "topic": "Shopping and fashion"
+    },
+    {
+      "id": "962870357067624",
+      "name": "SAP SE",
+      "audience_size_lower_bound": 11563852,
+      "audience_size_upper_bound": 13599090,
+      "path": [
+        "Interesses",
+        "Outros interesses",
+        "SAP SE"
+      ],
+      "description": null
+    },
+    {
+      "id": "6003399942489",
+      "name": "Sapateado",
+      "audience_size_lower_bound": 7494965,
+      "audience_size_upper_bound": 8814080,
+      "path": [
+        "Interesses",
+        "Outros interesses",
+        "Sapateado"
+      ],
+      "description": null,
+      "disambiguation_category": "Esporte",
+      "topic": "Sports and outdoors"
+    },
+    {
+      "id": "6003247127613",
+      "name": "Bal\u00e9",
+      "audience_size_lower_bound": 100333394,
+      "audience_size_upper_bound": 117992072,
+      "path": [
+        "Interesses",
+        "Entretenimento (conceito social)",
+        "eventos ao vivo (evento)",
+        "Bal\u00e9"
+      ],
+      "description": "",
+      "topic": "News and entertainment"
+    },
+    {
+      "id": "6003700426513",
+      "name": "Jap\u00e3o(lugar)",
+      "audience_size_lower_bound": 330555076,
+      "audience_size_upper_bound": 388732770,
+      "path": [
+        "Interesses",
+        "Outros interesses",
+        "Jap\u00e3o(lugar)"
+      ],
+      "description": null,
+      "topic": "Travel, places and events"
+    },
+    {
+      "id": "6787131154192",
+      "name": "Futebol na Am\u00e9rica do Norte (esporte)",
+      "audience_size_lower_bound": 850340,
+      "audience_size_upper_bound": 1000000,
+      "path": [
+        "Interesses",
+        "Outros interesses",
+        "Futebol na Am\u00e9rica do Norte (esporte)"
+      ],
+      "description": null,
+      "disambiguation_category": "Empresa local"
+    },
+    {
+      "id": "6003446581680",
+      "name": "Bombay Sapphire",
+      "audience_size_lower_bound": 1816628,
+      "audience_size_upper_bound": 2136355,
+      "path": [
+        "Interesses",
+        "Outros interesses",
+        "Bombay Sapphire"
+      ],
+      "description": null,
+      "disambiguation_category": "Vinho/bebidas",
+      "topic": "Food and drink"
+    },
+    {
+      "id": "6825465065791",
+      "name": "Educa\u00e7\u00e3o na It\u00e1lia (educa\u00e7\u00e3o)",
+      "audience_size_lower_bound": 850340,
+      "audience_size_upper_bound": 1000000,
+      "path": [
+        "Interesses",
+        "Outros interesses",
+        "Educa\u00e7\u00e3o na It\u00e1lia (educa\u00e7\u00e3o)"
+      ],
+      "description": null,
+      "disambiguation_category": "Faculdade e universidade"
+    }
+  ],
+  "Investimento": [
+    {
+      "id": "6003388314512",
+      "name": "Investimento (neg\u00f3cios e finan\u00e7as)",
+      "audience_size_lower_bound": 412508707,
+      "audience_size_upper_bound": 485110240,
+      "path": [
+        "Interesses",
+        "Finan\u00e7as pessoais (banc\u00e1rio)",
+        "Investimento (neg\u00f3cios e finan\u00e7as)"
+      ],
+      "description": "",
+      "topic": "Business and industry"
+    },
+    {
+      "id": "6003446239080",
+      "name": "Investimento imobili\u00e1rio (investimento)",
+      "audience_size_lower_bound": 97533199,
+      "audience_size_upper_bound": 114699043,
+      "path": [
+        "Interesses",
+        "Outros interesses",
+        "Investimento imobili\u00e1rio (investimento)"
+      ],
+      "description": null,
+      "topic": "Business and industry"
+    },
+    {
+      "id": "6003063638807",
+      "name": "Bancos de investimento (banc\u00e1rio)",
+      "audience_size_lower_bound": 32717426,
+      "audience_size_upper_bound": 38475693,
+      "path": [
+        "Interesses",
+        "Bancos",
+        "Bancos de investimento (banc\u00e1rio)"
+      ],
+      "description": "",
+      "topic": "Business and industry"
+    },
+    {
+      "id": "6014673805956",
+      "name": "Retorno sobre o investimento (investimento)",
+      "audience_size_lower_bound": 10986198,
+      "audience_size_upper_bound": 12919770,
+      "path": [
+        "Interesses",
+        "Outros interesses",
+        "Retorno sobre o investimento (investimento)"
+      ],
+      "description": null,
+      "topic": "Business and industry"
+    },
+    {
+      "id": "6015879038663",
+      "name": "XP Investimentos",
+      "audience_size_lower_bound": 4786641,
+      "audience_size_upper_bound": 5629090,
+      "path": [
+        "Interesses",
+        "Outros interesses",
+        "XP Investimentos"
+      ],
+      "description": null,
+      "disambiguation_category": "Servi\u00e7os financeiros"
+    },
+    {
+      "id": "6003142569461",
+      "name": "Clube de investimentos",
+      "audience_size_lower_bound": 1067482,
+      "audience_size_upper_bound": 1255360,
+      "path": [
+        "Interesses",
+        "Outros interesses",
+        "Clube de investimentos"
+      ],
+      "description": null,
+      "disambiguation_category": "Empresa local",
+      "topic": "Business and industry"
+    },
+    {
+      "id": "6772974341137",
+      "name": "Bancos e servi\u00e7os financeiros (servi\u00e7os banc\u00e1rios)",
+      "audience_size_lower_bound": 850340,
+      "audience_size_upper_bound": 1000000,
+      "path": [
+        "Interesses",
+        "Outros interesses",
+        "Bancos e servi\u00e7os financeiros (servi\u00e7os banc\u00e1rios)"
+      ],
+      "description": null,
+      "disambiguation_category": "Empresa local"
+    }
+  ],
+  "Pessoas que preferem bens de valor": [],
+  "Viajantes internacionais": [],
+  "Facebook Page Admins": [],
+  "Facebook payment users (90 days)": [],
+  "Hotmart": [
+    {
+      "id": "6012293838236",
+      "name": "Hotmart",
+      "audience_size_lower_bound": 3989090,
+      "audience_size_upper_bound": 4691170,
+      "path": [
+        "Interesses",
+        "Outros interesses",
+        "Hotmart"
+      ],
+      "description": null,
+      "disambiguation_category": "Marca",
+      "topic": "Technology"
+    }
+  ],
+  "Dropshipping": [
+    {
+      "id": "6003109292833",
+      "name": "Drop shipping (varejista)",
+      "audience_size_lower_bound": 19359846,
+      "audience_size_upper_bound": 22767180,
+      "path": [
+        "Interesses",
+        "Outros interesses",
+        "Drop shipping (varejista)"
+      ],
+      "description": null,
+      "topic": "Business and industry"
+    }
+  ]
+}

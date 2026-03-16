@@ -1,0 +1,12 @@
+{
+  "error": {
+    "message": "Invalid parameter",
+    "type": "OAuthException",
+    "code": 100,
+    "error_subcode": 1815857,
+    "is_transient": false,
+    "error_user_title": "O valor do lance \u00e9 necess\u00e1rio para a estrat\u00e9gia de lance fornecida",
+    "error_user_msg": "Valor do lance obrigat\u00f3rio: voc\u00ea precisa fornecer um limite de lance ou custo-alvo no campo bid_amount. Para LOWEST_COST_WITH_BID_CAP, voc\u00ea precisa fornecer o campo bid_amount para definir um limite de lance. Para TARGET_COST, voc\u00ea precisa fornecer o campo bid_amount para definir um objetivo de custo-alvo m\u00e9dio.",
+    "fbtrace_id": "ADpvDb2LRZBpS_2SFLBQPtZ"
+  }
+}

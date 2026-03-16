@@ -1,0 +1,62 @@
+{
+  "yesterday": [
+    {
+      "Campaign": "[Camp-Orflie-Form-C01]",
+      "Spend": "29.82",
+      "Impr": "442",
+      "Clicks": "13",
+      "CPC": "2.293846",
+      "Leads": "1",
+      "Cost_per_Lead": "29.82"
+    },
+    {
+      "Campaign": "Aberto- Leads-OUT",
+      "Spend": "20.02",
+      "Impr": "765",
+      "Clicks": "16",
+      "CPC": "1.25125",
+      "Leads": "0",
+      "Cost_per_Lead": "N/A"
+    }
+  ],
+  "today": [
+    {
+      "Campaign": "[Camp-Orflie-Form-C01]",
+      "Spend": "10.72",
+      "Impr": "173",
+      "Clicks": "4",
+      "CPC": "2.68",
+      "Leads": "1",
+      "Cost_per_Lead": "10.72"
+    },
+    {
+      "Campaign": "Aberto- Leads-OUT",
+      "Spend": "4.68",
+      "Impr": "106",
+      "Clicks": "1",
+      "CPC": "4.68",
+      "Leads": "0",
+      "Cost_per_Lead": "N/A"
+    }
+  ],
+  "last_3d": [
+    {
+      "Campaign": "[Camp-Orflie-Form-C01]",
+      "Spend": "30.46",
+      "Impr": "463",
+      "Clicks": "13",
+      "CPC": "2.343077",
+      "Leads": "1",
+      "Cost_per_Lead": "30.46"
+    },
+    {
+      "Campaign": "Aberto- Leads-OUT",
+      "Spend": "20.05",
+      "Impr": "767",
+      "Clicks": "16",
+      "CPC": "1.253125",
+      "Leads": "0",
+      "Cost_per_Lead": "N/A"
+    }
+  ]
+}

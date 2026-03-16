@@ -1,0 +1,112 @@
+const TENANT_ID = 966
+const STATIC_URL = 'https://static.sizebay.technology/'
+const MODULE_URL = 'https://vfr-v3-production.sizebay.technology/V4/implantation/index.js'
+
+window.SizebayPrescript = () => ({
+  getPermalink() {
+    let slug = dataLayer.find((layer) => layer['listSku'])?.idProduct
+    let product = `https://www.jalecochic.com.br/${slug}`
+    console.log('Link produto: ' + product)
+    return product
+  },
+  getAnchor() {
+    return {
+      web: 'div.product-variants',
+      mobile: 'div.product-variants',
+    }
+  },
+  getTenantId() {
+    return TENANT_ID
+  },
+  getLanguage() {
+    return 'br'
+  },
+  getButtons() {
+    return {
+      order: [
+        { name: 'vfr', text: null },
+        { name: 'measurements', text: null },
+      ],
+      position: 'after',
+      class: 'vfr__button--clean',
+    }
+  },
+  getRecommendationText() {
+    return {
+      default: 'Recomendamos o tamanho {size}',
+      simplified: 'Recomendamos o tamanho {size}',
+      order: 'before',
+      anchor: '.vfr__container',
+    }
+  },
+  getProductSizes() {
+    return [
+      ...new Set(
+        [...dataLayer.find((layer) => layer['listSku']).listSku].map((size) => size.nameSku.split(' ').pop().trim())
+      ),
+    ]
+  },
+  hasOnPageIntegration() {
+    return true
+  },
+  getIsMeasurementsTableEnabled() {
+    return true
+  },
+})
+
+const insertSizebayScript = (src, base) => {
+  const script = document.createElement('script')
+  script.id = base ? 'szb-vfr__base' : 'szb-vfr__module'
+  script.setAttribute('src', src)
+
+  document.querySelector('head').appendChild(script)
+}
+
+const sizebayStyles = () => {
+  const link = document.createElement('link')
+  link.setAttribute('rel', 'stylesheet')
+  link.setAttribute('type', 'text/css')
+  link.setAttribute('href', `${STATIC_URL}${TENANT_ID}/styles/styles_v4.css`)
+
+  document.querySelector('body').appendChild(link)
+}
+
+const sizebayImplantation = () => {
+  insertSizebayScript(MODULE_URL, true)
+
+  sizebayStyles()
+}
+
+const addCart = () => {
+  const payload = { products: [] }
+  payload.products.push({ permalink: window?.SizebayPrescript().getPermalink() })
+  window.Sizebay.events.addToCart(payload, TENANT_ID)
+}
+
+function SizebayInit() {
+  if (!document.querySelectorAll('#szb-vfr__base').length) sizebayImplantation()
+
+  document.querySelector('div.tray-buy-button')?.addEventListener('click', addCart)
+
+  const payload = {
+    permalink: SizebayPrescript().getPermalink(),
+    tenantId: SizebayPrescript().getTenantId(),
+    buttons: SizebayPrescript().getButtons(),
+    anchor: SizebayPrescript().getAnchor(),
+    lang: SizebayPrescript().getLanguage(),
+    recommendation: SizebayPrescript().getRecommendationText(),
+  }
+
+  const sizebayRender = () => {
+    console.log(`Sizebay -> produto: ${payload.permalink}`)
+    window?.Sizebay?.Implantation(payload)
+  }
+
+  window.addEventListener('sizebay:loaded', () => {
+    sizebayRender()
+  })
+
+  typeof window?.Sizebay?.Implantation === 'function' && sizebayRender()
+}
+
+if (document.querySelector('html.page-product')) SizebayInit()

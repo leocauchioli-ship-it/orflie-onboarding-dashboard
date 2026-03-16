@@ -1,0 +1,134 @@
+{
+  "data": [
+    {
+      "id": "120241197237280337",
+      "name": "Art - X",
+      "adcreatives": {
+        "data": [
+          {
+            "object_story_spec": {
+              "page_id": "167676264141990",
+              "instagram_user_id": "17841409481563451",
+              "video_data": {
+                "video_id": "1016055104700403",
+                "call_to_action": {
+                  "type": "SIGN_UP",
+                  "value": {
+                    "lead_gen_form_id": "2708845959483410",
+                    "link": "http://fb.me/"
+                  }
+                },
+                "image_url": "https://www.facebook.com/ads/image/?d=AQKxN0NTT9SJfs3VByQGGutAwnNINRvQ-g-h8TxpX8QdCi44IeBJOZ0B7XBHoVQbzuZkNBVHwla0EELcdOnX_v_4MFnCSFdQwCYoV2OEGNmy4X4sVEVQNRsM-4f9YvnSixp7dZUXbNxHjabYwCFvyFW7",
+                "image_hash": "b380447e2efd6c9b797b6fa10bcd7b87"
+              }
+            },
+            "id": "1594034391638921"
+          }
+        ]
+      }
+    },
+    {
+      "id": "120241296417830337",
+      "name": "Vender n\u00e3o \u00e9 dom",
+      "adcreatives": {
+        "data": [
+          {
+            "object_story_spec": {
+              "page_id": "167676264141990",
+              "instagram_user_id": "17841409481563451",
+              "video_data": {
+                "video_id": "1790878278245566",
+                "call_to_action": {
+                  "type": "LEARN_MORE",
+                  "value": {
+                    "lead_gen_form_id": "1240360820789235",
+                    "link": "https://wa.me/5511917848251?text=Ol%C3%A1%20quero%20agilizar%20e%20saber%20mais%20agora!"
+                  }
+                },
+                "image_url": "https://www.facebook.com/ads/image/?d=AQLzwFZ4BVLCVbkU827GfYNRxTC-Rr8avkTGiSk4ravP_mTkkvVaraOareLrBRAOxVSoiTANi-q9ppDHe8WmQbWJ_YcNrsdMsinnqjNj_WfsXwRNN_GD4ttdSuIkHQXRcLxTlOyUtnAFBSaAjnwVeZuG",
+                "image_hash": "d05b2c5123877909ee16d9ffe1dfeebf"
+              }
+            },
+            "id": "26167750276196913"
+          }
+        ]
+      }
+    },
+    {
+      "id": "120241296355410337",
+      "name": "Melhor vendedor risco",
+      "adcreatives": {
+        "data": [
+          {
+            "object_story_spec": {
+              "page_id": "167676264141990",
+              "instagram_user_id": "17841409481563451"
+            },
+            "id": "2138535580291807"
+          }
+        ]
+      }
+    },
+    {
+      "id": "120241236969370337",
+      "name": "CLTxTERCEIRIZADA",
+      "adcreatives": {
+        "data": [
+          {
+            "object_story_spec": {
+              "page_id": "167676264141990",
+              "instagram_user_id": "17841409481563451",
+              "video_data": {
+                "video_id": "799247866550169",
+                "call_to_action": {
+                  "type": "LEARN_MORE",
+                  "value": {
+                    "lead_gen_form_id": "1240360820789235",
+                    "link": "https://wa.me/5511917848251?text=Ol%C3%A1%20quero%20agilizar%20e%20saber%20mais%20agora!"
+                  }
+                },
+                "image_url": "https://www.facebook.com/ads/image/?d=AQIu7pgKCLpuPxTapMECCaHbJoKwyY2o4cxZxZwfr6i2ZnBjsnx-lmmGw8VNR6lfgvM2u9Uw1MhTrEuoX_zR0rwYvLn6HOgDgDqoPHp0FktkIGGjhfbSB71MbkRktCyTn9MV9cOJFPz2vjglIiOhDSjM",
+                "image_hash": "5dd29f3d9a31e744fa6da89826a666b3"
+              }
+            },
+            "id": "904790039197175"
+          }
+        ]
+      }
+    },
+    {
+      "id": "120241196380730337",
+      "name": "Art - X",
+      "adcreatives": {
+        "data": [
+          {
+            "object_story_spec": {
+              "page_id": "167676264141990",
+              "instagram_user_id": "17841409481563451",
+              "video_data": {
+                "video_id": "1016055104700403",
+                "call_to_action": {
+                  "type": "SIGN_UP",
+                  "value": {
+                    "lead_gen_form_id": "2708845959483410",
+                    "link": "http://fb.me/"
+                  }
+                },
+                "image_url": "https://www.facebook.com/ads/image/?d=AQKxN0NTT9SJfs3VByQGGutAwnNINRvQ-g-h8TxpX8QdCi44IeBJOZ0B7XBHoVQbzuZkNBVHwla0EELcdOnX_v_4MFnCSFdQwCYoV2OEGNmy4X4sVEVQNRsM-4f9YvnSixp7dZUXbNxHjabYwCFvyFW7",
+                "image_hash": "b380447e2efd6c9b797b6fa10bcd7b87"
+              }
+            },
+            "id": "1425822772416643"
+          }
+        ]
+      }
+    }
+  ],
+  "paging": {
+    "cursors": {
+      "before": "QVFIU0FwSm9xcUtkc0xGYmxXMVBaQ29IR0dSbzY2Qno1UlQzX3ZAxRElqTmNOZAkttWmhIa1ZARa0VvdjU4VnloZA2FURVN0ODlWek45WTlvWUMxam9FczQ2NGt3",
+      "after": "QVFIU0xZAQjQ2V0g0ZAnY2R3RzREVpUnAwSU9qWHV5bE1nV2FLUDI2SXFjTVpXSkUtUjJ6MzVJMFVtOFVPemZA4anVzMVFtTkJvazNQVnBIRjRmaFBEcTgydTBn"
+    },
+    "next": "https://graph.facebook.com/v25.0/act_4102226916661284/ads?access_token=EAAUcCJJeKl4BQ16De7Sgi8zD8iovopgZCKoGQ2ZCRNF5aeY5zZBaSnvchfxBO5IWAFXt2ilZBZA7DpeSko25Xh6oJYKaST28IkXBJlZC4QpP9yDhUcomdpGzMhfzg3qhhAchujLk17DKbSo2EipjJaX16YEGk9KzlMYIZA9IrWZCOwQJUv364OqTib6hlngtHldoUa2WkHc9ePZBGC3gR1dQPXThMNVBWMSdSlglZBwC8jNGof5BGkeo1AZCtySAvNY4krgalVDvCxYWv5VU99hUdp48Wkqhxvh0SisJTowbyZAEQv7fCcmxJ0NSxHF5wSVAcNS7635P2UTBR0BE&fields=id%2Cname%2Cadcreatives%7Bobject_story_spec%7D&limit=5&after=QVFIU0xZAQjQ2V0g0ZAnY2R3RzREVpUnAwSU9qWHV5bE1nV2FLUDI2SXFjTVpXSkUtUjJ6MzVJMFVtOFVPemZA4anVzMVFtTkJvazNQVnBIRjRmaFBEcTgydTBn"
+  }
+}

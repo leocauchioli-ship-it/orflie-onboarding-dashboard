@@ -1,0 +1,274 @@
+{
+  "data": [
+    {
+      "adset_name": "[P\u00fabli-All-30a50-Ins]",
+      "spend": "44.39",
+      "impressions": "606",
+      "clicks": "21",
+      "cpc": "2.11381",
+      "cpm": "73.250825",
+      "actions": [
+        {
+          "action_type": "offsite_complete_registration_add_meta_leads",
+          "value": "2"
+        },
+        {
+          "action_type": "link_click",
+          "value": "15"
+        },
+        {
+          "action_type": "page_engagement",
+          "value": "110"
+        },
+        {
+          "action_type": "post_engagement",
+          "value": "110"
+        },
+        {
+          "action_type": "post_interaction_gross",
+          "value": "2"
+        },
+        {
+          "action_type": "offsite_search_add_meta_leads",
+          "value": "2"
+        },
+        {
+          "action_type": "post",
+          "value": "1"
+        },
+        {
+          "action_type": "onsite_conversion.post_net_like",
+          "value": "1"
+        },
+        {
+          "action_type": "lead",
+          "value": "2"
+        },
+        {
+          "action_type": "offsite_content_view_add_meta_leads",
+          "value": "2"
+        },
+        {
+          "action_type": "onsite_conversion.lead_grouped",
+          "value": "2"
+        },
+        {
+          "action_type": "video_view",
+          "value": "93"
+        },
+        {
+          "action_type": "post_reaction",
+          "value": "1"
+        }
+      ],
+      "cost_per_action_type": [
+        {
+          "action_type": "offsite_submit_application_add_meta_leads",
+          "value": "22.195"
+        },
+        {
+          "action_type": "offsite_search_add_meta_leads",
+          "value": "22.195"
+        },
+        {
+          "action_type": "offsite_complete_registration_add_meta_leads",
+          "value": "22.195"
+        },
+        {
+          "action_type": "video_view",
+          "value": "0.477312"
+        },
+        {
+          "action_type": "link_click",
+          "value": "2.959333"
+        },
+        {
+          "action_type": "onsite_conversion.lead_grouped",
+          "value": "22.195"
+        },
+        {
+          "action_type": "post_interaction_gross",
+          "value": "22.195"
+        },
+        {
+          "action_type": "lead",
+          "value": "22.195"
+        },
+        {
+          "action_type": "post_engagement",
+          "value": "0.403545"
+        },
+        {
+          "action_type": "offsite_content_view_add_meta_leads",
+          "value": "22.195"
+        },
+        {
+          "action_type": "offsite_contact_website_add_meta_leads",
+          "value": "22.195"
+        },
+        {
+          "action_type": "page_engagement",
+          "value": "0.403545"
+        }
+      ],
+      "date_start": "2026-03-03",
+      "date_stop": "2026-03-09"
+    },
+    {
+      "adset_name": "[P\u00fabli-Direcionamento-30a50-Ins]",
+      "spend": "55.78",
+      "impressions": "867",
+      "clicks": "25",
+      "cpc": "2.2312",
+      "cpm": "64.336794",
+      "actions": [
+        {
+          "action_type": "onsite_conversion.total_messaging_connection",
+          "value": "1"
+        },
+        {
+          "action_type": "offsite_complete_registration_add_meta_leads",
+          "value": "2"
+        },
+        {
+          "action_type": "link_click",
+          "value": "22"
+        },
+        {
+          "action_type": "page_engagement",
+          "value": "173"
+        },
+        {
+          "action_type": "onsite_conversion.post_unlike",
+          "value": "1"
+        },
+        {
+          "action_type": "post_engagement",
+          "value": "173"
+        },
+        {
+          "action_type": "comment",
+          "value": "1"
+        },
+        {
+          "action_type": "post_interaction_gross",
+          "value": "3"
+        },
+        {
+          "action_type": "onsite_conversion.messaging_user_depth_2_message_send",
+          "value": "1"
+        },
+        {
+          "action_type": "offsite_search_add_meta_leads",
+          "value": "2"
+        },
+        {
+          "action_type": "onsite_conversion.post_net_like",
+          "value": "1"
+        },
+        {
+          "action_type": "onsite_conversion.messaging_first_reply",
+          "value": "1"
+        },
+        {
+          "action_type": "lead",
+          "value": "2"
+        },
+        {
+          "action_type": "offsite_content_view_add_meta_leads",
+          "value": "2"
+        },
+        {
+          "action_type": "onsite_conversion.messaging_conversation_started_7d",
+          "value": "1"
+        },
+        {
+          "action_type": "onsite_conversion.lead_grouped",
+          "value": "2"
+        },
+        {
+          "action_type": "video_view",
+          "value": "148"
+        },
+        {
+          "action_type": "post_reaction",
+          "value": "2"
+        }
+      ],
+      "cost_per_action_type": [
+        {
+          "action_type": "onsite_conversion.total_messaging_connection",
+          "value": "55.78"
+        },
+        {
+          "action_type": "offsite_submit_application_add_meta_leads",
+          "value": "27.89"
+        },
+        {
+          "action_type": "offsite_search_add_meta_leads",
+          "value": "27.89"
+        },
+        {
+          "action_type": "offsite_complete_registration_add_meta_leads",
+          "value": "27.89"
+        },
+        {
+          "action_type": "video_view",
+          "value": "0.376892"
+        },
+        {
+          "action_type": "link_click",
+          "value": "2.535455"
+        },
+        {
+          "action_type": "onsite_conversion.lead_grouped",
+          "value": "27.89"
+        },
+        {
+          "action_type": "post_interaction_gross",
+          "value": "18.593333"
+        },
+        {
+          "action_type": "onsite_conversion.messaging_user_depth_2_message_send",
+          "value": "55.78"
+        },
+        {
+          "action_type": "lead",
+          "value": "27.89"
+        },
+        {
+          "action_type": "post_engagement",
+          "value": "0.322428"
+        },
+        {
+          "action_type": "offsite_content_view_add_meta_leads",
+          "value": "27.89"
+        },
+        {
+          "action_type": "offsite_contact_website_add_meta_leads",
+          "value": "27.89"
+        },
+        {
+          "action_type": "page_engagement",
+          "value": "0.322428"
+        },
+        {
+          "action_type": "onsite_conversion.messaging_first_reply",
+          "value": "55.78"
+        },
+        {
+          "action_type": "onsite_conversion.messaging_conversation_started_7d",
+          "value": "55.78"
+        }
+      ],
+      "date_start": "2026-03-03",
+      "date_stop": "2026-03-09"
+    }
+  ],
+  "paging": {
+    "cursors": {
+      "before": "MAZDZD",
+      "after": "MQZDZD"
+    }
+  }
+}

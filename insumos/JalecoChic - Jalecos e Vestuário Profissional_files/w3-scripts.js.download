@@ -1,0 +1,1586 @@
+(function($){
+
+    /*
+    * Copyright (c) 2023 W3 Corp - CNPJ 18.417.945/0001-79
+    * Todos os direitos reservados.
+    * Este codigo eh protegido por leis de direitos autorais e tratados internacionais.
+    * Nao e permitida a reproducao, distribuicao ou modificacao sem permissao expressa por escrito.
+    * ultima atualizacao: 2024-01-14
+    * Atualizado por: tanto
+    */    
+    
+
+
+    /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+       Funcoes do tema 
+    .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+    window.w3corptema = {
+        //Spread da variavel para nao perder nada
+        ...window.w3corptema,
+
+
+
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+           Propriedade configs com as configuracoes globais da loja
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        configs :{
+            ...window.w3corptema.configs,
+
+        },
+
+
+
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+           Variavel inicializada para conter todos os elementos swiper
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        swiper: [],
+
+        
+
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Inicializa o tema, resetando alguns itens e pegando alguns valores da tray
+            2024-01-08 | tanto
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        inicializa: function(){
+            if( this.configs.idLoja<1 ){        this.configs.idLoja     = $('html').data('store'); } //Se nao preenche aqui
+            
+            if( this.configs.idSession===undefined || this.configs.idSession=='' ){ this.configs.idSession  = $('html').data('session'); }
+
+            $('.logotray-message a').attr('rel', 'noopener').attr('href', $('.logotray-message a').attr('href').replace('http', 'https')); //Ajustes no logo da Tray Rodape
+            $('[role="dialog"] .modal-title').removeAttr('id'); //Remove id duplicado da Tray
+
+            console.log("%c [[[W3CorpTema]]] Tema iniciado com sucesso!" + "%cVoce esta visualizando um recurso destinado a desenvolvedores. \nSe voce acessou este recurso por acaso, pressione CTRL + SHIFT + i (ou F12) para ocultar esta mensagem.\n\n", 'font-size:25px; color: #19a3ff; text-shadow: 0 0 2px #000; font-weight:bolder;', 'font-size:14px; color: #FFFF00; background-color:#990000;');
+        },
+
+
+
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Ajusta os links com ancoras para um scroll suave
+            2024-01-08 | tanto
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        formControl: function(){ 
+            select = $('select');
+            wrap   = $('<div class="item-field"></div>');
+        
+            select.wrap(wrap).parent().attr('data-input','select');
+            
+            console.log("[[[W3CorpTema]]] formControl iniciado");
+        },
+            
+
+
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Ajusta os links com ancoras para um scroll suave
+            2024-01-08 | tanto
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        smoothScroll: function(){ 
+            $('a[href*="#"]')
+            .not('[href="#"]')
+            .not('[href="#0"]')
+            .click(function(event) {
+                if (
+                    location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') 
+                    && 
+                    location.hostname == this.hostname
+                ) {
+                    var target = $(this.hash);
+                    target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                    if (target.length) {
+                    event.preventDefault();
+                    $('html, body').animate({
+                        scrollTop: target.offset().top - 100
+                    }, 1000, function() {
+                        var jQuerytarget = $(target);
+                        jQuerytarget.focus();
+                        if (jQuerytarget.is(":focus")) { 
+                        return false;
+                        } else {
+                        jQuerytarget.attr('tabindex','-1'); 
+                        jQuerytarget.focus(); 
+                        };
+                    });
+                    }
+                }
+            });
+
+            console.log("[[[W3CorpTema]]] smoothScroll iniciado");
+        },
+
+
+
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Cria uma variavel com a altura da DIV do header, usada no layout com topo flutuante
+            2024-01-08 | alima
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        atualizarAlturaDivHeader: function() {
+            var alturaDiv = $("header").height();
+            $("html").css("--height-header", alturaDiv + "px");
+            
+            console.log("[[[W3CorpTema]]] atualizarAlturaDivHeader iniciado. Altura da Div: " + alturaDiv + "px");
+        },
+
+
+
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Adiciona ou remove a classe para o topo flutuante conforme posicao do scroll
+            2024-09-25 | alima
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        scrollHeaderFloat: function() {
+            const $header = $('header'); 
+        
+            if ($(window).width() >= this.configs.widthMobile) {
+                if ($(window).scrollTop() > 100) {
+                    if (!$header.hasClass('w3-header-float')) {
+                        $header.addClass('w3-header-float');
+        
+                        setTimeout(function() {
+                            const headerHeight = $header.outerHeight();
+                            console.log('Altura do header com w3-header-float: ' + headerHeight + 'px');
+                            $('.w3-product-info').css('top', 'calc(' + headerHeight + 'px + 10px)');
+                        }, 200);
+                        
+                    }
+                } else {
+                    $header.removeClass('w3-header-float'); // Removendo a classe corretamente
+                }
+            } else {
+                var alturaDiv = $header.height();
+                if ($(window).scrollTop() > alturaDiv) {
+                    $header.addClass('w3-header-mobile-float');
+                } else {
+                    $header.removeClass('w3-header-mobile-float');
+                }
+            }
+        },
+
+
+
+
+
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Exibe ou oculta o botao para voltar para o topo conforme posicao do scroll
+            2024-01-08 | tanto
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        scrollbtnToTop: function() {
+            if ($(window).scrollTop() > 700) {
+                $('.js-btt').fadeIn(200);
+            } else {
+                $('.js-btt').fadeOut(200);
+            }
+        },
+
+
+
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Evento de click no botao para voltar para o topo
+            2024-01-08 | tanto
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        btnToTop: function() {
+            $(document).on('click', '.js-btt', function(){ 
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 'smooth');    
+            });
+            
+            console.log("[[[W3CorpTema]]] btnToTop iniciado.");
+        },
+        
+
+
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Funcionamento do botao de acionamento do menu
+            2024-01-08 | tanto
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        btnMenu: function(){
+            btn     = $('.js-navbar-btn');
+            nav     = $('.js-header-nav');
+            
+            $(btn).on('click', function(){
+                $(nav).toggleClass('close open').stop();
+                $(this).toggleClass('close open').stop();
+            });
+            
+            console.log("[[[W3CorpTema]]] btnMenu iniciado.");
+        },
+
+        
+
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Funcionamento do botao de acionamento do header
+            2024-10-01 | tanto
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        btnHeader: function() {
+            var btn_clique  = '.js-header-btn-clique';
+            var btn_hover   = '.js-header-btn-hover';
+            var drop        = '.js-header-dropdown';
+        
+            $(document).on('click', btn_clique, function () {
+                var currentBtn = $(this);
+                var currentDrop = currentBtn.next(drop);
+        
+                // Fecha todos os dropdowns abertos, exceto o atual
+                $(drop).not(currentDrop).removeClass('open').addClass('close').stop();
+                
+                //Percorre todos os botoes e fecha eles tambem
+                $(btn_clique).each(function(){
+                    $(this).children('i').removeClass('times').addClass($(this).attr('data-class-i')).stop();
+                })
+                
+                currentDrop.toggleClass('close open').stop();
+                if( currentDrop.hasClass('open') ){
+                    currentBtn.children('i').removeClass().addClass('w3').addClass('times').stop();
+                    if( currentBtn.hasClass('w3-search-btn') ){ 
+                        $('.w3-input-search').focus();
+                    }
+                }
+            });
+        
+        
+            $(document).on('mouseenter', btn_hover, function () {
+                var currentBtn = $(this);
+                var currentDrop = currentBtn.children(drop);
+    
+                currentBtn.children('.js-header-btn').addClass('ativo');
+                currentDrop.removeClass('close').addClass('open').stop();
+            });
+        
+            $(document).on('mouseleave', btn_hover, function () {
+                var currentBtn = $(this);
+                var currentDrop = currentBtn.children(drop);
+    
+                currentBtn.children('.js-header-btn').removeClass('ativo');
+                currentDrop.removeClass('open').addClass('close').stop();
+            });
+
+            console.log("[[[W3CorpTema]]] btnHeader iniciado.");
+        },
+        
+
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Funcionamento do botao para ativar o modo escuro
+            2024-07-16 | alima
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        btnNox: function() {
+            $('.js-nox').on('click', function(){
+              if($('html').hasClass('nox')){
+                  $('html').removeClass('nox');
+                  $('.logo-lux-nox').attr('src', $('.logo-lux-nox').attr('data-srclux') );
+                  $(this).find('i').removeClass('sun').addClass('moon');
+                  Cookies.set('nox', 'lux', { expires: 365 });
+              } else{
+                  $('html').addClass('nox');
+                  $(this).find('i').removeClass('moon').addClass('sun');
+                  $('.logo-lux-nox').attr('src', $('.logo-lux-nox').attr('data-srcnox') );
+                  Cookies.set('nox', 'nox', { expires: 365 });
+              }
+            });
+
+            console.log("[[[W3CorpTema]]] btnNox iniciado.");
+        },
+
+
+
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Abre e fecha Menu no Mobile
+            2024-07-15 | alima
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        menuMobile: function(){
+            if(this.configs.isMobile == '1' ){
+                btnOpen   = $('.js-menu-btn-m-open');
+                btnClose  = $('.js-menu-btn-m-close');
+                backdropM = $('.js-backdrop-menu');
+                menu      = $('.js-header-nav');
+                
+                // Animacao
+                function menuAnimate(){
+                    $('.w3-header-m-wrapper > div').each(function(index) {
+                        $(this).delay(index * 200).queue(function(next) {
+                            $(this).css({
+                                opacity: 1,
+                                transform: 'translateY(0)'
+                            });
+                            next();
+                        });
+                    });
+                }
+                
+                btnOpen.on('click', function(){
+                    menu.removeClass('m-close');
+                    $("html").css("overflow", "hidden");
+                    backdropM.fadeIn();
+                    
+                    // Chamada da animacao
+                    menuAnimate();
+                });
+                
+                function closeAction(){
+                    menu.addClass('m-close');
+                    $("html").css("overflow", "auto");
+                    backdropM.fadeOut();
+                    $('.sub-list').slideUp(200);
+                    $('.js-header-m-box-content').slideUp(200);
+                    
+                    // Reseta a animacao
+                    $('.w3-header-m-wrapper > div').css({
+                        opacity: 0,
+                        transform: 'translateY(10px)'
+                    });
+                }
+                
+                btnClose.on('click', function(){
+                    closeAction();
+                });
+                backdropM.on('click', function(){
+                    closeAction();
+                });
+        
+                console.log("[[[W3CorpTema]]] menuMobile iniciado.");
+            }
+        },
+
+
+
+
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Abre e fecha Menu de Categorias no Mobile
+            2024-01-17 | alima
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        menuMobileCat: function(){
+            if(this.configs.isMobile == '1' ){
+                itemSub = $('ul.w3-menu-list .sub > :is(a, span)');
+                itemSubArrow = $('ul.w3-menu-list .sub > a::after');
+                listSub  = $('.sub-list');
+                
+                itemSub.on('click', function(e){
+                    e.preventDefault();
+                    // listSub.slideUp(200);
+                    if($(this).next(listSub).is(':visible')){
+                        $(this).next(listSub).slideUp(200);
+                    } else{
+                        $(this).next(listSub).slideDown(200).css('display', 'flex');
+                    }
+                    
+                });
+
+                console.log("[[[W3CorpTema]]] menuMobileCat iniciado.");
+            }
+        },
+
+        
+
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Abre e fecha Menu de Categorias no Mobile
+            2024-01-08 | tanto
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        btnMenuMobile: function(){
+            if(this.configs.isMobile == '1' ){
+                item    = $('.js-header-m-box-item');
+                content = $('.js-header-m-box-content');
+                
+                item.on('click', function(){
+                    if($(this).next(content).is(':visible')){
+                        $(this).next(content).slideUp(200);
+                    } else{
+                        $(this).next(content).slideDown(200);
+                    }
+                    
+                });
+                
+                console.log("[[[W3CorpTema]]] btnMenuMobile iniciado.");
+            }
+        },
+
+        
+
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Abre e fecha Menu de Categorias no Mobile
+            2024-01-08 | tanto
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        menuMobileFloating: function(){
+            if(this.configs.isMobile == '1' ){
+                header         = $('header');
+                navFloat       = $('.js-header-m-nav');
+                btnSearch      = $('.js-header-m-search-btn');
+                dropdownSearch = $('.js-header-m-search-dropdown');
+                 
+                $(document).ready(function(){
+                    $(window).on('scroll', function(){
+                        // console.log("Evento de rolagem detectado! " + jQuery(window).scrollTop());
+                        if ($(window).scrollTop() > 100) {
+                            header.addClass('slide-up');
+                            navFloat.slideDown(200);
+                        } else {
+                            header.removeClass('slide-up');
+                            navFloat.slideUp(200);
+                        }
+                    });
+                });
+                
+                btnSearch.on('click', function(){
+                   if(dropdownSearch.is(':visible')){
+                       $(this).children('i').toggleClass('times search');
+                    //   dropdownSearch.slideDown(200);
+                       dropdownSearch.fadeOut(200);
+                   } else{
+                       $(this).children('i').toggleClass('search times');
+                    //   dropdownSearch.slideUp(200);
+                       dropdownSearch.fadeIn(200);
+                   }
+                });
+
+                console.log("[[[W3CorpTema]]] menuMobileFloating iniciado.");
+            }
+        },
+
+
+
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Cria Swiper de maneira dinamica. Esta funcao e chamada pela inicializaSwiper
+            2024-01-12 | tanto
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        criaSwiper: function(config){
+            //Define as propriedades basicas
+            let tempSwiperConfig  = { 
+                centeredSlides: config.centeredSlides,
+                loop: config.loop,
+                slidesPerView: config.slidesPerView,
+                spaceBetween: config.spaceBetween,
+                speed: config.speed,
+                effect: config.effect || null,
+                autoplay: config.autoplay || false,
+                pagination: config.pagination || false,
+                navigation: config.navigation || false,
+                breakpoints: config.breakpoints || false,
+            };
+            // Adiciona breakpoints se existirem
+            if (config.breakpoints) {
+                Object.keys(config.breakpoints).forEach(breakpoint => {
+                    tempSwiperConfig.breakpoints[breakpoint] = {
+                        slidesPerView: config.breakpoints[breakpoint].slidesPerView,
+                        spaceBetween: config.breakpoints[breakpoint].spaceBetween,
+                    };
+                });
+            }
+
+            w3corptema.swiper[config.variavel] = new Swiper(config.elemento, config);
+
+            console.log("[[[W3CorpTema]]] swiper "+config.variavel+" foi criado no elemento "+config.elemento);
+        },
+
+
+
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Percorre as variaveis definidas, ajusta as configuracoes e cria os swipers
+            2024-01-12 | tanto
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        inicializaSwiper: function(){
+            for (let i = 0; i < w3corptema.swiperData.length; i++) {
+                const tempSwiper = w3corptema.swiperData[i];
+                w3corptema.criaSwiper(tempSwiper);
+            }
+
+            console.log("[[[W3CorpTema]]] swiper iniciado.");
+        },
+
+
+
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Funcao que inicializa o menu de categorias
+            2024-01-20 | tanto
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        inicializaMenuTopo: function(){
+            $('.first-level.sub .sub-list.second-level').each(function() {
+                    var listaAtual = $(this);
+                    var quantidadeLi = listaAtual.find('> li').length;
+                
+                    if (quantidadeLi >= 8 && quantidadeLi <= 15) {
+                        if (listaAtual.find('.sub-list-wrap').length) {
+                            listaAtual.find('.sub-list-wrap').addClass('column-count-2');
+                        } else {
+                            listaAtual.addClass('column-count-2');
+                        }
+                    } else if (quantidadeLi >= 16 && quantidadeLi <= 22) {
+                        if (listaAtual.find('.sub-list-wrap').length) {
+                            listaAtual.find('.sub-list-wrap').addClass('column-count-3');
+                        } else {
+                            listaAtual.addClass('column-count-3');
+                        }
+                    } else if (quantidadeLi >= 23) {
+                        if (listaAtual.find('.sub-list-wrap').length) {
+                            listaAtual.find('.sub-list-wrap').addClass('column-count-4');
+                        } else {
+                            listaAtual.addClass('column-count-4');
+                        }
+                    } else{
+                        if (listaAtual.find('.sub-list-wrap').length) {
+                            listaAtual.find('.sub-list-wrap').addClass('column-count-1');
+                        } else {
+                            listaAtual.addClass('column-count-1');
+                        }
+                    }
+                });
+            
+                console.log("[[[W3CorpTema]]] inicializaMenuTopo iniciado.");
+            },    
+
+
+
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Funcao que inicializa o carrinho flutuante
+            2024-02-27 | tanto
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        inicializaCarrinho: function(){
+            if (!w3corptema.cartCustomerId) {
+                const e = dataLayer.find(e=>"customerId"in e);
+                w3corptema.cartCustomerId = e ? e.cartCustomerId : null
+            }
+            if( this.configs.idSession===undefined || this.configs.idSession=='' ){ this.configs.idSession  = $('html').data('session'); }
+            
+            console.log("[[[W3CorpTema]]] inicializaCarrinho iniciado. cartSession: "+this.configs.idSession+" | cartidStore: "+this.configs.idLoja+" |  customerId: "+w3corptema.cartCustomerId);
+            
+            $(document).on("click", ".w3js-cart-remover", function(event){  event.preventDefault(); w3corptema.removeCarrinho($(this));  });
+            $(document).on("click", ".w3js-cart-open", function(event){     event.preventDefault(); w3corptema.exibeCarrinho($(this));  });
+            $(document).on("click", ".w3js-cart-close", function(event){    event.preventDefault(); w3corptema.ocultaCarrinho($(this));  });
+            $(document).on("click", ".w3-cart-overflow", function(event){   event.preventDefault(); w3corptema.ocultaCarrinho($(this));  });
+            w3corptema.carregaCarrinho();
+
+        },    
+
+
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Funcao que carrega itens do carrinho flutuante
+            2024-02-27 | tanto
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        carregaCarrinho: function(){
+            console.log("[[[W3CorpTema]]] carregaCarrinho - AJAX - Aguarde status");
+            if( this.configs.idSession===undefined || this.configs.idSession=='' ){ this.configs.idSession  = $('html').data('session'); }
+            
+            $(".w3-cart-product-list-loading").show();
+            jQuery.ajax({
+                method: "GET",
+                url: "/web_api/cart/" + this.configs.idSession,
+                success: function(e) {
+                    $(".w3-cart-product-list-loading").hide();
+                    $(".w3-cart-product-list").show();
+                    $(".w3-cart-product-list-no-product").hide();
+                    w3corptema.listaCarrinho(e);
+                    console.log("[[[W3CorpTema]]] carregaCarrinho - AJAX - Cart Carregado.");
+                    console.log(e);
+                },
+                error: function(e) {
+                    console.log("[[[W3CorpTema]]] carregaCarrinho - AJAX - Erro ao carregar. Nada encontrado");
+                    console.log(e);
+                    $(".w3-cart-product-list-loading").hide();
+                    $(".w3-cart-product-list").empty();
+                    $(".w3-cart-product-list").hide();
+                    $(".w3-cart-product-list-no-product").show();
+                    //cart.forProduct([])
+                }
+            });
+        },  
+
+
+
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Funcao que remove itens do carrinho flutuante
+            2024-02-27 | tanto
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        removeCarrinho: function(elemento){
+            var produtoId   = elemento.attr("data-product-id");
+            var variacaoId  = elemento.attr("data-product-variantId");
+            if( variacaoId>0 ){ variacaoId = '/' + variacaoId; } else { variacaoId = ''; }
+            console.log("[[[W3CorpTema]]] removeCarrinho Remover Item. ID:"+produtoId+" | Variant:"+variacaoId);
+            if( elemento.attr("data-product-variantAdd") ){
+                var variacaoAdd = "/?additional_information=" + elemento.attr("data-product-variantAdd").replace(/br>/g, "br/>");
+            } else { 
+                var variacaoAdd = "";
+            }
+            jQuery.ajax({
+                method: "DELETE",
+                url: "/web_api/carts/" + this.configs.idSession + "/" + produtoId + variacaoId + variacaoAdd,
+                success: function(e) {
+                    var qtdCart = parseInt(jQuery("[data-cart=amount]").html());
+                    jQuery("[data-cart=amount]").html(qtdCart - 1);
+                    w3corptema.carregaCarrinho();
+                },
+                error: function(e) {
+                    console.log("[[[W3CorpTema]]] removeCarrinho. URL /web_api/carts/" + this.configs.idSession + "/" + produtoId + variacaoId + variacaoAdd+" | ERRO: ", e.responseText);
+                    w3corptema.carregaCarrinho();
+                }
+            });            
+        },    
+
+
+
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Funcao que exibe o carrinho flutuante
+            2024-02-27 | tanto
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        exibeCarrinho: function(elemento){
+            console.log("[[[W3CorpTema]]] exibeCarrinho");
+            w3corptema.carregaCarrinho();
+            $(".w3-cart-overflow").show();
+            $(".w3-cart").show().animate({ right: "0" }, 200, function() { });
+        },    
+
+
+
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Funcao que oculta o carrinho flutuante
+            2024-02-27 | tanto
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        ocultaCarrinho: function(elemento){
+            console.log("[[[W3CorpTema]]] ocultaCarrinho");
+            $(".w3-cart-overflow").hide();
+            $(".w3-cart").animate({ right: "-100%" }, 200, function() {
+                $(".w3-cart").hide();
+            });
+        },    
+
+
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Funcao que lista os itens do carrinho flutuante
+            2024-02-28 | tanto
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        listaCarrinho: function(produtos){
+            console.log("[[[W3CorpTema]]] inicializaCarrinho listaCarrinho");
+            $(".w3-cart-product-list").show();
+            $(".w3-cart-product-list-no-product").hide();
+            $(".w3-cart-product-list").empty();
+            var imagem = '';
+            var variantAdd = '';
+            var subtotal = 0;
+            produtos.forEach( function(item){ 
+                // item.additional_information.replace(/\//g, "");
+                console.table(item);
+                if( item.Cart.product_image.thumbs[180].https.length ){
+                    imagem = '<img src="'+item.Cart.product_image.thumbs[180].https+'" title="" />';
+                } else { 
+                    imagem = '';
+                }
+                variantAdd = item.Cart.additional_information.replace(/\//g, "");
+                var html = `
+                <div class="img">${imagem}</div>
+                <div class="nome">${item.Cart.product_name}</div>
+                <div class="variantes">
+                </div>
+                <div class="quantidade">Qtde: ${item.Cart.quantity}</div>
+                <div class="valor">
+                  <div class="remover w3js-cart-remover" data-product-id="${item.Cart.product_id}" data-product-variantId="${item.Cart.variant_id}" data-product-variantAdd="${variantAdd}">Remover</div>
+                  <div class="preco">R$ ${item.Cart.price}</div>
+                </div>
+                `;
+                
+                var li = $('<li>').addClass('cart-item').html(html);
+                $('.w3-cart-product-list').append(li);
+                subtotal += parseFloat(item.Cart.price);
+            });
+
+            var formattedSubtotal = subtotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            $(".w3js-cart-subtotal").html(formattedSubtotal);
+        },    
+
+
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Inicializa e atualiza contadores regressivos
+            2024-01-11 | tanto
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        atualizaContadoresRegressivos: function(){
+            $('.w3js-contador').each(function() {
+                if( !$(this).data('contadordata') || !$(this).data('contadorhora') ){
+                    $(this).slideUp();
+                } else {
+                    var dataFinal = new Date($(this).data('contadordata') + 'T' + $(this).data('contadorhora'));
+                    var dataAtual = new Date();
+            
+                    var diferencaSegundos = dataFinal - dataAtual;
+                    if (diferencaSegundos < 0) {
+                        $(this).slideUp();
+                    } else { 
+                        $(this).slideDown();                        
+                        var dias = Math.floor(diferencaSegundos / (1000 * 60 * 60 * 24));
+                        var horas = Math.floor((diferencaSegundos % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        var minutos = Math.floor((diferencaSegundos % (1000 * 60 * 60)) / (1000 * 60));
+                        var segundos = Math.floor((diferencaSegundos % (1000 * 60)) / 1000);
+                
+                        $(this).find('.w3js-contador-dias .showcase-contador-time').text(dias.toString().padStart(2, '0'));
+                        $(this).find('.w3js-contador-horas .showcase-contador-time').text(horas.toString().padStart(2, '0'));
+                        $(this).find('.w3js-contador-minutos .showcase-contador-time').text(minutos.toString().padStart(2, '0'));
+                        $(this).find('.w3js-contador-segundos .showcase-contador-time').text(segundos.toString().padStart(2, '0'));
+                
+                        if (diferencaSegundos <= 86400000) { // Menos de 24 horas
+                            $('.w3js-contador-dias', this).slideUp();
+                        } else {
+                            $('.w3js-contador-dias', this).slideDown();
+                        }
+                    }
+                }
+            });
+            setTimeout(function(){ w3corptema.atualizaContadoresRegressivos(); }, 1000);
+
+            // console.log("[[[W3CorpTema]]] contadores atualizados.");
+        },
+
+
+
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Home - Carrega as noticias via AJAX
+            2024-01-08 | tanto
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        homeNewsLoad: function(){ 
+            var s = "busca_noticias.php?loja=" + this.configs.idLoja +'&'+ document.getElementsByTagName("html")[0].getAttribute("data-files")
+            , e = $(".noticias-content");
+            console.log("[[[W3CorpTema]]] homeNewsLoad - AJAX - Aguarde status");
+            $.ajax({
+                url: s,
+                type: "GET",
+                dataType: "html",
+                contentType: "charset=iso-8859-1",
+                success: function(s) {
+                    var t = s.replace(/src/g, 'src');
+                    e.html('<div class="noticias">' + $(t).find(".noticias").html() + "</div>"),
+                    e.find("li").wrapInner('<div class="box-noticia"></div>').find('img').attr('width', '400').attr('height', '400'),
+                    e.find(".noticias li:nth-child(n+5)").remove(),
+                    e.find('.noticias li').length ? '' : $('.section-notices').remove();
+                    console.log("[[[W3CorpTema]]] homeNewsLoad - AJAX - - Finalizado OK");
+                    
+                    if(e.hasClass('swiper')){
+                        e.find('.noticias').addClass('swiper-wrapper');
+                        e.find('.noticias li').addClass('swiper-slide');
+                        
+                        w3corptema.criaSwiper(tempSwiperNewsHome);
+                    }
+                }
+            });
+        },
+
+
+
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Catalogo - Habilita os 2 modos de visualizacao da listagem, em lista ou bloco
+            2024-01-08 | tanto
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        catalogLayout: function(){
+            list      = $('.js-showcase-list');
+            btnLayout = $('.js-layout-btn');
+            
+            btnLayout.on('click', function(){
+                if($(window).width() <= w3corptema.configs.widthMobile ){
+                    $(this).children('i').toggleClass('layout-bock-row layout-block').stop();
+                } else{
+                    $(this).children('i').toggleClass('layout-list layout-block').stop();    
+                }
+                
+                if($(this).children('i').hasClass('layout-block')){
+                    list.fadeOut(100, function(){
+                        list.addClass('list');
+                    },).fadeIn(100);
+                } else if($(this).children('i').hasClass('layout-list') || $(this).children('i').hasClass('layout-block-row')){
+                    list.fadeOut(100, function(){
+                        list.removeClass('list');
+                    },).fadeIn(100);
+                }
+                
+            });
+
+            console.log("[[[W3CorpTema]]] catalogLayout iniciado.");
+        },
+
+
+
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Catalogo - Funcoes relacionadas ao botao de exibicao dos filtros, apenas no mobile
+            2024-01-08 | tanto
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        catalogFilterMobile: function(){
+            if($(window).width() <= this.configs.widthMobile ){
+                btnOpen  = $('.js-filter-open');
+                btnClose = $('.js-filter-close');
+                filter   = $('.js-filter');
+                
+                btnOpen.on('click', function(){
+                    if(filter.hasClass('close')){
+                        filter.removeClass('close').stop();
+                        filter.addClass('open').stop();
+                        console.log('ABRIU');
+                    }
+                });
+                
+                btnClose.on('click', function(){
+                    if(filter.hasClass('open')){
+                        filter.removeClass('open').stop();
+                        filter.addClass('close').stop();
+                    }
+                    console.log('FECHOU');
+                });
+                
+                console.log("[[[W3CorpTema]]] catalogFilterMobile iniciado.");
+            }
+        },
+        
+        
+        
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Catalogo - Funcoes relacionadas ao botao de exibicao dos filtros, apenas no desktop quando ativado o filtro oculto
+            2024-02-01 | alima
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        catalogFilterHide: function(){
+            btnOpen   = $('.js-btn-filter-open');
+            btnClose  = $('.w3-catalog-filter-hide .filter-header');
+            filter    = $('.w3-catalog-filter-hide .w3-catalog-sidebar');
+            btnCat    = $('.w3-catalog-filter-hide .filter-title');
+            infoCat   = $('.w3-catalog-filter-hide .filter-list');
+            chevron   = $('.w3-catalog-filter-hide .w3-catalog-sidebar .smart-filter .filters .filter-block .filter-title::after');
+            backdrop  = $('.js-backdrop');
+            headerCat = $('.w3-catalog-content-header');
+            
+            btnOpen.on('click', function(){
+                if(filter.hasClass('close')){
+                    filter.removeClass('close').stop();
+                    filter.addClass('open').stop();
+                    $('html').css('overflow','hidden');
+                    backdrop.fadeIn(200);
+                }
+            });
+            
+            btnClose.on('click', function(){
+                if(filter.hasClass('open')){
+                    filter.removeClass('open').stop();
+                    filter.addClass('close').stop();
+                    $('html').css('overflow','auto');
+                    backdrop.fadeOut(200);
+                }
+            });
+            
+            // Secoes
+            btnCat.on('click', function() {
+                $(this).siblings(infoCat).slideToggle();
+                $(this).toggleClass('active');
+            });
+            
+            // Esconde elementos do header do catalogo quando scroll
+            $(document).on('scroll', function(){
+                var catalogHeader       = $('.w3-catalog-content-header');
+                var catalogHeaderHeight = catalogHeader.height();
+                if($('header').hasClass('w3-header-mobile-float') || $('header').hasClass('w3-header-float')){
+                    catalogHeader.css('--height-catalog-header', catalogHeaderHeight + 'px');
+                }
+            });
+            
+            console.log("[[[W3CorpTema]]] catalogFilterHide iniciado.");
+        },
+
+
+
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Produto - Pop Up Tabela de Medidas
+            2024-02-06 | alima
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        productMeasureTable: function(){
+            mBtn      = $('.js-measure-btn');
+            mBtnClose = $('.js-popup-close');
+            mPopUp    = $('.js-popup-measureTape');
+            backdrop  = $('.js-backdrop');
+            
+            mBtn.on('click', function(){
+                mPopUp.fadeIn(); 
+                backdrop.fadeIn();
+                // $('html').css('overflow','hidden');
+            });
+            mBtnClose.on('click', function(){
+                mPopUp.fadeOut(); 
+                backdrop.fadeOut(); 
+                // $('html').css('overflow','auto');
+            });
+    
+            console.log("[[[W3CorpTema]]] productMeasureTable iniciado.");
+        },
+        
+
+
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Produto - Clear: Both na descricao do produto
+            2024-02-19 | alima
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        productDescription: function(){
+            pDescription = $('.w3-product-content#description article');
+            
+            pDescription.append('<div style="clear:both;"></div>')
+    
+            console.log("[[[W3CorpTema]]] pDescription iniciado.");
+        },
+        
+        
+
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Produto - Acordeon variacoes
+            2024-02-08 | alima
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        productVariantAccordion: function(){
+            vBtn         = $('.w3-product-info-price .lista_radios li.color > .lista-radios-input');
+            vLista       = $('.w3-product-info-price .lista_radios li.color > .lista_radios');
+            vBtnMultipla = $('.w3-product-info-price .lista_radios.listaVarMultipla li.color > .labelMultiVariacao');
+            
+            vBtn.on('click', function(e){
+                var nextList = $(this).next(vLista);
+            
+                if (!nextList.is(':visible')) {
+                    vLista.slideUp();
+                    nextList.slideDown();
+                }
+            
+                if (nextList.is(':visible')) {
+                    e.preventDefault();
+                }
+            });
+            
+            vBtnMultipla.on('click', function(e){
+                var nextList = $(this).siblings('.lista_radios');
+
+                if (!nextList.is(':visible')) {
+                    vLista.slideUp();
+                    nextList.slideDown();
+                }
+            
+                if (nextList.is(':visible')) {
+                    e.preventDefault();
+                }
+            });
+            
+    
+            console.log("[[[W3CorpTema]]] productVariantAccordion iniciado.");
+        },
+  
+        
+        
+        
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Produto - Textos das variacoes
+            2024-02-08 | alima
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        productVariantTexts: function(){
+            vBtn   = $('.w3-product-info-price .lista-radios-input');
+            
+            vBtn.each(function() {
+                $(this).contents().filter(function() {
+                    return this.nodeType === 3 && $.trim(this.nodeValue) !== ''; // Seleciona apenas os textNodes nao vazios
+                }).wrap('<span></span>'); // Envolve cada texto encontrado em um <span>
+            });
+            
+    
+            console.log("[[[W3CorpTema]]] productVariantTexts iniciado.");
+        },
+
+
+  
+        
+        
+        
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Produto - calculo do frete
+            2024-02-23 | tneves
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        productfrete: function(){
+            var quantity = 1;
+            $('.zip-code-mask').mask('00000-000');
+            $('.shipping-form').on('submit', function(event){
+                event.preventDefault();
+                console.log("[[[W3CorpTema]]] productfrete iniciado.");
+
+                let variant  = $('#form_comprar').find('input[type="hidden"][name="variacao"]');
+                //let url      = $('#shippingSimulatorButton').data('url'); 
+                let url      = $('#shippingSimulatorButton').attr('data-url');                 
+                let cep      = $('input', this).val().split('-');
+
+                if (jQuery('#quant:visible').is(':visible')) {
+                    quantity = jQuery('#quant:visible').val();
+                }
+
+                if(variant.length && variant.val() === ''){
+                    $('.product-shipping .result').addClass('loaded').html(`<div class="error-message">Por favor, selecione as varia&ccedil;&otilde;es antes de calcular o frete.</div>`);
+                    return;
+                }
+
+                variant = variant.val() || 0;
+
+                url = url.replace('cep1=%s', `cep1=${cep[0]}`  )
+                         .replace('cep2=%s', `cep2=${cep[1]}`  )
+                         .replace('acao=%s', `acao=${variant}` )
+                         .replace('dade=%s', `dade=${quantity}`);
+
+
+                console.log("[[[W3CorpTema]]] productfrete - AJAX - Aguarde status");
+                $('.product-shipping .result').removeClass('loaded').addClass('loading').html('Carregando fretes...');
+
+                /* Validate zip code first using viacep web service */
+                $.ajax({
+                    'url'      : `https://viacep.com.br/ws/${cep[0]+cep[1]}/json/`,
+                    'method'   : 'get',
+                    'dataType' : 'json',
+                    'success'  : function (viacepResponse) {
+
+                        if(viacepResponse.erro){
+                            
+                            console.log("[[[W3CorpTema]]] productfrete - AJAX - erro na validacao do cep.");
+
+                            let message = 'Cep inv&aacute;lido. Verifique e tente novamente.'
+                            $('.product-shipping .result').removeClass('loading').addClass('loaded').html(`<div class="error-message">${message}</div>`);
+
+                            return;
+
+                        }
+                        console.log("[[[W3CorpTema]]] productfrete - AJAX - Segundo AJAX.");
+                        $.ajax({
+                            'url'    : url,
+                            'method' : 'get',
+                            'success' : function (response) {
+
+                                if(response.includes('N&atilde;o foi poss&iacute;vel estimar o valor do frete')){
+
+                                    let message = 'N&atilde;o foi poss&iacute;vel obter os pre&ccedil;os e prazos de entrega. Tente novamente mais tarte.'
+                                    $('.product-shipping .result').removeClass('loading').addClass('loaded').html(`<div class="error-message">${message}</div>`);
+                                    
+                                    console.log("[[[W3CorpTema]]] productfrete - AJAX - erro no ajax do calculo.");
+
+                                    return;
+
+                                }
+                                
+                                console.log("[[[W3CorpTema]]] productfrete - AJAX - ajustando tabela.");
+
+                                let shippingRates = $(response.replace(/Prazo de entrega: /gi, ''));
+                                let local = shippingRates.find('p .color').html().replace(/\s\s\\\s/g, '').replace(/ \\/g, ',');
+
+                                //shippingRates.find('table:first-child, p, table tr td:first-child').remove();
+                                shippingRates.find('table:first-child, p').remove();
+                                shippingRates.find('table, table th, table td').removeAttr('align class width border cellpadding cellspacing height colspan');
+
+                                shippingRates.find('table').addClass('shipping-rates-table');
+
+                                var frete = shippingRates.find('table th:first-child').text();
+                                if (frete == 'Forma de Envio:'){
+                                    shippingRates.find('table th:first-child').html('Frete').attr("colspan", "2");
+                                }
+
+                                var valor = shippingRates.find('table th:nth-child(2)').text();
+                                if (valor == 'Valor:'){
+                                    shippingRates.find('table th:nth-child(2)').html('Valor');
+                                }
+
+                                var prazo = shippingRates.find('table th:last-child').text();
+                                if (prazo == 'Prazo de Entrega e Observa\u00E7\u00F5es:'){
+                                    shippingRates.find('table th:last-child').html('Prazo');
+                                }
+                                shippingRates = shippingRates.children();
+
+                                $('.product-shipping .result').removeClass('loading').addClass('loaded').html('').append(shippingRates);
+
+                            },
+                            'error' : function (request, status, error) {
+
+                                console.log("[[[W3CorpTema]]] productfrete - AJAX - erro ao recuperar valores. ");
+
+                                if(request.responseText !== ''){
+                                    console.error(`[[[W3CorpTema]]] - AJAX - productfrete: ${request.responseText}`);
+                                }
+
+                                let message = 'N&atilde;o foi poss&iacute;vel obter os pre&ccedil;os e prazos de entrega. Tente novamente mais tarde.'
+                                $('.product-shipping .result').removeClass('loading').addClass('loaded').html(`<div class="error-message">${message}</div>`);
+
+                            }
+                        });
+
+                    },
+                    'error': function (request, status, error) {
+
+                        console.error(`[[[W3CorpTema]]] productfrete - AJAX - Cep nao validado. Error: ${error}`);
+                        console.error(`[[[[W3CorpTema]]] productfrete: ${request.responseJSON}`);
+
+                        let message = 'N&atilde;o foi poss&iacute;vel obter os pre&ccedil;os e prazos de entrega. Tente novamente mais tarde.'
+                        $('.product-shipping .result').removeClass('loading').addClass('loaded').html(`<div class="error-message">${message}</div>`);
+
+                    }
+                });
+
+                return false;
+
+            });
+
+        },
+
+
+
+
+
+
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Produto - Botao de compra flutuante no mobile
+            2024-02-06 | alima
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        productButtonFloat: function(){
+            if($(window).width() <= this.configs.widthMobile ){
+                var floatingButton = $('.js-btn-buy-float');
+                var priceDiv = $('.w3-qty');
+            
+                function isElementInViewport(el) {
+                    var rect = el[0].getBoundingClientRect();
+                    return (
+                        rect.top >= 0 &&
+                        rect.left >= 0 &&
+                        rect.bottom <= $(window).height() &&
+                        rect.right <= $(window).width()
+                    );
+                }
+            
+                $(window).scroll(function() {
+                    if (isElementInViewport(priceDiv)) {
+                        floatingButton.fadeOut();
+                    } else {
+                        floatingButton.fadeIn();
+                    }
+                });
+                
+                
+                $(document).on('click', '.js-btn-buy-float', function(){ 
+                    var offsetTop = $('#w3-product-info').offset().top - 70;
+                    $('html, body').animate({
+                        scrollTop: offsetTop
+                    }, 'smooth');    
+                });
+
+
+                
+                console.log("[[[W3CorpTema]]] productButtonFloat iniciado.");
+            }
+        },
+        
+
+
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Produto - Ajuste de botao de comentarios
+            2024-01-08 | tanto
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        productWrapBtnComments: function(){
+            $('#bt-submit-comments').wrap('<div class="w3-comments-btn"></div>');
+            setTimeout(function() {
+                $('.w3-comments-btn button').addClass('w3-btn w3-btn-default');
+            }, 1000);
+    
+            console.log("[[[W3CorpTema]]] productWrapBtnComments iniciado.");
+        },
+
+
+
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Produto - Ajuste de botao de comentarios
+            2024-01-08 | tanto
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        productABtnLogin: function(){
+            $('.w3-product-content#coments a[data-logged-user="false"]').addClass('w3-btn w3-btn-featured');
+    
+            console.log("[[[W3CorpTema]]] productABtnLogin iniciado.");
+        },
+    
+
+
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Produto - Ajuste de quantidade 
+            2024-01-08 | tanto
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        productQuant: function(quant){
+            var value = parseInt($("#quant").val());
+            value+=quant;
+            if(value < 1){
+                $("#quant").val(1);
+            }else{
+                $("#quant").val(value);
+            }
+        
+            console.log("[[[W3CorpTema]]] productQuant: adicionado "+quant+" + "+value);
+        },
+        
+        
+        
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Produto - Remove o ALIGN inline da div de precos 
+            2024-01-31 | alima
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        productPrecoAlignRemove: function(){
+            var align = $('.produto-preco #preco');
+            // setTimeout(function(){
+                align.removeAttr('align');
+            // }, 1000);
+        
+            console.log("[[[W3CorpTema]]] productPrecoAlignRemove iniciado.");
+        },
+
+
+
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Produto - Funcoes que ajustam e trabalham com as Abas
+            2024-01-08 | tanto
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        productTabs: function(){   
+            $(".w3_aba_conteudo_adicional").each(function(){
+                let div_conteudo    = $(this);
+                let div_id          = div_conteudo.attr("data-div-id");
+                console.log(div_id);
+                $(div_id).detach().appendTo(div_conteudo);
+                $(div_id).show();
+                div_conteudo.find('img').attr('loading','lazy');
+                div_conteudo.find('iframe').attr('loading','lazy');
+            });
+            
+            $(document).on("click", ".w3-produto-aba-header-clicavel", function(){
+                let div_conteudo    = $(this);
+                let div_id          = div_conteudo.attr("data-id-aba");
+                
+                $('.w3_produto_aba_conteudo').hide().removeClass('active');
+                $('.w3_produto_aba_conteudo').parent().parent().removeClass('active');
+                $('#'+div_id).toggle();
+                $(div_conteudo).children('svg').toggleClass('aberto');
+                $('.w3-produto-aba-header-clicavel').removeClass('active');
+                $(div_conteudo).toggleClass('active');
+                $('#'+div_id).parent().parent().addClass('active');
+            });
+            
+            $(".w3_aba_carrega_url").each(function(){
+                let div_conteudo    = $(this);
+                let div_url          = div_conteudo.attr("data-url");
+                console.log(div_url);
+                if( div_url.length>0 ){
+                    console.log("[[[W3CorpTema]]] productTabs - AJAX - Carregando Aba: ".div_url);
+                    $.ajax({
+                        'url'     : div_url,
+                        'method'  : 'get',
+                        'success' : function (response){
+                            console.log("[[[W3CorpTema]]] productTabs - AJAX - Aba carregada: ".div_url);
+                            if( $(div_conteudo).attr('id')!='aba_conteudo_payment_methods'  ){
+                                let html = $(response);
+                                html.find('img').attr('loading','lazy');
+                                html.find('iframe').attr('loading','lazy');
+                                div_conteudo.html(html);
+                                
+                            } else {
+                                let html = $(response);
+                                let price         = $('#preco_atual').val();
+        
+                                html = html.find('#atualizaFormas').unwrap();
+                                html = html.find('ul.Forma1').unwrap();
+        
+                                html.find('li').each(function () {
+                                    let image = $('img', this).remove();
+                                    $('a', this).prepend(image);
+                                });
+        
+                                html.find('table br').remove();
+                                html.find('table td:first-child').remove();
+        
+                                html.find('table').removeAttr('id class width cellpadding cellspacing border style');
+                                html.find('table td, table th').removeAttr('class width style');
+                                html.find('li').removeAttr('id style');
+                                html.find('li a').removeAttr('id class name');
+                                html.find('li a img').removeAttr('border').attr('loading','lazy');
+                                
+                                html.find('img').attr('loading','lazy');
+                                html.find('iframe').attr('loading','lazy');
+        
+                                html.removeClass().addClass('payment-options');
+                                html.find('li').addClass('option');
+                                html.find('li a').attr('href', 'javascript:void(0)').attr('rel', 'nofollow, noindex, noreferrer');
+                                html.find('table').wrap('<div class="option-details"></div>');
+                                html.find('.option-details').css('display', 'none');
+        
+                                div_conteudo.attr('data-loaded-price', price);
+                                div_conteudo.html('').append(html);                        
+                            }
+                        }
+                    });
+                }
+            });
+        
+            console.log("[[[W3CorpTema]]] productTabs iniciado.");
+        },
+
+
+
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Produto - Funcao que carrega via AJAX as imagens de uma determinada variacao do produto
+            2024-01-08 | tanto
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        productLoadVariacaoFotosAjax: function(id){  
+            console.log("[[[W3CorpTema]]] productLoadVariacaoFotosAjax - AJAX - Carregando fotos das variacoes"); 
+            $.ajax({
+                url    : `/web_api/variants/${id}`,
+                method : 'get',
+                success: function (response){
+                    console.log("[[[W3CorpTema]]] productLoadVariacaoFotosAjax - AJAX - Fotos encontradas");
+                    let images = response.Variant.VariantImage;
+                    
+                    if(images.length){
+                        w3corptema.productVariacaoFotoCriaGaleria(images);
+                    }
+
+                },
+                error: function (request, status, error) {
+                    console.log(`[[[W3CorpTema]]] productLoadVariacaoFotosAjax - AJAX - encontrou um ERRO! ${error} `);
+                }
+            });
+            
+            console.log("[[[W3CorpTema]]] productLoadVariacaoFotosAjax concluido");
+        },
+
+
+
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Produto - Funcao que cria a galeria de imagens de um produto
+            2024-01-08 | tanto
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        productVariacaoFotoCriaGaleria: function(images){   
+            let productName = $('.product-wrapper .product-form .product-name').text();
+            let htmlThumbs  = ``;
+            let htmlImages  = ``;
+
+            $.each(images, function (index, item){
+
+                let slideIndex = index + 1;
+
+                htmlImages += `
+                    <div class="image swiper-slide ${ slideIndex === 1 ? 'active' : '' }" data-index="${slideIndex}">
+                        <a data-fancybox="product-gallery" data-src="${item.https}" data-caption="${productName}">
+                            <img class="swiper-lazy" src="${item.https}" alt="${productName}">
+                        </a>
+                    </div>
+                    
+                `;
+
+                htmlThumbs +=
+                    `<li class="swiper-slide ${ slideIndex === 1 ? 'active' : '' }" data-index="${slideIndex}">
+                        <div class="thumb">
+                            <img src="${item.thumbs[90].https}" alt="${productName}">
+                        </div>
+                    </li>
+                `;
+
+            });
+
+
+            $('.w3-product .w3-product-gallery .swiper-wrapper .image').remove();
+            $('.product-wrapper .product-gallery .product-thumbs .swiper-slide').remove();
+            $('.w3-product .w3-product-gallery .swiper-wrapper').html(htmlImages);
+
+            if(images.length > 1){
+
+                $('.w3-product .w3-product-gallery .swiper-wrapper .product-thumbs').addClass('show');
+                $('.w3-product .w3-product-gallery .swiper-wrapper .thumbs-list .swiper-wrapper').html(htmlThumbs);
+
+            } else {
+                $('.w3-product .w3-product-gallery .swiper-wrapper.product-thumbs').removeClass('show');
+            }
+            
+            console.log("[[[W3CorpTema]]] productLoadVariacaoFotosAjax concluido para id "+id+".");
+        },
+
+
+
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Produto - Funcao que observa os clicks para ajustar as imagens da galeria de um produto
+            2024-01-08 | tanto
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        productVariacaoFoto: function(){   
+            
+            $('.product-variants').on('click', '.lista_cor_variacao li[data-id]', function(){
+                w3corptema.productLoadVariacaoFotosAjax($(this).data('id'));
+                console.log('click1');
+            });
+
+            $('.product-variants').on('click', '.lista-radios-input', function(){
+                w3corptema.productLoadVariacaoFotosAjax($(this).find('input').val());
+                console.log('click2');
+            });
+
+            $('.product-variants').on('change', 'select', function(){
+                w3corptema.productLoadVariacaoFotosAjax($(this).val());
+                console.log('click3');
+            });
+
+            $('.product-variants').on('change', '.infoSelects', function(){
+                 console.log('click4');
+                var optionSelected = $(this).find('option:selected');
+                if (optionSelected.val().length){
+                    var rel = optionSelected.attr('rel');
+                    var image = [
+                        {
+                            https: rel,
+                            thumbs: {
+                                    90: {
+                                        https: rel,
+                                    },
+                            }
+                        },
+                    ];
+                    w3corptema.productVariacaoFotoCriaGaleria(image);
+                }
+            });
+        
+            console.log("[[[W3CorpTema]]] productVariacaoFoto iniciado.");
+        },
+
+
+        /* .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            FUNCAO: Page Contact - Funcao que monta a pg contato
+            2024-10-02 | alima
+        .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- */
+        contactContructorPage: function(){   
+            
+            // Seleciona todos os filhos de .w3-page-contact .w3-site-main .container3:last-of-type > .container2
+            $('.w3-page-contact .w3-site-main .container3:last-of-type > .container2 > *').each(function(index) {
+                // Adiciona a classe .child com nÃÂÃÂÃÂÃÂºmero sequencial
+                $(this).addClass('child' + (index + 1));
+            });
+            
+            // Wrap child1 atÃÂÃÂÃÂÃÂ© child6 com .contact1
+            $('.w3-page-contact .w3-site-main .container3:last-of-type > .container2 > .child1, .child2, .child3, .child4, .child5, .child6').wrapAll('<div class="contact1"></div>');
+            
+            // Wrap child7 com .contactForm
+            $('.w3-page-contact .w3-site-main .container3:last-of-type > .container2 > .child7').wrap('<div class="contactForm"></div>');
+            
+            // Wrap child8 atÃÂÃÂÃÂÃÂ© child11 com .contact2
+            $('.w3-page-contact .w3-site-main .container3:last-of-type > .container2 > .child8, .child9, .child10, .child11').wrapAll('<div class="contact2"></div>');
+            
+            
+            // Adiciona as classes .w3-btn e .w3-btn-featured ao elemento .btn_submit dentro de .contactForm
+            $('.contactForm .btn_submit').addClass('w3-btn w3-btn-featured');
+
+
+            console.log("[[[W3CorpTema]]] contactContructorPage iniciado.");
+        }
+
+
+
+
+
+
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    //Inicializacao das funcoes do tema
+    
+    $(function(){
+
+        //Funcoes de configuracao e uso geral
+        w3corptema.inicializa();
+        w3corptema.smoothScroll();
+        w3corptema.btnMenu();
+        w3corptema.btnHeader();
+        w3corptema.btnToTop();
+        w3corptema.menuMobile();
+        w3corptema.menuMobileCat();
+        w3corptema.btnMenuMobile();
+        w3corptema.inicializaSwiper();
+        w3corptema.atualizaContadoresRegressivos();
+        w3corptema.inicializaMenuTopo();
+        w3corptema.formControl();
+        w3corptema.inicializaCarrinho();
+        w3corptema.btnNox();
+        
+
+
+        //Funcoes que necessitam de um leve delay para evitar problemas
+        setTimeout(function(){
+            w3corptema.atualizarAlturaDivHeader();
+        },20);
+
+
+
+        //Funcoes acionadas no resize
+        $(window).on("resize", function() {
+            //w3corptema.atualizarAlturaDivHeader();
+        });
+
+
+
+        //Funcoes acionadas no resize - o ideal eh replicar tambem na inicializacao
+        $(window).on("scroll", function() {
+            w3corptema.scrollHeaderFloat();
+            w3corptema.scrollbtnToTop();
+        });
+
+
+
+        //Funcoes especiicas para cada pagina
+        if($('html').hasClass('page-home')){
+            setTimeout(function(){
+                w3corptema.homeNewsLoad();
+            },200);
+                      
+            
+
+        } else if($('html').hasClass('page-newsletter')){
+            
+
+
+        } else if($('html').hasClass('page-catalog') || $('html').hasClass('page-search')){
+            w3corptema.catalogLayout();
+            if($('body').hasClass('w3-ctrl-menu-hide')){
+                w3corptema.catalogFilterHide();    
+            } else{
+                w3corptema.catalogFilterMobile();
+            }
+
+
+
+        } else if($('html').hasClass('page-product')){
+            w3corptema.productWrapBtnComments();
+            w3corptema.productABtnLogin();
+            //w3corptema.productQuant();
+            w3corptema.productTabs();
+            //w3corptema.productVariacaoFoto();
+            w3corptema.productPrecoAlignRemove();
+            w3corptema.productMeasureTable();
+            w3corptema.productButtonFloat();
+            w3corptema.productVariantAccordion();
+            w3corptema.productVariantTexts();
+            w3corptema.productfrete();
+            w3corptema.productDescription();
+            
+
+
+
+        } else if ($('html').hasClass('page-busca_noticias')){
+
+
+
+        } else if ($('html').hasClass('page-noticia')){
+            
+
+
+        } else if ($('html').hasClass('page-depoimentos')){
+
+
+
+        } else if($('html').hasClass('page-contact')){
+            w3corptema.contactContructorPage();
+
+
+        } else if($('html').hasClass('page-finalizar_presentes')){
+            
+
+
+        }  
+    
+    });
+
+
+}(jQuery));

@@ -1,0 +1,33 @@
+
+/* Tag extra personalizada da vitrine */
+.product .product-header .image > .tag{ display: inline-flex; justify-content: center; align-items: center; min-height: 20px; font-size: var(--tags_font_size); font-weight: var(--tags_font_weight); overflow: hidden; }
+.product .product-header .image > .tag.extra{ position: absolute; left: 0; bottom: 0; width: 100%; margin-bottom: 42px; z-index: 1; background-color: var(--product_tag_extra_bg); color: var(--product_tag_extra_fg); }
+
+
+/* Preço à vista pg do produto */
+.w3-product-info-price #produto_preco #info_preco .txt-corparcelas:first-of-type .preco-parc2{ font-size: 0; }
+.w3-product-info-price #produto_preco #info_preco .txt-corparcelas:first-of-type .preco-parc2 strong{ font-size: var(--product_price_info_font_size); }
+.w3-product-info-price #produto_preco #info_preco .operadora + br{ display: initial; }
+/*.w3-product-info-price #produto_preco #info_preco .operadora + br + .preco-avista::before{ content: ' ou '; font-size: inherit; font-weight: inherit; color: inherit; }*/
+
+
+/* Pg produto - compre junto */
+.w3-buy-together{ margin-top: 20px; }
+.w3-buy-together .prodBox .compreJunto li form{ justify-content: flex-start; flex-wrap: wrap; }
+.w3-buy-together .prodBox .compreJunto li .fotosCompreJunto .produto{ width: calc(50% - 12px); border: 0; padding: 0; }
+.w3-buy-together .prodBox .compreJunto li .precoCompreJunto{ width: 100%; }
+@media screen and (max-width: 480px) {
+    .w3-buy-together .prodBox .compreJunto li form {
+        justify-content: center;
+    }
+}
+
+
+/* Vídeo da pg de produto */
+@media screen and (min-width: 768px) {
+    .w3-product-layout-sticky .w3-product-gallery .w3-product-image .video{ aspect-ratio: calc( var(--product_img_width) / var(--product_img_height) ); overflow: hidden; }
+}
+.fancybox-content{ font-size: 0; }
+.fancybox-content video{ max-height: 85vh; }
+
+

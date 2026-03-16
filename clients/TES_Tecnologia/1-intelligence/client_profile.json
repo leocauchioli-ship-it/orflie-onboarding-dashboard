@@ -1,0 +1,48 @@
+{
+    "client_name": "TES Tecnologia",
+    "business_sector": "Tecnologia Educacional e Corporativa",
+    "founded": "1990 (Fundadores ex-3M)",
+    "key_stakeholders": [
+        "Samir",
+        "Maurício",
+        "Juarez"
+    ],
+    "icp_characteristics": {
+        "profile": "Escolas (Públicas e Privadas), Universidades, Setor Corporativo, Arquitetura e Engenharia.",
+        "psychology": "Valorizam autoridade técnica, durabilidade e assistência 'on-site'. Céticos com marketing 'vazio' ou imagens de IA desconectadas da realidade.",
+        "pain_points": [
+            "Barreira tecnológica dos professores",
+            "Complexidade de instalação (cabos)",
+            "Custo de manutenção",
+            "Desconhecimento do produto All-in-One"
+        ]
+    },
+    "unique_selling_point": "Know-how de engenharia de 35 anos. Líder em Carrinhos de Recarga. Marca própria de Monitores Interativos (TESMIT) que substituem o notebook, projetor e lousa.",
+    "language_guidelines": {
+        "avoid": [
+            "engajamento",
+            "aguentar",
+            "passivo",
+            "coach",
+            "youctuber"
+        ],
+        "prefer": [
+            "envolvimento",
+            "participação",
+            "colaboração",
+            "solução ipsis litteris",
+            "estágio de compra"
+        ]
+    },
+    "similar_past_projects": [
+        "NeuroAgi (Conexão: Liderança e Educação)"
+    ],
+    "current_status": "Lançamento da Landing Page TESMIT e preparação para Bett Brasil (Maio).",
+    "knowledge_chunks": [
+        "Fundação em 1990 após saída da 3M",
+        "Líder em Carrinhos de Recarga (fabricação própria e modular)",
+        "Diferencial de Assistência Técnica On-site",
+        "Conceito 'Teacher Show' e 'Speaker Show'",
+        "Foco em facilitar a vida do professor (que já usa GPT e QR Codes)"
+    ]
+}

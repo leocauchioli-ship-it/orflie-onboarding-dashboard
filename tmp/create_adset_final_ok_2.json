@@ -1,0 +1,78 @@
+{
+  "targeting_used": {
+    "age_max": 54,
+    "age_min": 30,
+    "flexible_spec": [
+      {
+        "interests": [
+          {
+            "id": "6003388161512",
+            "name": "Planejamento estrat\u00e9gico"
+          },
+          {
+            "id": "6003388314512",
+            "name": "Investimento (neg\u00f3cios e finan\u00e7as)"
+          },
+          {
+            "id": "6004037932409",
+            "name": "Gest\u00e3o (neg\u00f3cios e finan\u00e7as)"
+          }
+        ],
+        "industries": [
+          {
+            "id": "6009003311983",
+            "name": "Management"
+          }
+        ]
+      },
+      {
+        "behaviors": [
+          {
+            "id": "6002764392172",
+            "name": "Facebook Payments users (90 days)"
+          },
+          {
+            "id": "6015683810783",
+            "name": "Facebook Page admins"
+          }
+        ],
+        "work_positions": [
+          {
+            "id": "108611555829523",
+            "name": "Empres\u00e1rio"
+          },
+          {
+            "id": "144066855611031",
+            "name": "S\u00f3cio Propriet\u00e1rio"
+          },
+          {
+            "id": "151785081542575",
+            "name": "Propriet\u00e1rio(a)"
+          },
+          {
+            "id": "849873341726582",
+            "name": "Founder"
+          }
+        ]
+      }
+    ],
+    "genders": [
+      0
+    ],
+    "geo_locations": {
+      "countries": [
+        "BR"
+      ],
+      "location_types": [
+        "home",
+        "recent"
+      ]
+    },
+    "targeting_automation": {
+      "advantage_audience": 0
+    }
+  },
+  "result": {
+    "id": "120241621871960337"
+  }
+}

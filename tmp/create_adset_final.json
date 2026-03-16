@@ -1,0 +1,12 @@
+{
+  "error": {
+    "message": "Invalid parameter",
+    "type": "OAuthException",
+    "code": 100,
+    "error_subcode": 1487079,
+    "is_transient": false,
+    "error_user_title": "Especifica\u00e7\u00e3o de alvo inv\u00e1lida",
+    "error_user_msg": "A especifica\u00e7\u00e3o de direcionamento indicada n\u00e3o \u00e9 v\u00e1lida porque: The field saved_audience is not a valid target spec field",
+    "fbtrace_id": "Au1Dn3QlsjYaPTghX6oHN3X"
+  }
+}

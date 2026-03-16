@@ -1,0 +1,128 @@
+{
+  "data": [
+    {
+      "id": "120241197237290337",
+      "name": "[P\u00fabli-Direcionamento-30a50-Ins]",
+      "targeting": {
+        "age_max": 65,
+        "age_min": 25,
+        "age_range": [
+          30,
+          50
+        ],
+        "flexible_spec": [
+          {
+            "interests": [
+              {
+                "id": "6003388314512",
+                "name": "Investimento (neg\u00f3cios e finan\u00e7as)"
+              },
+              {
+                "id": "6003402305839",
+                "name": "Neg\u00f3cios (neg\u00f3cios e finan\u00e7as)"
+              },
+              {
+                "id": "6004037932409",
+                "name": "Gest\u00e3o (neg\u00f3cios e finan\u00e7as)"
+              }
+            ],
+            "work_positions": [
+              {
+                "id": "133337610036491",
+                "name": "Founder, Director, CEO"
+              },
+              {
+                "id": "149598488387016",
+                "name": "Owner and CEO"
+              }
+            ]
+          }
+        ],
+        "geo_locations": {
+          "countries": [
+            "BR"
+          ],
+          "location_types": [
+            "home",
+            "recent"
+          ]
+        },
+        "targeting_automation": {
+          "advantage_audience": 1,
+          "individual_setting": {
+            "age": 1,
+            "gender": 1
+          }
+        },
+        "publisher_platforms": [
+          "instagram"
+        ],
+        "instagram_positions": [
+          "stream",
+          "ig_search",
+          "profile_reels",
+          "story",
+          "explore",
+          "reels",
+          "explore_home",
+          "profile_feed"
+        ],
+        "device_platforms": [
+          "mobile",
+          "desktop"
+        ]
+      }
+    },
+    {
+      "id": "120241196380740337",
+      "name": "[P\u00fabli-All-30a50-Ins]",
+      "targeting": {
+        "age_max": 65,
+        "age_min": 25,
+        "age_range": [
+          30,
+          50
+        ],
+        "geo_locations": {
+          "countries": [
+            "BR"
+          ],
+          "location_types": [
+            "home",
+            "recent"
+          ]
+        },
+        "targeting_automation": {
+          "advantage_audience": 1,
+          "individual_setting": {
+            "age": 1,
+            "gender": 1
+          }
+        },
+        "publisher_platforms": [
+          "instagram"
+        ],
+        "instagram_positions": [
+          "stream",
+          "ig_search",
+          "profile_reels",
+          "story",
+          "explore",
+          "reels",
+          "explore_home",
+          "profile_feed"
+        ],
+        "device_platforms": [
+          "mobile",
+          "desktop"
+        ]
+      }
+    }
+  ],
+  "paging": {
+    "cursors": {
+      "before": "QVFIU01UR1JKNFdZAekoxOWVkRXJpSHNwaFE5dlVxaU9yVVB2ZAEg3aXpmdzRaNmdabWZANMGhuQTVGUFlHd09paWVkTW94V2tLc0htYVMzeUVvUk1qQkVENUdB",
+      "after": "QVFIU2tKUHcwUGRtWXlFQjM1dXg5WVUwUGJuZAFAtSWpiakNfeTUzRDB2MXhNTkF3NjV2bWRhcTMwRmtKcGZAuRUNPODI5S2RtYmtObE1hQ0o4SmRxSC1oVFNR"
+    }
+  }
+}

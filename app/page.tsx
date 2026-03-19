@@ -195,14 +195,49 @@ export default function Dashboard() {
     return matchSearch && matchSegment && matchState
   })
 
-  function exportPDF(d: OnboardingData) {
+  async function exportPDF(d: OnboardingData) {
     const flat = flattenPayload(d.payload)
     const content = generatePDFContent(d, flat)
-    const opt = { margin: 10, filename: `${d.companyName || 'onboarding'}.pdf` }
-    if (typeof window !== 'undefined' && 'html2pdf' in window) {
-      const element = document.createElement('div')
-      element.innerHTML = content
-      ;(window as Record<string, unknown> & { html2pdf: () => { set: (o: unknown) => { from: (el: HTMLElement) => { save: () => void } } } }).html2pdf().set(opt).from(element).save()
+
+    const wrapper = document.createElement('div')
+    wrapper.style.cssText = 'position:fixed;top:-9999px;left:-9999px;width:794px;background:#fff;'
+    wrapper.innerHTML = content
+    document.body.appendChild(wrapper)
+
+    try {
+      const [{ default: jsPDF }, { default: html2canvas }] = await Promise.all([
+        import('jspdf'),
+        import('html2canvas'),
+      ])
+
+      const canvas = await html2canvas(wrapper, {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: '#ffffff',
+        logging: false,
+      })
+
+      const imgData = canvas.toDataURL('image/png')
+      const pdf = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4' })
+      const pageW = pdf.internal.pageSize.getWidth()
+      const pageH = pdf.internal.pageSize.getHeight()
+      const imgH = (canvas.height * pageW) / canvas.width
+
+      let remaining = imgH
+      let yOffset = 0
+
+      while (remaining > 0) {
+        pdf.addImage(imgData, 'PNG', 0, yOffset, pageW, imgH)
+        remaining -= pageH
+        if (remaining > 0) {
+          yOffset -= pageH
+          pdf.addPage()
+        }
+      }
+
+      pdf.save(`onboarding-${(d.companyName || 'empresa').toLowerCase().replace(/\s+/g, '-')}.pdf`)
+    } finally {
+      document.body.removeChild(wrapper)
     }
   }
 
@@ -613,71 +648,130 @@ function normalizeKey(key: string): string {
 
 function generatePDFContent(d: OnboardingData, p: Record<string, unknown>): string {
   const f = (val: unknown) => formatValue(val)
-  const arr = (val: unknown) => Array.isArray(val) ? (val as string[]).join(', ') : f(val)
+  const arr = (val: unknown) => Array.isArray(val) ? (val as string[]).join(' · ') : f(val)
+
+  // Só renderiza se tiver valor preenchido (não "-")
+  const field = (label: string, val: unknown) => {
+    const v = Array.isArray(val) ? arr(val) : f(val)
+    if (!v || v === '-') return ''
+    return `
+      <div style="margin-bottom:10px;">
+        <div style="font-size:10px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:3px;">${label}</div>
+        <div style="font-size:13px;color:#1a1a1a;line-height:1.5;">${v}</div>
+      </div>`
+  }
+
+  const section = (title: string, fields: string) => {
+    const filtered = fields.trim()
+    if (!filtered) return ''
+    return `
+      <div style="margin-bottom:24px;break-inside:avoid;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
+          <div style="width:3px;height:18px;background:#0a0a0a;border-radius:2px;flex-shrink:0;"></div>
+          <div style="font-size:12px;font-weight:700;color:#0a0a0a;text-transform:uppercase;letter-spacing:1px;">${title}</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 24px;padding-left:11px;">
+          ${filtered}
+        </div>
+      </div>`
+  }
 
   return `
-    <div style="font-family: Arial, sans-serif; padding: 20px; color: #1a1a1a;">
-      <h1 style="border-bottom: 2px solid #000; padding-bottom: 10px;">${d.companyName || 'Empresa'}</h1>
-      <p><strong>Data:</strong> ${d.receivedAt}</p>
-      <p><strong>Segmento:</strong> ${d.companySegment}</p>
+    <div style="font-family:'Helvetica Neue',Arial,sans-serif;background:#fff;color:#1a1a1a;width:794px;">
 
-      <h2>Dados do Contato</h2>
-      <p><strong>Nome:</strong> ${d.contactName}</p>
-      <p><strong>E-mail:</strong> ${d.contactEmail}</p>
-      <p><strong>Telefone:</strong> ${d.contactPhone}</p>
+      <!-- HEADER -->
+      <div style="background:#0a0a0a;padding:32px 40px 28px;margin-bottom:0;">
+        <div style="font-size:11px;font-weight:600;color:#888;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">ORFLIE · ONBOARDING</div>
+        <div style="font-size:28px;font-weight:700;color:#fff;line-height:1.2;margin-bottom:4px;">${d.companyName || 'Empresa'}</div>
+        ${d.companySegment ? `<div style="font-size:13px;color:#aaa;margin-top:6px;">${d.companySegment}</div>` : ''}
+      </div>
 
-      <h2>Dados da Empresa</h2>
-      <p><strong>CNPJ:</strong> ${f(p.cnpj)}</p>
-      <p><strong>Site:</strong> ${f(p.site)}</p>
-      <p><strong>Tempo de Mercado:</strong> ${f(p.tempo_mercado)}</p>
-      <p><strong>Colaboradores:</strong> ${f(p.colaboradores)}</p>
-      <p><strong>Cidade/Estado:</strong> ${f(p.cidade_estado)}</p>
-      <p><strong>Faturamento:</strong> ${f(p.faturamento)}</p>
+      <!-- META BAR -->
+      <div style="background:#f5f5f5;padding:14px 40px;display:flex;gap:32px;border-bottom:1px solid #e5e5e5;margin-bottom:32px;">
+        ${d.contactName ? `<div><span style="font-size:10px;color:#888;font-weight:600;text-transform:uppercase;">Contato</span><br><span style="font-size:12px;color:#1a1a1a;">${d.contactName}</span></div>` : ''}
+        ${d.contactEmail ? `<div><span style="font-size:10px;color:#888;font-weight:600;text-transform:uppercase;">E-mail</span><br><span style="font-size:12px;color:#1a1a1a;">${d.contactEmail}</span></div>` : ''}
+        ${d.contactPhone ? `<div><span style="font-size:10px;color:#888;font-weight:600;text-transform:uppercase;">Telefone</span><br><span style="font-size:12px;color:#1a1a1a;">${d.contactPhone}</span></div>` : ''}
+        ${d.receivedAt ? `<div style="margin-left:auto;"><span style="font-size:10px;color:#888;font-weight:600;text-transform:uppercase;">Recebido</span><br><span style="font-size:12px;color:#1a1a1a;">${d.receivedAt.slice(0,16).replace('T',' ')}</span></div>` : ''}
+      </div>
 
-      <h2>Posicionamento</h2>
-      <p><strong>Posição no Mercado:</strong> ${f(p.posicionamento)}</p>
-      <p><strong>Diferencial:</strong> ${f(p.diferencial)}</p>
-      <p><strong>Percepção desejada:</strong> ${f(p.percepcao)}</p>
-      <p><strong>Missão:</strong> ${f(p.missao)}</p>
+      <!-- BODY -->
+      <div style="padding:0 40px 40px;">
 
-      <h2>Cliente Ideal</h2>
-      <p><strong>Segmento Alvo:</strong> ${f(p.segmento_alvo)}</p>
-      <p><strong>Porte:</strong> ${f(p.porte_cliente)}</p>
-      <p><strong>Região:</strong> ${f(p.regiao)}</p>
-      <p><strong>Decisores:</strong> ${arr(p.decisores)}</p>
-      <p><strong>Gatilhos:</strong> ${f(p.gatilhos)}</p>
+        ${section('Dados da Empresa', `
+          ${field('CNPJ', p.cnpj)}
+          ${field('Site', p.site)}
+          ${field('Tempo de Mercado', p.tempo_mercado)}
+          ${field('Colaboradores', p.colaboradores)}
+          ${field('Cidade / Estado', p.cidade_estado)}
+          ${field('Faturamento Médio', p.faturamento)}
+        `)}
 
-      <h2>Dores do Cliente</h2>
-      <p><strong>Dores:</strong> ${arr(p.dores)}</p>
-      <p><strong>Impacto:</strong> ${f(p.impacto_dores)}</p>
-      <p><strong>Como resolve hoje:</strong> ${f(p.como_resolve_hoje)}</p>
+        ${section('Posicionamento', `
+          ${field('Posição no Mercado', p.posicionamento)}
+          ${field('Diferencial', p.diferencial)}
+          ${field('Percepção Desejada', p.percepcao)}
+          ${field('Missão', p.missao)}
+        `)}
 
-      <h2>Processo de Vendas</h2>
-      <p><strong>CRM:</strong> ${f(p.crm)}</p>
-      <p><strong>Qual CRM:</strong> ${f(p.qual_crm)}</p>
-      <p><strong>Canais:</strong> ${arr(p.canais)}</p>
-      <p><strong>Como chegam leads:</strong> ${arr(p.como_chegam)}</p>
+        ${section('Cliente Ideal', `
+          ${field('Segmento Alvo', p.segmento_alvo)}
+          ${field('Porte do Cliente', p.porte_cliente)}
+          ${field('Região', p.regiao)}
+          ${field('Decisores', p.decisores)}
+          ${field('Gatilho de Compra', p.gatilhos)}
+        `)}
 
-      <h2>Equipe de Vendas</h2>
-      <p><strong>Nr. Vendedores:</strong> ${f(p.nr_vendedores)}</p>
-      <p><strong>Estrutura:</strong> ${arr(p.estrutura)}</p>
-      <p><strong>Metas:</strong> ${f(p.metas)}</p>
+        ${section('Dores do Cliente', `
+          ${field('Principais Dores', p.dores)}
+          ${field('Impacto', p.impacto_dores)}
+          ${field('Como Resolve Hoje', p.como_resolve_hoje)}
+        `)}
 
-      <h2>Métricas</h2>
-      <p><strong>Ticket Médio:</strong> ${f(p.ticket_medio)}</p>
-      <p><strong>Ciclo de Vendas:</strong> ${f(p.ciclo_vendas)}</p>
-      <p><strong>Taxa Conversão:</strong> ${f(p.taxa_conversao)}</p>
-      <p><strong>Churn:</strong> ${f(p.churn)}</p>
-      <p><strong>Métrica Crítica:</strong> ${f(p.metrica_critica)}</p>
+        ${section('Processo de Vendas', `
+          ${field('Usa CRM', p.crm)}
+          ${field('Qual CRM', p.qual_crm)}
+          ${field('Canais de Venda', p.canais)}
+          ${field('Como Chegam Leads', p.como_chegam)}
+        `)}
 
-      <h2>Objetivos</h2>
-      <p><strong>O que espera alcançar:</strong> ${arr(p.objetivos)}</p>
-      <p><strong>Meta:</strong> ${f(p.meta_faturamento)}</p>
-      <p><strong>Prazo:</strong> ${f(p.prazo)}</p>
+        ${section('Equipe de Vendas', `
+          ${field('Nº de Vendedores', p.nr_vendedores)}
+          ${field('Estrutura', p.estrutura)}
+          ${field('Metas', p.metas)}
+        `)}
 
-      <h2>Contexto</h2>
-      <p><strong>O que conhecer antes:</strong> ${f(p.conhecer_antes)}</p>
-      <p><strong>Sucesso absoluto:</strong> ${f(p.sucesso_absoluto)}</p>
+        ${section('Métricas', `
+          ${field('Ticket Médio', p.ticket_medio)}
+          ${field('Ciclo de Vendas', p.ciclo_vendas)}
+          ${field('Taxa de Conversão', p.taxa_conversao)}
+          ${field('Churn', p.churn)}
+          ${field('Métrica Crítica', p.metrica_critica)}
+        `)}
+
+        ${section('Concorrência', `
+          ${field('Principais Concorrentes', p.concorrentes)}
+          ${field('Diferencial vs Concorrentes', p.diferencial_concorrentes)}
+        `)}
+
+        ${section('Objetivos', `
+          ${field('O que Espera Alcançar', p.objetivos)}
+          ${field('Meta de Faturamento', p.meta_faturamento)}
+          ${field('Prazo', p.prazo)}
+        `)}
+
+        ${section('Contexto Adicional', `
+          ${field('O que Conhecer Antes', p.conhecer_antes)}
+          ${field('Sucesso Absoluto', p.sucesso_absoluto)}
+          ${field('Materiais a Criar', p.materiais_criar)}
+        `)}
+
+      </div>
+
+      <!-- FOOTER -->
+      <div style="border-top:1px solid #e5e5e5;padding:16px 40px;display:flex;justify-content:space-between;align-items:center;">
+        <div style="font-size:10px;color:#aaa;">Documento gerado pelo sistema Orflie Onboarding</div>
+        <div style="font-size:10px;color:#aaa;font-weight:600;">ORFLIE</div>
+      </div>
     </div>
   `
 }

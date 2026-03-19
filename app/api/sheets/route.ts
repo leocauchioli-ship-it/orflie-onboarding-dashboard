@@ -1,9 +1,13 @@
 import { NextResponse } from 'next/server'
 import { google } from 'googleapis'
 
+// Força execução dinâmica a cada request — nunca cacheia
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 // Configurar credenciais via variável de ambiente
-const SPREADSHEET_ID = process.env.GOOGLE_SHEETS_ID!
-const SHEET_NAME = process.env.GOOGLE_SHEETS_NAME || 'Respostas'
+const SPREADSHEET_ID = (process.env.GOOGLE_SHEETS_ID || '').trim()
+const SHEET_NAME = (process.env.GOOGLE_SHEETS_NAME || 'Respostas').trim()
 
 export async function GET() {
   console.log('API /api/sheets chamada')
@@ -13,18 +17,31 @@ export async function GET() {
       return NextResponse.json({ error: 'SPREADSHEET_ID não configurado' }, { status: 500 })
     }
 
-    console.log('Autenticando com Google Sheets...', process.env.GOOGLE_CLIENT_EMAIL)
-    
-    // Autenticação via Service Account
-    const auth = new google.auth.GoogleAuth({
-      credentials: {
-        client_email: process.env.GOOGLE_CLIENT_EMAIL,
-        private_key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
-      },
+    // Autenticação via Service Account — prioridade: B64 > JSON > email+chave
+    let credentials: { client_email: string; private_key: string }
+
+    if (process.env.GOOGLE_SERVICE_ACCOUNT_B64) {
+      const json = Buffer.from(process.env.GOOGLE_SERVICE_ACCOUNT_B64, 'base64').toString('utf8')
+      credentials = JSON.parse(json)
+      console.log('Autenticando com Google Sheets via B64...', credentials.client_email)
+    } else if (process.env.GOOGLE_SERVICE_ACCOUNT_JSON) {
+      credentials = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_JSON)
+      console.log('Autenticando com Google Sheets via JSON...', credentials.client_email)
+    } else {
+      credentials = {
+        client_email: process.env.GOOGLE_CLIENT_EMAIL!,
+        private_key: (process.env.GOOGLE_PRIVATE_KEY || '').replace(/\\n/g, '\n'),
+      }
+      console.log('Autenticando com Google Sheets...', credentials.client_email)
+    }
+
+    const auth = new google.auth.JWT({
+      email: credentials.client_email,
+      key: credentials.private_key,
       scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
     })
 
-    const sheets = google.sheets({ version: 'v4', auth })
+const sheets = google.sheets({ version: 'v4', auth })
 
     console.log('Buscando dados da planilha:', SPREADSHEET_ID, 'aba:', SHEET_NAME)
     
@@ -80,9 +97,18 @@ export async function GET() {
       return (parseDate(b.receivedAt as string) || 0) - (parseDate(a.receivedAt as string) || 0);
     })
 
-    return NextResponse.json(data)
+    return NextResponse.json(data, {
+      headers: { 'Cache-Control': 'no-store, no-cache, must-revalidate' }
+    })
   } catch (error) {
+    const e = error as { message?: string; code?: number; status?: number; errors?: unknown[] }
     console.error('Erro ao buscar dados:', error)
-    return NextResponse.json({ error: 'Erro ao buscar dados' }, { status: 500 })
+    return NextResponse.json({
+      error: 'Erro ao buscar dados',
+      message: e.message,
+      code: e.code,
+      status: e.status,
+      details: e.errors,
+    }, { status: 500 })
   }
 }

@@ -11,7 +11,6 @@ interface OnboardingData {
   payload: Record<string, unknown>
 }
 
-// Dados mock para desenvolvimento
 const MOCK_DATA: OnboardingData[] = [
   {
     receivedAt: '2026-03-13T10:30:00Z',
@@ -31,74 +30,77 @@ const MOCK_DATA: OnboardingData[] = [
           'Faturamento Médio Anual': 'R$ 5M - R$ 10M'
         },
         'Posicionamento de Mercado': {
-          'Posição no Mercado': 'Produto Premium',
+          'Como a empresa se posiciona no mercado?': 'Produto Premium',
           'Principal diferencial competitivo': 'Tecnologia proprietária e suporte 24/7',
-          'Como a empresa quer ser percebida': 'Parceiro estratégico de confiança',
+          'Como a empresa quer ser percebida pelos clientes?': 'Parceiro estratégico de confiança',
           'Missão ou propósito declarado': 'Simplificar a venda B2B com inteligência'
         },
         'Cliente Ideal': {
-          'Segmento-alvo': 'PMEs com 50-500 funcionários',
+          'Segmento de Atuação': 'PMEs com 50-500 funcionários',
           'Porte da empresa cliente': 'Médio',
           'Faixa de faturamento do cliente ideal': 'R$ 5M - R$ 50M/ano',
-          'Região de atuação': 'Sudeste, fokus em SP e RJ',
-          'Quem toma a decisão de compra': ['Dono / Sócio', 'CEO / Diretor', 'Gerente Comercial'],
-          'Principal gatilho': 'Crescimento acelerado que sobrecarrega a equipe de vendas'
+          'Região de atuação': 'Sudeste',
+          'Quem toma a decisão de compra': ['Dono / Sócio', 'CEO / Diretor'],
+          'Principal gatilho de compra': 'Crescimento acelerado'
         },
         'Dores do Cliente': {
-          'Principais dores do cliente': [
-            'Alto custo de aquisição de clientes',
-            'Processo de venda manual e demorado',
-            'Falta de visibilidade do pipeline'
-          ],
-          'Impacto financeiro/operacional': 'Perda de R$ 100k/mês em oportunidades não convertidas',
-          'Como resolve hoje': 'Planilhas Excel e WhatsApp'
+          'Principais dores do cliente': ['Alto CAC', 'Processo manual', 'Falta de visibilidade'],
+          'Impacto financeiro/operacional das dores': 'Perda de R$ 100k/mês',
+          'Como resolve hoje (antes da Orflie)': 'Planilhas Excel e WhatsApp'
         },
         'Processo de Vendas': {
-          'CRM': 'Parcialmente',
-          'Qual CRM': 'HubSpot (mas mal utilizado)',
-          'Canais de comunicação': ['WhatsApp', 'E-mail', 'LinkedIn'],
-          'Como os leads chegam': ['Indicação', 'Marketing digital', 'Prospecção ativa']
+          'Usa CRM?': 'Parcialmente',
+          'Qual CRM utiliza?': 'HubSpot',
+          'Canais de comunicação com clientes': ['WhatsApp', 'E-mail', 'LinkedIn'],
+          'Como os leads chegam hoje': ['Indicação', 'Marketing digital']
         },
         'Equipe de Vendas': {
           'Total de vendedores': 8,
-          'Estrutura da equipe': ['SDR', 'Closer', 'Executivo de Contas'],
-          'Metas comerciais': 'Meta mensal de R$ 180k, 12 novos clientes/mês',
-          'O time tem treinamento de vendas': 'Às vezes'
+          'Estrutura da equipe comercial': ['SDR', 'Closer'],
+          'Metas comerciais atuais': 'R$ 180k/mês',
+          'O time tem treinamento de vendas?': 'Às vezes'
         },
-        'Métricas': {
+        'Métricas Comerciais': {
           'Ticket Médio': 'R$ 15.000',
           'Ciclo Médio de Vendas': '45 dias',
           'Taxa de Conversão Média': '12%',
-          'Reuniões / mês': 35,
-          'Novos clientes / mês': 6,
+          'Reuniões realizadas por mês': 35,
+          'Novos clientes por mês': 6,
           'Churn mensal': '5%',
-          'Métrica mais crítica': 'Taxa de conversão'
+          'Métrica mais crítica para o negócio': 'Taxa de conversão'
         },
         'Concorrência': {
           'Principais concorrentes': ['Salesforce', 'RD Station', 'Pipedrive'],
-          'O que concorrentes fazem melhor': 'Marca consolidada e preço baixo',
-          'O que a empresa faz melhor': 'Atendimento personalizado e implementação rápida'
+          'O que os concorrentes fazem melhor': 'Marca consolidada',
+          'O que a empresa faz melhor que os concorrentes': 'Atendimento personalizado',
+          'Por que perdem para concorrentes?': 'Preço'
         },
         'Objetivos': {
-          'O que empresa espera alcançar': ['Aumentar geração de leads', 'Melhorar conversão', 'Estruturar processo comercial'],
+          'O que a empresa espera alcançar?': ['Aumentar geração de leads', 'Melhorar conversão'],
           'Meta de faturamento desejada': 'R$ 800k/mês em 6 meses',
-          'Prazo esperado': '3-6 meses'
+          'Prazo esperado para ver resultados': '3-6 meses',
+          'Como o sucesso deste projeto será medido internamente?': 'Aumento de 30% na conversão'
         },
         'Marketing': {
-          'Investe em marketing': 'Sim',
-          'Canais ativos': ['Google Ads', 'LinkedIn Ads', 'Conteúdo / Blog'],
-          'Investimento mensal em mídia': 'R$ 5.000 - R$ 10.000',
-          'Agência de marketing': 'Gerenciamento interno'
+          'Investe em marketing?': 'Sim',
+          'Canais de marketing ativos': ['Google Ads', 'LinkedIn Ads'],
+          'Investimento mensal em mídia paga': 'R$ 5.000 - R$ 10.000',
+          'Trabalha com agência de marketing?': 'Gerenciamento interno'
         },
         'Materiais': {
-          'A empresa já possui': ['Apresentação institucional', 'Proposta comercial padrão', 'Scripts de prospecção'],
-          'Material precisa criar': 'Cases de sucesso e calculadora de ROI'
+          'Materiais que a empresa já possui': ['Apresentação institucional', 'Proposta comercial'],
+          'Materiais que precisam ser criados ou melhorados': 'Cases de sucesso'
         },
         'Projeto & Equipe': {
-          'Responsável interno': 'Ana Paula Santos',
-          'Cargo': 'Gerente Comercial',
-          'Acessos necessários': ['CRM', 'E-mail corporativo', 'Base de leads'],
-          'O que time precisa saber': 'Temos sazonalidade no segundo semestre'
+          'Nome do responsável interno pelo projeto': 'Ana Paula Santos',
+          'Cargo do responsável': 'Gerente Comercial',
+          'Quem aprova as entregas?': 'CEO',
+          'Outros envolvidos no projeto': 'Time de marketing',
+          'Acessos que a Orflie precisará': ['CRM', 'E-mail corporativo'],
+          'Restrições ou limitações importantes': 'Nenhuma',
+          'O que o time precisa saber antes de começar': 'Sazonalidade no Q4',
+          'Frustrações com experiências anteriores': 'Nenhuma',
+          'O que seria um sucesso absoluto?': 'Dobrar o faturamento'
         }
       }
     }
@@ -121,59 +123,15 @@ const MOCK_DATA: OnboardingData[] = [
           'Faturamento Médio Anual': 'R$ 2M - R$ 5M'
         },
         'Posicionamento de Mercado': {
-          'Posição no Mercado': 'Especializado / Nicho',
-          'Principal diferencial competitivo': 'Especialistas em e-commerce B2B',
-          'Como a empresa quer ser percebida': 'Autoridade em marketing para e-commerce'
+          'Como a empresa se posiciona no mercado?': 'Especializado / Nicho',
+          'Principal diferencial competitivo': 'Especialistas em e-commerce B2B'
         },
-        'Cliente Ideal': {
-          'Segmento-alvo': 'E-commerces B2B',
-          'Porte da empresa cliente': 'Pequeno a Médio',
-          'Quem toma a decisão de compra': ['Dono / Sócio', 'Marketing']
-        },
-        'Processo de Vendas': {
-          'CRM': 'Sim',
-          'Qual CRM': 'RD Station',
-          'Como os leads chegam': ['Inbound / SEO', 'Indicação']
-        },
-        'Equipe de Vendas': {
-          'Total de vendedores': 4,
-          'Estrutura da equipe': ['Executivo de Contas']
-        },
-        'Métricas': {
+        'Métricas Comerciais': {
           'Ticket Médio': 'R$ 8.000',
           'Ciclo Médio de Vendas': '30 dias'
         },
         'Objetivos': {
-          'O que empresa espera alcançar': ['Escalar receita', 'Entrar em novos mercados']
-        }
-      }
-    }
-  },
-  {
-    receivedAt: '2026-03-11T09:15:00Z',
-    companyName: 'Construtec Engenharia',
-    contactName: 'Fernanda Oliveira',
-    contactEmail: 'fernanda@construtec.com.br',
-    contactPhone: '(31) 99999-5555',
-    companySegment: 'Construção Civil',
-    payload: {
-      sections: {
-        'Dados da Empresa': {
-          'Tempo de Mercado': '15 anos',
-          'Nº de Colaboradores': 120,
-          'Cidade / Estado': 'Belo Horizonte / MG',
-          'Faturamento Médio Anual': 'R$ 50M+'
-        },
-        'Posicionamento de Mercado': {
-          'Posição no Mercado': 'Produto Premium',
-          'Principal diferencial competitivo': 'Certificações e compliance'
-        },
-        'Cliente Ideal': {
-          'Segmento-alvo': 'Grandes empresas e governo',
-          'Porte da empresa cliente': 'Grande'
-        },
-        'Equipe de Vendas': {
-          'Total de vendedores': 6
+          'O que a empresa espera alcançar?': ['Escalar receita', 'Entrar em novos mercados']
         }
       }
     }
@@ -185,147 +143,67 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true)
   const [selected, setSelected] = useState<OnboardingData | null>(null)
   const [search, setSearch] = useState('')
+  const [filterSegment, setFilterSegment] = useState('')
+  const [filterState, setFilterState] = useState('')
+  const [isMock, setIsMock] = useState(false)
 
-  useEffect(() => { 
+  useEffect(() => {
     if (typeof window !== 'undefined') {
-      fetchData() 
+      fetchData()
     }
   }, [])
 
   async function fetchData() {
     try {
-      console.log('Iniciando busca de dados...')
       const res = await fetch('/api/sheets')
-      if (!res.ok) {
-        const errorText = await res.text()
-        console.error('Erro na resposta da API:', errorText)
-        throw new Error(`API error: ${res.status}`)
-      }
+      if (!res.ok) throw new Error(`API error: ${res.status}`)
       const json = await res.json()
-      console.log('Dados recebidos com sucesso:', json.length, 'itens')
       setData(json)
-    } catch (e) {
-      console.error('Falha ao buscar dados do Sheets, usando mock...', e)
+      setIsMock(false)
+    } catch {
       setData(MOCK_DATA)
+      setIsMock(true)
+    } finally {
+      setLoading(false)
     }
-    finally { setLoading(false) }
   }
 
-  const filtered = data.filter(d =>
-    d.companyName.toLowerCase().includes(search.toLowerCase()) ||
-    d.contactName.toLowerCase().includes(search.toLowerCase())
-  )
+  const segments = Array.from(new Set(data.map(d => d.companySegment).filter(Boolean)))
 
-  function exportPDF() {
-    if (!selected) return
-    const content = generatePDFContent(selected)
-    const opt = { margin: 10, filename: `${selected.companyName || 'onboarding'}.pdf` }
-    // @ts-ignore
-    if (typeof window !== 'undefined' && window.html2pdf) {
-      // @ts-ignore
+  const states = Array.from(new Set(
+    data.map(d => {
+      const flat = flattenPayload(d.payload)
+      const loc = flat['cidade_estado'] as string | undefined
+      if (!loc) return ''
+      const parts = loc.split('/')
+      return parts.length > 1 ? parts[parts.length - 1].trim() : ''
+    }).filter(Boolean)
+  ))
+
+  const filtered = data.filter(d => {
+    const matchSearch = !search ||
+      d.companyName.toLowerCase().includes(search.toLowerCase()) ||
+      d.contactName.toLowerCase().includes(search.toLowerCase())
+
+    const matchSegment = !filterSegment || d.companySegment === filterSegment
+
+    const flat = flattenPayload(d.payload)
+    const loc = flat['cidade_estado'] as string | undefined
+    const state = loc ? (loc.split('/').pop()?.trim() ?? '') : ''
+    const matchState = !filterState || state === filterState
+
+    return matchSearch && matchSegment && matchState
+  })
+
+  function exportPDF(d: OnboardingData) {
+    const flat = flattenPayload(d.payload)
+    const content = generatePDFContent(d, flat)
+    const opt = { margin: 10, filename: `${d.companyName || 'onboarding'}.pdf` }
+    if (typeof window !== 'undefined' && 'html2pdf' in window) {
       const element = document.createElement('div')
       element.innerHTML = content
-      // @ts-ignore
-      window.html2pdf().set(opt).from(element).save()
+      ;(window as Record<string, unknown> & { html2pdf: () => { set: (o: unknown) => { from: (el: HTMLElement) => { save: () => void } } } }).html2pdf().set(opt).from(element).save()
     }
-  }
-
-  function generatePDFContent(d: OnboardingData): string {
-    const p = d.payload
-    return `
-      <div style="font-family: Arial, sans-serif; padding: 20px;">
-        <h1 style="border-bottom: 2px solid #000; padding-bottom: 10px;">${d.companyName || 'Empresa'}</h1>
-        <p><strong>Data:</strong> ${d.receivedAt}</p>
-        <p><strong>Segmento:</strong> ${d.companySegment}</p>
-
-        <h2>Dados do Contato</h2>
-        <p><strong>Nome:</strong> ${d.contactName}</p>
-        <p><strong>E-mail:</strong> ${d.contactEmail}</p>
-        <p><strong>Telefone:</strong> ${d.contactPhone}</p>
-
-        <h2>Dados da Empresa</h2>
-        <p><strong>CNPJ:</strong> ${p.cnpj || '-'}</p>
-        <p><strong>Site:</strong> ${p.site || '-'}</p>
-        <p><strong>Tempo de Mercado:</strong> ${p.tempo_mercado || '-'}</p>
-        <p><strong>Colaboradores:</strong> ${p.colaboradores || '-'}</p>
-        <p><strong>Cidade/Estado:</strong> ${p.cidade_estado || '-'}</p>
-        <p><strong>Faturamento:</strong> ${p.faturamento || '-'}</p>
-
-        <h2>Posicionamento</h2>
-        <p><strong>Posição no Mercado:</strong> ${p.posicionamento || '-'}</p>
-        <p><strong>Diferencial:</strong> ${p.diferencial || '-'}</p>
-        <p><strong>Percepção desejada:</strong> ${p.percepcao || '-'}</p>
-        <p><strong>Missão:</strong> ${p.missao || '-'}</p>
-
-        <h2>Cliente Ideal</h2>
-        <p><strong>Segmento Alvo:</strong> ${p.segmento_alvo || '-'}</p>
-        <p><strong>Porte:</strong> ${p.porte_cliente || '-'}</p>
-        <p><strong>Faturamento:</strong> ${p.faturamento_cliente || '-'}</p>
-        <p><strong>Região:</strong> ${p.regiao || '-'}</p>
-        <p><strong>Decisores:</strong> ${Array.isArray(p.decisores) ? p.decisores.join(', ') : p.decisores || '-'}</p>
-        <p><strong>Gatilhos:</strong> ${p.gatilhos || '-'}</p>
-
-        <h2>Dores do Cliente</h2>
-        <p><strong>Dores:</strong> ${Array.isArray(p.dores) ? p.dores.join(', ') : p.dores || '-'}</p>
-        <p><strong>Impacto:</strong> ${p.impacto_dores || '-'}</p>
-
-        <h2>Processo Atual</h2>
-        <p><strong>CRM:</strong> ${p.crm || '-'}</p>
-        <p><strong>Qual CRM:</strong> ${p.qual_crm || '-'}</p>
-        <p><strong>Canais:</strong> ${Array.isArray(p.canais) ? p.canais.join(', ') : p.canais || '-'}</p>
-        <p><strong>Como chegam:</strong> ${Array.isArray(p.como_chegam) ? p.como_chegam.join(', ') : p.como_chegam || '-'}</p>
-
-        <h2>Equipe de Vendas</h2>
-        <p><strong>Nr. Vendedores:</strong> ${p.nr_vendedores || '-'}</p>
-        <p><strong>Estrutura:</strong> ${Array.isArray(p.estrutura) ? p.estrutura.join(', ') : p.estrutura || '-'}</p>
-        <p><strong>Metas:</strong> ${p.metas || '-'}</p>
-        <p><strong>Treinamento:</strong> ${p.treinamento || '-'}</p>
-
-        <h2>Métricas</h2>
-        <p><strong>Ticket Médio:</strong> ${p.ticket_medio || '-'}</p>
-        <p><strong>Ciclo de Vendas:</strong> ${p.ciclo_vendas || '-'}</p>
-        <p><strong>Taxa Conversão:</strong> ${p.taxa_conversao || '-'}</p>
-        <p><strong>Reuniões/mês:</strong> ${p.reunioes_mes || '-'}</p>
-        <p><strong>Novos Clientes/mês:</strong> ${p.novos_clientes || '-'}</p>
-        <p><strong>Churn:</strong> ${p.churn || '-'}</p>
-        <p><strong>Métrica Crítica:</strong> ${p.metrica_critica || '-'}</p>
-
-        <h2>Concorrentes</h2>
-        <p><strong>Lista:</strong> ${Array.isArray(p.concorrentes) ? p.concorrentes.join(', ') : p.concorrentes || '-'}</p>
-        <p><strong>O que fazem melhor:</strong> ${p.conc_melhor || '-'}</p>
-        <p><strong>O que fazemos melhor:</strong> ${p.nos_melhor || '-'}</p>
-        <p><strong>Por que perdem:</strong> ${p.por_que_perdem || '-'}</p>
-
-        <h2>Objetivos</h2>
-        <p><strong>O que esperar:</strong> ${Array.isArray(p.objetivos) ? p.objetivos.join(', ') : p.objetivos || '-'}</p>
-        <p><strong>Meta:</strong> ${p.meta_faturamento || '-'}</p>
-        <p><strong>Prazo:</strong> ${p.prazo || '-'}</p>
-        <p><strong>Sucesso medido:</strong> ${p.sucesso_medido || '-'}</p>
-
-        <h2>Marketing</h2>
-        <p><strong>Investe em MKT:</strong> ${p.investe_mkt || '-'}</p>
-        <p><strong>Canais Ativos:</strong> ${Array.isArray(p.canais_mkt) ? p.canais_mkt.join(', ') : p.canais_mkt || '-'}</p>
-        <p><strong>Investimento:</strong> ${p.investimento_midia || '-'}</p>
-        <p><strong>Agência:</strong> ${p.agencia || '-'}</p>
-
-        <h2>Materiais</h2>
-        <p><strong>Possui:</strong> ${Array.isArray(p.materiais) ? p.materiais.join(', ') : p.materiais || '-'}</p>
-        <p><strong>Precisa criar:</strong> ${p.materiais_criar || '-'}</p>
-
-        <h2>Projeto</h2>
-        <p><strong>Responsável:</strong> ${p.responsavel_projeto || '-'}</p>
-        <p><strong>Cargo:</strong> ${p.cargo_responsavel || '-'}</p>
-        <p><strong>Aprovador:</strong> ${p.aprovador || '-'}</p>
-        <p><strong>Outros:</strong> ${p.outros_envolvidos || '-'}</p>
-        <p><strong>Acessos necessários:</strong> ${Array.isArray(p.acessos) ? p.acessos.join(', ') : p.acessos || '-'}</p>
-        <p><strong>Restrições:</strong> ${p.restricoes || '-'}</p>
-
-        <h2>Contexto</h2>
-        <p><strong>Conhecer antes:</strong> ${p.conhecer_antes || '-'}</p>
-        <p><strong>Frustrações anteriores:</strong> ${p.frustracoes || '-'}</p>
-        <p><strong>Sucesso absoluto:</strong> ${p.sucesso_absoluto || '-'}</p>
-      </div>
-    `
   }
 
   if (loading) return <div className="container"><div className="loading">Carregando dados...</div></div>
@@ -334,8 +212,50 @@ export default function Dashboard() {
     <div className="container">
       <header>
         <div className="logo">Orflie <span>Onboarding</span></div>
-        <input className="search-input" placeholder="Buscar empresa ou contato..." value={search} onChange={e => setSearch(e.target.value)} />
+        <div className="header-controls">
+          <input
+            className="search-input"
+            placeholder="Buscar empresa ou contato..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+          />
+          <select
+            className="filter-select"
+            value={filterSegment}
+            onChange={e => setFilterSegment(e.target.value)}
+          >
+            <option value="">Todos os segmentos</option>
+            {segments.map(s => <option key={s} value={s}>{s}</option>)}
+          </select>
+          {states.length > 0 && (
+            <select
+              className="filter-select"
+              value={filterState}
+              onChange={e => setFilterState(e.target.value)}
+            >
+              <option value="">Todos os estados</option>
+              {states.map(s => <option key={s} value={s}>{s}</option>)}
+            </select>
+          )}
+        </div>
       </header>
+
+      {isMock && (
+        <div className="mock-banner">
+          ⚠️ Exibindo dados de demonstração — conexão com Google Sheets indisponível
+        </div>
+      )}
+
+      <div className="stats-bar">
+        <span className="stat-item"><strong>{filtered.length}</strong> onboardings{filterSegment || filterState ? ' (filtrado)' : ''}</span>
+        {filterSegment && <span className="stat-badge">{filterSegment}</span>}
+        {filterState && <span className="stat-badge">{filterState}</span>}
+        {(filterSegment || filterState) && (
+          <button className="btn-clear" onClick={() => { setFilterSegment(''); setFilterState('') }}>
+            Limpar filtros
+          </button>
+        )}
+      </div>
 
       {filtered.length === 0 ? (
         <div className="empty">Nenhum onboarding encontrado</div>
@@ -343,26 +263,32 @@ export default function Dashboard() {
         <div>
           <div className="actions" style={{ marginBottom: 20 }}>
             <button className="btn" onClick={() => setSelected(null)}>← Voltar à lista</button>
-            <button className="btn btn-secondary" onClick={exportPDF}>📄 Exportar PDF</button>
+            <button className="btn btn-secondary" onClick={() => exportPDF(selected)}>📄 Exportar PDF</button>
           </div>
           <DetailView data={selected} />
         </div>
       ) : (
         <div className="grid">
-          {filtered.map((item, i) => (
-            <div key={i} className="card company-card" onClick={() => setSelected(item)}>
-              <div className="company-header">
-                <div>
-                  <div className="company-name">{item.companyName || 'Sem nome'}</div>
-                  <div className="company-segment">{item.companySegment}</div>
+          {filtered.map((item, i) => {
+            const flat = flattenPayload(item.payload)
+            const loc = flat['cidade_estado'] as string | undefined
+            const state = loc ? (loc.split('/').pop()?.trim() ?? '') : ''
+            return (
+              <div key={i} className="card company-card" onClick={() => setSelected(item)}>
+                <div className="company-header">
+                  <div>
+                    <div className="company-name">{item.companyName || 'Sem nome'}</div>
+                    <div className="company-segment">{item.companySegment}</div>
+                  </div>
+                  {state && <span className="state-badge">{state}</span>}
+                </div>
+                <div className="company-date">{new Date(item.receivedAt).toLocaleDateString('pt-BR')}</div>
+                <div style={{ marginTop: 10, color: 'var(--muted)', fontSize: '0.875rem' }}>
+                  {item.contactName} • {item.contactEmail}
                 </div>
               </div>
-              <div className="company-date">{new Date(item.receivedAt).toLocaleDateString('pt-BR')}</div>
-              <div style={{ marginTop: 10, color: 'var(--muted)', fontSize: '0.875rem' }}>
-                {item.contactName} • {item.contactEmail}
-              </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
       )}
     </div>
@@ -375,187 +301,175 @@ function DetailView({ data }: { data: OnboardingData }) {
   return (
     <div className="card">
       <h1 style={{ marginBottom: 5 }}>{data.companyName}</h1>
-      <p style={{ color: 'var(--muted)', marginBottom: 30 }}>Recebido em {new Date(data.receivedAt).toLocaleString('pt-BR')}</p>
+      <p style={{ color: 'var(--muted)', marginBottom: 30 }}>
+        Recebido em {new Date(data.receivedAt).toLocaleString('pt-BR')}
+      </p>
 
-      <div className="detail-section">
-        <h3>Dados do Contato</h3>
-        <div className="detail-grid">
-          <div className="detail-item"><span className="detail-label">Nome</span><span className="detail-value">{data.contactName}</span></div>
-          <div className="detail-item"><span className="detail-label">E-mail</span><span className="detail-value">{data.contactEmail}</span></div>
-          <div className="detail-item"><span className="detail-label">Telefone</span><span className="detail-value">{data.contactPhone}</span></div>
-        </div>
-      </div>
+      <Section title="Dados do Contato">
+        <Field label="Nome" value={data.contactName} />
+        <Field label="E-mail" value={data.contactEmail} />
+        <Field label="Telefone" value={data.contactPhone} />
+      </Section>
 
-      <div className="detail-section">
-        <h3>Dados da Empresa</h3>
-        <div className="detail-grid">
-          <div className="detail-item"><span className="detail-label">CNPJ</span><span className="detail-value">{p.cnpj || '-'}</span></div>
-          <div className="detail-item"><span className="detail-label">Site</span><span className="detail-value">{p.site || '-'}</span></div>
-          <div className="detail-item"><span className="detail-label">Tempo de Mercado</span><span className="detail-value">{p.tempo_mercado || '-'}</span></div>
-          <div className="detail-item"><span className="detail-label">Colaboradores</span><span className="detail-value">{p.colaboradores || '-'}</span></div>
-          <div className="detail-item"><span className="detail-label">Cidade/Estado</span><span className="detail-value">{p.cidade_estado || '-'}</span></div>
-          <div className="detail-item"><span className="detail-label">Faturamento</span><span className="detail-value">{p.faturamento || '-'}</span></div>
-        </div>
-      </div>
+      <Section title="Dados da Empresa">
+        <Field label="CNPJ" value={p.cnpj} />
+        <Field label="Site" value={p.site} />
+        <Field label="Tempo de Mercado" value={p.tempo_mercado} />
+        <Field label="Colaboradores" value={p.colaboradores} />
+        <Field label="Cidade/Estado" value={p.cidade_estado} />
+        <Field label="Faturamento" value={p.faturamento} />
+      </Section>
 
-      <div className="detail-section">
-        <h3>Posicionamento</h3>
-        <div className="detail-grid">
-          <div className="detail-item"><span className="detail-label">Posição no Mercado</span><span className="detail-value">{p.posicionamento || '-'}</span></div>
-          <div className="detail-item"><span className="detail-label">Diferencial</span><span className="detail-value">{p.diferencial || '-'}</span></div>
-          <div className="detail-item"><span className="detail-label">Percepção Desejada</span><span className="detail-value">{p.percepcao || '-'}</span></div>
-          <div className="detail-item"><span className="detail-label">Missão</span><span className="detail-value">{p.missao || '-'}</span></div>
-          <div className="detail-item" style={{ gridColumn: '1 / -1' }}><span className="detail-label">Palavras que NÃO representam</span><span className="detail-value">{p.palavras_nao || '-'}</span></div>
-        </div>
-      </div>
+      <Section title="Posicionamento">
+        <Field label="Posição no Mercado" value={p.posicionamento} />
+        <Field label="Diferencial" value={p.diferencial} />
+        <Field label="Percepção Desejada" value={p.percepcao} />
+        <Field label="Missão" value={p.missao} />
+        <Field label="Palavras que NÃO representam" value={p.palavras_nao} span />
+      </Section>
 
-      <div className="detail-section">
-        <h3>Cliente Ideal</h3>
-        <div className="detail-grid">
-          <div className="detail-item"><span className="detail-label">Segmento Alvo</span><span className="detail-value">{p.segmento_alvo || '-'}</span></div>
-          <div className="detail-item"><span className="detail-label">Porte do Cliente</span><span className="detail-value">{p.porte_cliente || '-'}</span></div>
-          <div className="detail-item"><span className="detail-label">Faturamento</span><span className="detail-value">{p.faturamento_cliente || '-'}</span></div>
-          <div className="detail-item"><span className="detail-label">Região</span><span className="detail-value">{p.regiao || '-'}</span></div>
-          <div className="detail-item" style={{ gridColumn: '1 / -1' }}><span className="detail-label">Decisores</span><span className="detail-value">{formatArray(p.decisores)}</span></div>
-          <div className="detail-item" style={{ gridColumn: '1 / -1' }}><span className="detail-label">Gatilhos</span><span className="detail-value">{p.gatilhos || '-'}</span></div>
-        </div>
-      </div>
+      <Section title="Cliente Ideal">
+        <Field label="Segmento Alvo" value={p.segmento_alvo} />
+        <Field label="Porte do Cliente" value={p.porte_cliente} />
+        <Field label="Faturamento do Cliente" value={p.faturamento_cliente} />
+        <Field label="Região" value={p.regiao} />
+        <Field label="Decisores" value={p.decisores} span />
+        <Field label="Gatilho de Compra" value={p.gatilhos} span />
+      </Section>
 
-      <div className="detail-section">
-        <h3>Dores do Cliente</h3>
-        <div className="detail-grid">
-          <div className="detail-item" style={{ gridColumn: '1 / -1' }}><span className="detail-label">Principais Dores</span><span className="detail-value">{formatArray(p.dores)}</span></div>
-          <div className="detail-item" style={{ gridColumn: '1 / -1' }}><span className="detail-label">Impacto Financeiro/Operacional</span><span className="detail-value">{p.impacto_dores || '-'}</span></div>
-          <div className="detail-item" style={{ gridColumn: '1 / -1' }}><span className="detail-label">Como Resolve Hoje</span><span className="detail-value">{p.como_resolve_hoje || '-'}</span></div>
-        </div>
-      </div>
+      <Section title="Dores do Cliente">
+        <Field label="Principais Dores" value={p.dores} span />
+        <Field label="Impacto Financeiro/Operacional" value={p.impacto_dores} span />
+        <Field label="Como Resolve Hoje" value={p.como_resolve_hoje} span />
+      </Section>
 
-      <div className="detail-section">
-        <h3>Processo Atual</h3>
-        <div className="detail-grid">
-          <div className="detail-item"><span className="detail-label">Usa CRM</span><span className="detail-value">{p.crm || '-'}</span></div>
-          <div className="detail-item"><span className="detail-label">Qual CRM</span><span className="detail-value">{p.qual_crm || '-'}</span></div>
-          <div className="detail-item" style={{ gridColumn: '1 / -1' }}><span className="detail-label">Canais de Comunicação</span><span className="detail-value">{formatArray(p.canais)}</span></div>
-          <div className="detail-item" style={{ gridColumn: '1 / -1' }}><span className="detail-label">Como Chegam Leads</span><span className="detail-value">{formatArray(p.como_chegam)}</span></div>
-          <div className="detail-item" style={{ gridColumn: '1 / -1' }}><span className="detail-label">Etapas do Funil</span><span className="detail-value">{p.etapas_funnel || '-'}</span></div>
-        </div>
-      </div>
+      <Section title="Processo de Vendas">
+        <Field label="Usa CRM" value={p.crm} />
+        <Field label="Qual CRM" value={p.qual_crm} />
+        <Field label="Canais de Comunicação" value={p.canais} span />
+        <Field label="Como Chegam os Leads" value={p.como_chegam} span />
+        <Field label="Etapas do Funil" value={p.etapas_funnel} span />
+      </Section>
 
-      <div className="detail-section">
-        <h3>Equipe de Vendas</h3>
-        <div className="detail-grid">
-          <div className="detail-item"><span className="detail-label">Nr. Vendedores</span><span className="detail-value">{p.nr_vendedores || '-'}</span></div>
-          <div className="detail-item" style={{ gridColumn: '1 / -1' }}><span className="detail-label">Estrutura</span><span className="detail-value">{formatArray(p.estrutura)}</span></div>
-          <div className="detail-item" style={{ gridColumn: '1 / -1' }}><span className="detail-label">Metas</span><span className="detail-value">{p.metas || '-'}</span></div>
-          <div className="detail-item"><span className="detail-label">Treinamento</span><span className="detail-value">{p.treinamento || '-'}</span></div>
-        </div>
-      </div>
+      <Section title="Equipe de Vendas">
+        <Field label="Nr. Vendedores" value={p.nr_vendedores} />
+        <Field label="Treinamento" value={p.treinamento} />
+        <Field label="Estrutura" value={p.estrutura} span />
+        <Field label="Metas" value={p.metas} span />
+      </Section>
 
-      <div className="detail-section">
-        <h3>Métricas</h3>
-        <div className="detail-grid">
-          <div className="detail-item"><span className="detail-label">Ticket Médio</span><span className="detail-value">{p.ticket_medio || '-'}</span></div>
-          <div className="detail-item"><span className="detail-label">Ciclo de Vendas</span><span className="detail-value">{p.ciclo_vendas || '-'}</span></div>
-          <div className="detail-item"><span className="detail-label">Taxa de Conversão</span><span className="detail-value">{p.taxa_conversao || '-'}</span></div>
-          <div className="detail-item"><span className="detail-label">Reuniões/mês</span><span className="detail-value">{p.reunioes_mes || '-'}</span></div>
-          <div className="detail-item"><span className="detail-label">Novos Clientes/mês</span><span className="detail-value">{p.novos_clientes || '-'}</span></div>
-          <div className="detail-item"><span className="detail-label">Churn Mensal</span><span className="detail-value">{p.churn || '-'}</span></div>
-          <div className="detail-item"><span className="detail-label">Métrica Crítica</span><span className="detail-value">{p.metrica_critica || '-'}</span></div>
-        </div>
-      </div>
+      <Section title="Métricas Comerciais">
+        <Field label="Ticket Médio" value={p.ticket_medio} />
+        <Field label="Ciclo de Vendas" value={p.ciclo_vendas} />
+        <Field label="Taxa de Conversão" value={p.taxa_conversao} />
+        <Field label="Reuniões/mês" value={p.reunioes_mes} />
+        <Field label="Novos Clientes/mês" value={p.novos_clientes} />
+        <Field label="Churn Mensal" value={p.churn} />
+        <Field label="Métrica Crítica" value={p.metrica_critica} />
+      </Section>
 
-      <div className="detail-section">
-        <h3>Concorrentes</h3>
-        <div className="detail-grid">
-          <div className="detail-item" style={{ gridColumn: '1 / -1' }}><span className="detail-label">Principais Concorrentes</span><span className="detail-value">{formatArray(p.concorrentes)}</span></div>
-          <div className="detail-item" style={{ gridColumn: '1 / -1' }}><span className="detail-label">O que fazem melhor</span><span className="detail-value">{p.conc_melhor || '-'}</span></div>
-          <div className="detail-item" style={{ gridColumn: '1 / -1' }}><span className="detail-label">O que fazemos melhor</span><span className="detail-value">{p.nos_melhor || '-'}</span></div>
-          <div className="detail-item" style={{ gridColumn: '1 / -1' }}><span className="detail-label">Por que perdem para concorrente</span><span className="detail-value">{p.por_que_perdem || '-'}</span></div>
-        </div>
-      </div>
+      <Section title="Concorrentes">
+        <Field label="Principais Concorrentes" value={p.concorrentes} span />
+        <Field label="O que fazem melhor" value={p.conc_melhor} span />
+        <Field label="O que fazemos melhor" value={p.nos_melhor} span />
+        <Field label="Por que perdem" value={p.por_que_perdem} span />
+      </Section>
 
-      <div className="detail-section">
-        <h3>Objetivos</h3>
-        <div className="detail-grid">
-          <div className="detail-item" style={{ gridColumn: '1 / -1' }}><span className="detail-label">O que esperar</span><span className="detail-value">{formatArray(p.objetivos)}</span></div>
-          <div className="detail-item"><span className="detail-label">Meta de Faturamento</span><span className="detail-value">{p.meta_faturamento || '-'}</span></div>
-          <div className="detail-item"><span className="detail-label">Prazo</span><span className="detail-value">{p.prazo || '-'}</span></div>
-          <div className="detail-item" style={{ gridColumn: '1 / -1' }}><span className="detail-label">Sucesso medido como</span><span className="detail-value">{p.sucesso_medido || '-'}</span></div>
-        </div>
-      </div>
+      <Section title="Objetivos">
+        <Field label="O que espera alcançar" value={p.objetivos} span />
+        <Field label="Meta de Faturamento" value={p.meta_faturamento} />
+        <Field label="Prazo" value={p.prazo} />
+        <Field label="Como mede o sucesso" value={p.sucesso_medido} span />
+      </Section>
 
-      <div className="detail-section">
-        <h3>Marketing</h3>
-        <div className="detail-grid">
-          <div className="detail-item"><span className="detail-label">Investe em MKT</span><span className="detail-value">{p.investe_mkt || '-'}</span></div>
-          <div className="detail-item" style={{ gridColumn: '1 / -1' }}><span className="detail-label">Canais Ativos</span><span className="detail-value">{formatArray(p.canais_mkt)}</span></div>
-          <div className="detail-item"><span className="detail-label">Investimento Mensal</span><span className="detail-value">{p.investimento_midia || '-'}</span></div>
-          <div className="detail-item"><span className="detail-label">Agência</span><span className="detail-value">{p.agencia || '-'}</span></div>
-        </div>
-      </div>
+      <Section title="Marketing">
+        <Field label="Investe em MKT" value={p.investe_mkt} />
+        <Field label="Investimento Mensal" value={p.investimento_midia} />
+        <Field label="Canais Ativos" value={p.canais_mkt} span />
+        <Field label="Agência" value={p.agencia} span />
+      </Section>
 
-      <div className="detail-section">
-        <h3>Materiais Existentes</h3>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-          {formatArray(p.materiais).split(', ').filter(Boolean).map((m, i) => <span key={i} className="tag">{m}</span>)}
-          {!p.materiais && <span style={{ color: 'var(--muted)' }}>-</span>}
+      <Section title="Materiais Existentes">
+        <div style={{ gridColumn: '1 / -1' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: p.materiais_criar ? 15 : 0 }}>
+            {formatValue(p.materiais).split(', ').filter(v => v && v !== '-').map((m, i) => (
+              <span key={i} className="tag">{m}</span>
+            ))}
+            {!p.materiais && <span style={{ color: 'var(--muted)' }}>-</span>}
+          </div>
+          {p.materiais_criar ? (
+            <div>
+              <span className="detail-label">Precisa criar/melhorar:</span>
+              <br />
+              <span className="detail-value">{formatValue(p.materiais_criar)}</span>
+            </div>
+          ) : null}
         </div>
-        {p.materiais_criar && <div style={{ marginTop: 15 }}><span className="detail-label">Precisa criar/melhorar:</span><br/><span className="detail-value">{p.materiais_criar}</span></div>}
-      </div>
+      </Section>
 
-      <div className="detail-section">
-        <h3>Projeto & Equipe</h3>
-        <div className="detail-grid">
-          <div className="detail-item"><span className="detail-label">Responsável Projeto</span><span className="detail-value">{p.responsavel_projeto || '-'}</span></div>
-          <div className="detail-item"><span className="detail-label">Cargo</span><span className="detail-value">{p.cargo_responsavel || '-'}</span></div>
-          <div className="detail-item"><span className="detail-label">Aprovador</span><span className="detail-value">{p.aprovador || '-'}</span></div>
-          <div className="detail-item"><span className="detail-label">Outros Envolvidos</span><span className="detail-value">{p.outros_envolvidos || '-'}</span></div>
-          <div className="detail-item" style={{ gridColumn: '1 / -1' }}><span className="detail-label">Acessos Necessários</span><span className="detail-value">{formatArray(p.acessos)}</span></div>
-          <div className="detail-item" style={{ gridColumn: '1 / -1' }}><span className="detail-label">Restrições</span><span className="detail-value">{p.restricoes || '-'}</span></div>
-        </div>
-      </div>
+      <Section title="Projeto & Equipe">
+        <Field label="Responsável" value={p.responsavel_projeto} />
+        <Field label="Cargo" value={p.cargo_responsavel} />
+        <Field label="Aprovador" value={p.aprovador} />
+        <Field label="Outros Envolvidos" value={p.outros_envolvidos} />
+        <Field label="Acessos Necessários" value={p.acessos} span />
+        <Field label="Restrições" value={p.restricoes} span />
+      </Section>
 
-      <div className="detail-section">
-        <h3>Contexto Adicional</h3>
-        <div className="detail-grid">
-          <div className="detail-item" style={{ gridColumn: '1 / -1' }}><span className="detail-label">O que conhecer antes de começar</span><span className="detail-value">{p.conhecer_antes || '-'}</span></div>
-          <div className="detail-item" style={{ gridColumn: '1 / -1' }}><span className="detail-label">Frustrações anteriores</span><span className="detail-value">{p.frustracoes || '-'}</span></div>
-          <div className="detail-item" style={{ gridColumn: '1 / -1' }}><span className="detail-label">Sucesso absoluto</span><span className="detail-value">{p.sucesso_absoluto || '-'}</span></div>
-        </div>
-      </div>
+      <Section title="Contexto Adicional">
+        <Field label="O que conhecer antes de começar" value={p.conhecer_antes} span />
+        <Field label="Frustrações anteriores" value={p.frustracoes} span />
+        <Field label="Sucesso absoluto" value={p.sucesso_absoluto} span />
+      </Section>
     </div>
   )
 }
 
-function formatArray(arr: unknown): string {
-  if (!arr) return '-'
-  if (Array.isArray(arr)) return arr.filter(Boolean).join(', ')
-  if (typeof arr === 'string') return arr
+function Section({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div className="detail-section">
+      <h3>{title}</h3>
+      <div className="detail-grid">{children}</div>
+    </div>
+  )
+}
+
+function Field({ label, value, span }: { label: string; value: unknown; span?: boolean }) {
+  return (
+    <div className="detail-item" style={span ? { gridColumn: '1 / -1' } : {}}>
+      <span className="detail-label">{label}</span>
+      <span className="detail-value">{formatValue(value)}</span>
+    </div>
+  )
+}
+
+function formatValue(val: unknown): string {
+  if (val === null || val === undefined) return '-'
+  if (typeof val === 'string') return val || '-'
+  if (typeof val === 'number') return val.toString()
+  if (typeof val === 'boolean') return val ? 'Sim' : 'Não'
+  if (Array.isArray(val)) return val.filter(Boolean).join(', ') || '-'
+  if (typeof val === 'object') {
+    try { return JSON.stringify(val) } catch { return '-' }
+  }
   return '-'
 }
 
-// Flatten payload sections para acesso fácil
 function flattenPayload(payload: Record<string, unknown>): Record<string, unknown> {
   const flat: Record<string, unknown> = {}
-
   if (!payload || typeof payload !== 'object') return flat
 
-  // Sections contém os dados reales
   const sections = payload.sections as Record<string, Record<string, unknown>> | undefined
-
   if (sections) {
-    Object.entries(sections).forEach(([sectionName, fields]) => {
+    Object.entries(sections).forEach(([, fields]) => {
       if (fields && typeof fields === 'object') {
         Object.entries(fields).forEach(([key, value]) => {
-          // Normalizar nome do campo
-          const normalizedKey = normalizeKey(key)
-          flat[normalizedKey] = value
+          flat[normalizeKey(key)] = value
         })
       }
     })
   }
 
-  // Também mapeia o sumário se existir (para campos redundantes)
   const summary = payload.summary as Record<string, unknown> | undefined
   if (summary) {
     Object.entries(summary).forEach(([key, value]) => {
@@ -567,9 +481,8 @@ function flattenPayload(payload: Record<string, unknown>): Record<string, unknow
 }
 
 function normalizeKey(key: string): string {
-  // Mapeamento de nomes das perguntas reais da planilha Orflie (baseado no JSON recebido)
   const map: Record<string, string> = {
-    // Seção: Informações Gerais
+    // --- Informações de contato / empresa ---
     'Nome da Empresa': 'companyName',
     'Nome do Responsável': 'contactName',
     'E-mail': 'contactEmail',
@@ -581,37 +494,190 @@ function normalizeKey(key: string): string {
     'Nº de Colaboradores': 'colaboradores',
     'Cidade / Estado': 'cidade_estado',
     'Faturamento Médio Anual': 'faturamento',
-    
-    // Seção: Posicionamento
+
+    // --- Posicionamento ---
     'Como a empresa se posiciona no mercado?': 'posicionamento',
+    'Posição no Mercado': 'posicionamento',
     'Principal diferencial competitivo': 'diferencial',
     'Como a empresa quer ser percebida pelos clientes?': 'percepcao',
+    'Como a empresa quer ser percebida': 'percepcao',
     'Missão ou propósito declarado': 'missao',
     'Quais palavras NÃO representam a empresa?': 'palavras_nao',
-    
-    // Seção: Objetivos
+    'Produto/serviço prioritário neste projeto': 'produto_prioritario',
+
+    // --- Cliente ideal ---
+    'Segmento-alvo': 'segmento_alvo',
+    'Segmento de Atuação do cliente ideal': 'segmento_alvo',
+    'Porte da empresa cliente': 'porte_cliente',
+    'Porte do cliente ideal': 'porte_cliente',
+    'Faixa de faturamento do cliente ideal': 'faturamento_cliente',
+    'Região de atuação': 'regiao',
+    'Quem toma a decisão de compra': 'decisores',
+    'Quem toma a decisão de compra?': 'decisores',
+    'Principal gatilho de compra': 'gatilhos',
+    'Principal gatilho': 'gatilhos',
+
+    // --- Dores ---
+    'Principais dores do cliente': 'dores',
+    'Principais dores do cliente ideal': 'dores',
+    'Impacto financeiro/operacional das dores': 'impacto_dores',
+    'Impacto financeiro/operacional': 'impacto_dores',
+    'Como resolve hoje (antes da Orflie)': 'como_resolve_hoje',
+    'Como resolve hoje': 'como_resolve_hoje',
+
+    // --- Processo de vendas ---
+    'Usa CRM?': 'crm',
+    'CRM': 'crm',
+    'Qual CRM utiliza?': 'qual_crm',
+    'Qual CRM': 'qual_crm',
+    'Canais de comunicação com clientes': 'canais',
+    'Canais de comunicação': 'canais',
+    'Como os leads chegam hoje': 'como_chegam',
+    'Como os leads chegam': 'como_chegam',
+    'Etapas do funil de vendas': 'etapas_funnel',
+
+    // --- Equipe de vendas ---
+    'Total de vendedores': 'nr_vendedores',
+    'Estrutura da equipe comercial': 'estrutura',
+    'Estrutura da equipe': 'estrutura',
+    'Metas comerciais atuais': 'metas',
+    'Metas comerciais': 'metas',
+    'O time tem treinamento de vendas?': 'treinamento',
+
+    // --- Métricas ---
+    'Ticket Médio': 'ticket_medio',
+    'Ciclo Médio de Vendas': 'ciclo_vendas',
+    'Taxa de Conversão Média': 'taxa_conversao',
+    'Reuniões realizadas por mês': 'reunioes_mes',
+    'Reuniões / mês': 'reunioes_mes',
+    'Novos clientes por mês': 'novos_clientes',
+    'Novos clientes / mês': 'novos_clientes',
+    'Churn mensal': 'churn',
+    'Métrica mais crítica para o negócio': 'metrica_critica',
+    'Métrica mais crítica': 'metrica_critica',
+
+    // --- Concorrência ---
+    'Principais concorrentes': 'concorrentes',
+    'O que os concorrentes fazem melhor': 'conc_melhor',
+    'O que concorrentes fazem melhor': 'conc_melhor',
+    'O que a empresa faz melhor que os concorrentes': 'nos_melhor',
+    'O que a empresa faz melhor': 'nos_melhor',
+    'Por que perdem para concorrentes?': 'por_que_perdem',
+    'Por que perdem para concorrente': 'por_que_perdem',
+
+    // --- Objetivos ---
     'O que a empresa espera alcançar?': 'objetivos',
     'Meta de faturamento desejada': 'meta_faturamento',
     'Prazo esperado para ver resultados': 'prazo',
     'Como o sucesso deste projeto será medido internamente?': 'sucesso_medido',
 
-    // Produtos
-    'Produto/serviço prioritário neste projeto': 'produto_prioritario',
-    
-    // Mapeamento legado para compatibilidade
-    'Posição no Mercado': 'posicionamento',
-    'Total de vendedores': 'nr_vendedores',
-    'Estrutura da equipe': 'estrutura',
-    'Metas comerciais': 'metas',
-    'Treinamento': 'treinamento',
-    'Ticket Médio': 'ticket_medio',
-    'Ciclo Médio de Vendas': 'ciclo_vendas',
-    'Taxa de Conversão Média': 'taxa_conversao',
-    'Reuniões / mês': 'reunioes_mes',
-    'Novos clientes / mês': 'novos_clientes',
-    'Churn mensal': 'churn',
-    'Métrica mais crítica': 'metrica_critica',
+    // --- Marketing ---
+    'Investe em marketing?': 'investe_mkt',
+    'Investe em marketing': 'investe_mkt',
+    'Canais de marketing ativos': 'canais_mkt',
+    'Canais ativos': 'canais_mkt',
+    'Investimento mensal em mídia paga': 'investimento_midia',
+    'Investimento mensal em mídia': 'investimento_midia',
+    'Trabalha com agência de marketing?': 'agencia',
+    'Agência de marketing': 'agencia',
+
+    // --- Materiais ---
+    'Materiais que a empresa já possui': 'materiais',
+    'A empresa já possui': 'materiais',
+    'Materiais que precisam ser criados ou melhorados': 'materiais_criar',
+    'Material precisa criar': 'materiais_criar',
+
+    // --- Projeto & Equipe ---
+    'Nome do responsável interno pelo projeto': 'responsavel_projeto',
+    'Responsável interno': 'responsavel_projeto',
+    'Cargo do responsável': 'cargo_responsavel',
+    'Cargo': 'cargo_responsavel',
+    'Quem aprova as entregas?': 'aprovador',
+    'Outros envolvidos no projeto': 'outros_envolvidos',
+    'Acessos que a Orflie precisará': 'acessos',
+    'Acessos necessários': 'acessos',
+    'Restrições ou limitações importantes': 'restricoes',
+    'Restrições': 'restricoes',
+
+    // --- Contexto adicional ---
+    'O que o time precisa saber antes de começar': 'conhecer_antes',
+    'O que time precisa saber': 'conhecer_antes',
+    'Frustrações com experiências anteriores': 'frustracoes',
+    'Frustrações anteriores': 'frustracoes',
+    'O que seria um sucesso absoluto?': 'sucesso_absoluto',
+    'Sucesso absoluto': 'sucesso_absoluto',
   }
 
-  return map[key] || key.toLowerCase().replace(/\s+/g, '_')
+  return map[key] ?? key.toLowerCase().replace(/\s+/g, '_').replace(/[?]/g, '')
+}
+
+function generatePDFContent(d: OnboardingData, p: Record<string, unknown>): string {
+  const f = (val: unknown) => formatValue(val)
+  const arr = (val: unknown) => Array.isArray(val) ? (val as string[]).join(', ') : f(val)
+
+  return `
+    <div style="font-family: Arial, sans-serif; padding: 20px; color: #1a1a1a;">
+      <h1 style="border-bottom: 2px solid #000; padding-bottom: 10px;">${d.companyName || 'Empresa'}</h1>
+      <p><strong>Data:</strong> ${d.receivedAt}</p>
+      <p><strong>Segmento:</strong> ${d.companySegment}</p>
+
+      <h2>Dados do Contato</h2>
+      <p><strong>Nome:</strong> ${d.contactName}</p>
+      <p><strong>E-mail:</strong> ${d.contactEmail}</p>
+      <p><strong>Telefone:</strong> ${d.contactPhone}</p>
+
+      <h2>Dados da Empresa</h2>
+      <p><strong>CNPJ:</strong> ${f(p.cnpj)}</p>
+      <p><strong>Site:</strong> ${f(p.site)}</p>
+      <p><strong>Tempo de Mercado:</strong> ${f(p.tempo_mercado)}</p>
+      <p><strong>Colaboradores:</strong> ${f(p.colaboradores)}</p>
+      <p><strong>Cidade/Estado:</strong> ${f(p.cidade_estado)}</p>
+      <p><strong>Faturamento:</strong> ${f(p.faturamento)}</p>
+
+      <h2>Posicionamento</h2>
+      <p><strong>Posição no Mercado:</strong> ${f(p.posicionamento)}</p>
+      <p><strong>Diferencial:</strong> ${f(p.diferencial)}</p>
+      <p><strong>Percepção desejada:</strong> ${f(p.percepcao)}</p>
+      <p><strong>Missão:</strong> ${f(p.missao)}</p>
+
+      <h2>Cliente Ideal</h2>
+      <p><strong>Segmento Alvo:</strong> ${f(p.segmento_alvo)}</p>
+      <p><strong>Porte:</strong> ${f(p.porte_cliente)}</p>
+      <p><strong>Região:</strong> ${f(p.regiao)}</p>
+      <p><strong>Decisores:</strong> ${arr(p.decisores)}</p>
+      <p><strong>Gatilhos:</strong> ${f(p.gatilhos)}</p>
+
+      <h2>Dores do Cliente</h2>
+      <p><strong>Dores:</strong> ${arr(p.dores)}</p>
+      <p><strong>Impacto:</strong> ${f(p.impacto_dores)}</p>
+      <p><strong>Como resolve hoje:</strong> ${f(p.como_resolve_hoje)}</p>
+
+      <h2>Processo de Vendas</h2>
+      <p><strong>CRM:</strong> ${f(p.crm)}</p>
+      <p><strong>Qual CRM:</strong> ${f(p.qual_crm)}</p>
+      <p><strong>Canais:</strong> ${arr(p.canais)}</p>
+      <p><strong>Como chegam leads:</strong> ${arr(p.como_chegam)}</p>
+
+      <h2>Equipe de Vendas</h2>
+      <p><strong>Nr. Vendedores:</strong> ${f(p.nr_vendedores)}</p>
+      <p><strong>Estrutura:</strong> ${arr(p.estrutura)}</p>
+      <p><strong>Metas:</strong> ${f(p.metas)}</p>
+
+      <h2>Métricas</h2>
+      <p><strong>Ticket Médio:</strong> ${f(p.ticket_medio)}</p>
+      <p><strong>Ciclo de Vendas:</strong> ${f(p.ciclo_vendas)}</p>
+      <p><strong>Taxa Conversão:</strong> ${f(p.taxa_conversao)}</p>
+      <p><strong>Churn:</strong> ${f(p.churn)}</p>
+      <p><strong>Métrica Crítica:</strong> ${f(p.metrica_critica)}</p>
+
+      <h2>Objetivos</h2>
+      <p><strong>O que espera alcançar:</strong> ${arr(p.objetivos)}</p>
+      <p><strong>Meta:</strong> ${f(p.meta_faturamento)}</p>
+      <p><strong>Prazo:</strong> ${f(p.prazo)}</p>
+
+      <h2>Contexto</h2>
+      <p><strong>O que conhecer antes:</strong> ${f(p.conhecer_antes)}</p>
+      <p><strong>Sucesso absoluto:</strong> ${f(p.sucesso_absoluto)}</p>
+    </div>
+  `
 }
